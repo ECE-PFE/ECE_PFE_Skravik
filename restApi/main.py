@@ -22,6 +22,7 @@ class MyHandler(BaseHTTPRequestHandler):
 
         self.send_response(200 if (status == "success") else 400)
         self.send_header('Content-type', 'application/json')
+        self.send_header('Access-Control-Allow-Origin', '*')
         self.end_headers()
 
         content = json.dumps({'Status': status, "data": data})
@@ -38,7 +39,7 @@ class MyHandler(BaseHTTPRequestHandler):
         print("GET {}".format(self.path))
         self.params=getParams(self.path)
 
-        if self.path.startswith('/values.json'):
+        if self.path.startswith('/values'):
             values(self)
 
 print("Listening...")
