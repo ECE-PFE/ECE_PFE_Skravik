@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		
+	</title>
+</head>
+<body>
+
+	source 1 : 
+	source 2 :
+
+<script>
+
+  var xhr = new XMLHttpRequest(); 
+	xhr.open('GET', 'mettre le http vers json');
+	xhr.onreadystatechange = function() {
+  if (xhr.readyState === 4) {
+    alert(xhr.responseText);
+  }
+};
+xhr.send();
+
+
+</script>
+
+
+</body>
+</html>
