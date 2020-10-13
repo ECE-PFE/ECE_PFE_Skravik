@@ -2,28 +2,36 @@
 <html>
 <head>
 	<title>
-		
+		Hey
 	</title>
 </head>
 <body>
 
-	source 1 : 
-	source 2 :
+source 1 : <h4 id="source1">...</h4>
+source 2 : <h4 id="source2">...</h4>
+
 
 <script>
-
-  var xhr = new XMLHttpRequest(); 
-	xhr.open('GET', 'http://localhost/values');
-	xhr.onreadystatechange = function() {
-  if (xhr.readyState === 4) {
-    alert(xhr.responseText);
-  }
-};
-xhr.send();
+(function(){
+    var f = function() {
+		var xhr = new XMLHttpRequest(); 
+		xhr.open('GET', 'http://localhost/values');
+		xhr.onreadystatechange = function() {
+			if (xhr.status === 200) {
+				const json = xhr.responseText;
+				const obj = JSON.parse(json);
+				document.getElementById("source1").innerHTML = obj.data.sources.source1;
+				document.getElementById("source2").innerHTML = obj.data.sources.source2;
+		  	}
+		};
+		xhr.send();
+   };
+   window.setInterval(f, 500);
+   f();
+})();
 
 
 </script>
-
 
 </body>
 </html>
