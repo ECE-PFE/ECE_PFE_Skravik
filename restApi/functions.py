@@ -15,7 +15,6 @@ def getParams(self,paramList):
     return [True] + valuesList
 
 def values(self):
-    print(1)
     sources = np.random.randint(0, 10, size=3)
     consos  = np.random.randint(-9, 1, size=3)
     sommeSources = np.sum(sources)
@@ -41,8 +40,6 @@ def values(self):
     sommesDict["sommeConsos"]=str(sommeConsos)
     sommesDict["sommeTotale"]=str(sommeTotale)
     response["sommes"]=sommesDict
-
-    print(response)
 
     try:
         self.sendContent("success", response)
