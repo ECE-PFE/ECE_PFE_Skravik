@@ -14,31 +14,33 @@ def getParams(self,paramList):
 
     return [True] + valuesList
 
-def values(self):
-    sources = np.random.randint(0, 10, size=3)
-    consos  = np.random.randint(-9, 1, size=3)
-    sommeSources = np.sum(sources)
-    sommeConsos  = np.sum(consos)
-    sommeTotale=sommeSources+sommeConsos
+def a():
+    return np.random.randint(0,10)
 
+def values(self):
     response={}
 
-    sourcesDict={}
-    for i in range(len(sources)):
-        key="source" + str(i+1)
-        sourcesDict[key]=str(sources[i])
-    response["sources"]=sourcesDict
+    response["sources"]={"panneausolaire": a(),
+                         "eolienne": a()}
 
-    consosDict={}
-    for i in range(len(consos)):
-        key="conso" + str(i+1)
-        consosDict[key]=str(consos[i])
-    response["consos"]=consosDict
+    response["consos"]={"moteur": -a(),
+                        "equipements": -a()}
+
+    #Calcul des sommes
+    sommeSources=0
+    for source in response["sources"]:
+        sommeSources += response["sources"][source]
+
+    sommeConsos=0
+    for conso in response["consos"]:
+        sommeConsos += response["consos"][conso]
+
+    sommeTotale=sommeSources+sommeConsos
 
     sommesDict={}
-    sommesDict["sommeSources"]=str(sommeSources)
-    sommesDict["sommeConsos"]=str(sommeConsos)
-    sommesDict["sommeTotale"]=str(sommeTotale)
+    sommesDict["sommesources"]=sommeSources
+    sommesDict["sommeconsos"]=sommeConsos
+    sommesDict["sommetotale"]=sommeTotale
     response["sommes"]=sommesDict
 
     try:
