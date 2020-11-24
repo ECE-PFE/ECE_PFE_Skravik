@@ -16,10 +16,9 @@ def getParams(uri):
 
 class MyHandler(BaseHTTPRequestHandler):
     def log_message(self, format, *args):
-        return #remove red log messages
+        return #We overwrite this function to remove red log messages
 
     def sendContent(self, status, data):
-
         self.send_response(200 if (status == "success") else 400)
         self.send_header('Content-type', 'application/json')
         self.send_header('Access-Control-Allow-Origin', '*')
@@ -37,9 +36,9 @@ class MyHandler(BaseHTTPRequestHandler):
             return
 
         print("GET {}".format(self.path))
-        self.params=getParams(self.path)
 
         if self.path.startswith('/values'):
+            self.params=getParams(self.path)
             values(self)
 
 print("Listening...")
