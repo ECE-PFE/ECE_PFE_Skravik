@@ -27,13 +27,13 @@
 			if (xhr.status === 200) {
 				const json = xhr.responseText;
 				const obj = JSON.parse(json);
-				document.getElementById("panneausolaire").innerHTML = "panneau solaire : " + obj.data.sources.panneausolaire + " kW";
-				document.getElementById("eolienne").innerHTML = "eolienne : " + obj.data.sources.eolienne + " kW";
-				document.getElementById("moteur").innerHTML = "moteur : " + obj.data.consos.moteur + " kW";
-				document.getElementById("equipements").innerHTML = "equipements : " + obj.data.consos.equipements + " kW";
-				document.getElementById("sommesources").innerHTML = "somme sources : " + obj.data.sommes.sommesources + " kW";
-				document.getElementById("sommeconsos").innerHTML = "somme consos : " + obj.data.sommes.sommeconsos + " kW";
-				document.getElementById("sommetotale").innerHTML = "somme totale : " + obj.data.sommes.sommetotale + " kW";
+				document.getElementById("panneausolaire").innerHTML = "panneau solaire : " + obj.data.sources.panneauxSolaires.production + " kW";
+				document.getElementById("eolienne").innerHTML = "eolienne : " + obj.data.sources.eolienne.production + " kW";
+				document.getElementById("moteur").innerHTML = "moteur : " + obj.data.consos.moteur.conso + " kW";
+				document.getElementById("equipements").innerHTML = "equipements : " + obj.data.consos.equipements.conso + " kW";
+				document.getElementById("sommesources").innerHTML = "somme sources : " + obj.data.sommes.sommeSources + " kW";
+				document.getElementById("sommeconsos").innerHTML = "somme consos : " + obj.data.sommes.sommeConsos + " kW";
+				document.getElementById("sommetotale").innerHTML = "somme totale : " + obj.data.sommes.sommeTotale + " kW";
 		  	}
 		};
 		xhr.send();
