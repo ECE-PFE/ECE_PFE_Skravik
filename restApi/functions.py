@@ -18,30 +18,51 @@ def a():
     return np.random.randint(0,10)
 
 def values(self):
-    response={}
+    #Productions
+    panneauxSolaires={"production": a(),
+                      "inclinaison": a(),
+                      "rendement": a(),
+                      "ensoleillement": a()}
 
-    response["sources"]={"panneausolaire": a(),
-                         "eolienne": a()}
+    hydrolienne={"production": a(),
+                 "vitesse": a(),
+                 "temperature": a()}
 
-    response["consos"]={"moteur": -a(),
-                        "equipements": -a()}
+    eolienne={"production": a(),
+              "vitesse": a(),
+              "temperature": a()}
 
-    #Calcul des sommes
-    sommeSources=0
-    for source in response["sources"]:
-        sommeSources += response["sources"][source]
+    #Consommations
+    moteur={"conso": -a(),
+            "vitesse": a()}
 
-    sommeConsos=0
-    for conso in response["consos"]:
-        sommeConsos += response["consos"][conso]
+    equipements={"conso": -a(),
+                "duree": a()}
 
-    sommeTotale=sommeSources+sommeConsos
+    #Combinaisons des elements
+    sources={"panneauxSolaires": panneauxSolaires,
+             "hydrolienne": hydrolienne,
+             "eolienne": eolienne}
 
-    sommesDict={}
-    sommesDict["sommesources"]=sommeSources
-    sommesDict["sommeconsos"]=sommeConsos
-    sommesDict["sommetotale"]=sommeTotale
-    response["sommes"]=sommesDict
+    consos={"moteur": moteur,
+            "equipements": equipements}
+
+    #Sommes
+    sommeSources = panneauxSolaires["production"] + hydrolienne["production"] + eolienne["production"]
+
+    sommeConsos = moteur["conso"] + equipements["conso"]
+
+    sommeTotale = sommeSources + sommeConsos
+
+    #Combinaison des sommes
+    sommes={"sommeSources": sommeSources,
+            "sommeConsos": sommeConsos,
+            "sommeTotale": sommeTotale}
+
+    #Construction de la réponse
+    response={"sources": sources,
+              "consos": consos,
+              "sommes": sommes}
 
     try:
         self.sendContent("success", response)
