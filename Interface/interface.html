@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>
-		Hey
+		Skravik UI
 	</title>
 </head>
 <body>
@@ -23,6 +23,7 @@
     var updateValues = function() {
 		var xhr = new XMLHttpRequest(); 
 		xhr.open('GET', 'http://localhost/values');
+
 		xhr.onreadystatechange = function() {
 			if (xhr.status === 200) {
 				const json = xhr.responseText;
@@ -39,11 +40,9 @@
 		xhr.send();
    };
 
-   window.setInterval(f, 1000);
+   window.setInterval(updateValues, 1000);
    updateValues();
 })();
-
-
 </script>
 
 </body>

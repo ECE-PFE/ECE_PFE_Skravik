@@ -13,23 +13,42 @@
       </style>
    </head>
    <body>
-
       <button onclick="showDetails()">Click here</button>
-      <p>blabla</p>
-      <div id="myDIV">
-         This is my DIV element.
-      </div>
-      <p>blabla2</p>
-      
+      <p id="panneauxsolaires">...</p>
+      <div id="details"> This is my DIV element. </div>
+
+      <p id="eoliennes">...</p>
+      <div id="details"> This is my DIV element. </div>
+
       <script>
-         function showDetails() {
-           var x = document.getElementById("myDIV");
-           if (x.style.display === "none") {
-             x.style.display = "block";
-           } else {
-             x.style.display = "none";
-           }
-         }
+        function showDetails() {
+          var x = document.getElementById("details");
+          if (x.style.display === "none") {
+            x.style.display = "block";
+          } else {
+            x.style.display = "none";
+          }
+        }
+
+        (function(){
+          var updateValues = function() {
+            var xhr = new XMLHttpRequest(); 
+            xhr.open('GET', 'http://localhost/values');
+           
+            xhr.onreadystatechange = function() {
+              if (xhr.status === 200) {
+                const json = xhr.responseText;
+                const obj = JSON.parse(json);
+                document.getElementById("panneauxsolaires").innerHTML = "Panneaux solaires : " + obj.data.sources. panneauxSolaires.production + " kW";
+                document.getElementById("eoliennes").innerHTML = "Eoliennes : " + obj.data.sources.eolienne.production + " kW";
+              }
+            };
+            xhr.send();
+          };
+         
+          window.setInterval(updateValues, 1000);
+          updateValues();
+        })();
       </script>
    </body>
 </html>
