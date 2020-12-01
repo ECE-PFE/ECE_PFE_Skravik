@@ -6,7 +6,7 @@
 - Open the file `Interface/interface.html` in your browser.
 
 ## Dev notes
-Raw data can be found at `http://localhost/values`, and will contain this kind of json :
+Raw data can be found at [http://localhost/values](http://localhost/values), and will contain this kind of json :
 ```
 {
    "Status":"success",
