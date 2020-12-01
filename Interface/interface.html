@@ -20,7 +20,7 @@
 
 <script>
 (function(){
-    var f = function() {
+    var updateValues = function() {
 		var xhr = new XMLHttpRequest(); 
 		xhr.open('GET', 'http://localhost/values');
 		xhr.onreadystatechange = function() {
@@ -38,8 +38,9 @@
 		};
 		xhr.send();
    };
+
    window.setInterval(f, 1000);
-   f();
+   updateValues();
 })();
 
 
