@@ -52,7 +52,7 @@
         <div class="row">
 
           <div class="col-sm-4" style="">
-            <h4 style="display: inline">+5KW</h4>
+            <h4 id="data" style="display: inline">+5KW</h4>
            </div>
 
           <div class="col-sm-3" style="">
@@ -109,4 +109,23 @@
       </div>
   
 </body>
+
+<script>
+	var dataDiv = document.getElementById('data');
+	function updateDisplay(event) {
+	  console.log(event.target.responseText)
+	  dataDiv.innerHTML = event.target.responseText;
+	  setTimeout(fetchDataFromRestApi, 1000);
+	}
+
+	function fetchDataFromRestApi()  {
+	  var oReq = new XMLHttpRequest();
+	  oReq.addEventListener("load", updateDisplay);
+	  oReq.open("GET", "/signalk/v1/api/vessels/self/environment/depth/belowTransducer/value");
+	  oReq.send();
+	}
+
+	fetchDataFromRestApi();
+</script>
+
 </html>
