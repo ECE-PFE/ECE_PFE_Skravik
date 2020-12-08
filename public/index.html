@@ -26,20 +26,20 @@
             <div id="div1" style="display: inline-block;">
             <img id="panneaux_solaire" name="panneaux_solaire" value="Afficher1" src="img/panneaux_solaire.png" width="75px" onclick="panneauSolaire()" >
             <img src="img/fleche.ico" width="50px" ; height="50px" style="margin-left: 20px ; padding-bottom: 5px">
-            <h3 style="display: inline; margin-left: 10px">+5KW</h3>
+            <h3 id="panneausolaire" style="display: inline; margin-left: 10px">+5KW</h3>
             </div>
             <br id="sans"> <br id="sans"> <br id="sans">
             <div id="div2" style="display: inline-block;">
             <img id="eolienne" name="eolienne" value="Afficher2" src="img/eolienne.png" width="75px" onclick="Eolienne()" >
             <img src="img/fleche.ico" width="50px" ; height="50px" style="margin-left: 20px ; padding-bottom: 5px">
-            <h3 style="display: inline ; margin-left: 10px">+5KW</h3>
+            <h3 id="eolienne" style="display: inline ; margin-left: 10px">+5KW</h3>
           </div>
             <br id="sans2"> <br id="sans2"> <br id="sans2">
 
             <div id="div3" style="display: inline-block;">
              <img id="hydro" name="hydro" value="Afficher3" src="img/hydro-power.png" width="75px" onclick="Hydro()" >
             <img src="img/fleche.ico" width="50px" ; height="50px" style="margin-left: 20px ; padding-bottom: 5px">
-            <h3 style="display: inline ; margin-left: 10px">+5KW</h3>
+            <h3 id="hydrolienne" style="display: inline ; margin-left: 10px">+5KW</h3>
           </div>
 
             </div>
@@ -57,13 +57,13 @@
         <div class="row">
 
           <div class="col-sm-4" style="">
-            <h4 style="display: inline">+5KW</h4>
+            <h4 id="sommesources" style="display: inline">+5KW</h4>
            </div>
 
           <div class="col-sm-3" style="">
            </div>
            <div class="col-sm-4" style="">
-            <h4 style="display: inline">+5KW</h4>
+            <h4 id="sommeconsos" style="display: inline">+5KW</h4>
            </div>
         </div>
         
@@ -73,7 +73,7 @@
           </div>
            
           <div style="text-align: center; padding-bottom: 10px; padding-top: 10px">
-            <h3 id="data">+5KW</h3>
+            <h3  id="sommetotale">+5KW</h3>
           </div>
         
         <div style="text-align: center">
@@ -96,14 +96,14 @@
            <div class="col-sm-7" style="margin-top: 150px">
 
             <div id="div4" style="display: inline-block;">
-            <h3 style="display: inline; padding-left: 20px ; padding-right: 20px">-5KW</h3>
+            <h3 id="moteur" style="display: inline; padding-left: 20px ; padding-right: 20px">-5KW</h3>
             <img src="img/fleche_rouge.ico" width="50px" height="50px" style="margin-right: 20px; ">
             <img id="electric" name="electric" value="Afficher" src="img/Transport_Engine.png" width="75px" onclick="Electric()" >
            </div>
             <br id="sans3"> <br id="sans3"> <br id="sans3">
 
             <div id="div5" style="display: inline-block;">
-            <h3 style="display: inline; padding-left: 20px; padding-right: 20px">-7KW</h3>
+            <h3 id="equipements" style="display: inline; padding-left: 20px; padding-right: 20px">-7KW</h3>
             <img src="img/fleche_rouge.ico" width="50px" height="50px" style="margin-right: 20px">
             <img id="moteur" name="moteur" value="Afficher" src="img/Transport_Engine.png" width="75px" onclick="Moteur()" >
             </div>
@@ -120,22 +120,5 @@
 
 </body>
 
-<script>
-	var dataDiv = document.getElementById('data');
-	function updateDisplay(event) {
-	  console.log(event.target.responseText)
-	  dataDiv.innerHTML = event.target.responseText;
-	  setTimeout(fetchDataFromRestApi, 1000);
-	}
-
-	function fetchDataFromRestApi()  {
-	  var oReq = new XMLHttpRequest();
-	  oReq.addEventListener("load", updateDisplay);
-	  oReq.open("GET", "/signalk/v1/api/vessels/self/environment/depth/belowTransducer/value");
-	  oReq.send();
-	}
-
-	fetchDataFromRestApi();
-</script>
 
 </html>

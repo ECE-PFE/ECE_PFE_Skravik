@@ -291,6 +291,31 @@
 
 
 
+(function(){
+    var updateValues = function() {
+    var xhr = new XMLHttpRequest(); 
+    xhr.open('GET', 'http://localhost/values');
+
+    xhr.onreadystatechange = function() {
+      if (xhr.status === 200) {
+        const json = xhr.responseText;
+        const obj = JSON.parse(json);
+        document.getElementById("panneausolaire").innerHTML = "panneau solaire : " + obj.data.sources.panneauxSolaires.production + " kW";
+        document.getElementById("eolienne").innerHTML = "eolienne : " + obj.data.sources.eolienne.production + " kW";
+        document.getElementById("hydrolienne").innerHTML = "hydrolienne : " + obj.data.sources.hydrolienne.production + " kW";
+        document.getElementById("moteur").innerHTML = "moteur : " + obj.data.consos.moteur.conso + " kW";
+        document.getElementById("equipements").innerHTML = "equipements : " + obj.data.consos.equipements.conso + " kW";
+        document.getElementById("sommesources").innerHTML = "somme sources : " + obj.data.sommes.sommeSources + " kW";
+        document.getElementById("sommeconsos").innerHTML = "somme consos : " + obj.data.sommes.sommeConsos + " kW";
+        document.getElementById("sommetotale").innerHTML = "somme totale : " + obj.data.sommes.sommeTotale + " kW";
+        }
+    };
+    xhr.send();
+   };
+
+   window.setInterval(updateValues, 1000);
+   updateValues();
+})();
 
 
 
