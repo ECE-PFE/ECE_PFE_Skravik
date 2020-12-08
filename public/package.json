@@ -1,0 +1,9 @@
+{
+  "name": "@signalk/skravik",
+  "version": "0.1",
+  "description": "Skravik interface",
+  "main": "index.html",
+  "keywords": [
+    "signalk-webapp"
+  ]
+}
