@@ -14,30 +14,30 @@ def getParams(self,paramList):
 
     return [True] + valuesList
 
-def a():
-    return np.random.randint(0,10)
+def rnd(min, max):
+    return np.random.randint(min, max+1)
 
 def values(self):
     #Productions
-    panneauxSolaires={"production": a(),
-                      "inclinaison": a(),
-                      "rendement": a(),
-                      "ensoleillement": a()}
+    panneauxSolaires={"production": rnd(0,5),#KW
+                      "inclinaison": rnd(30,45),#°
+                      "rendement": rnd(5,20),#%
+                      "ensoleillement": rnd(60,80)}#%
 
-    hydrolienne={"production": a(),
-                 "vitesse": a(),
-                 "temperature": a()}
+    hydrolienne={"production": rnd(0,5),#KW
+                 "vitesse": rnd(15,40),#km/h
+                 "temperature": rnd(17,25)}#°C
 
-    eolienne={"production": a(),
-              "vitesse": a(),
-              "temperature": a()}
+    eolienne={"production": rnd(0,10),#KW
+              "vitesse": rnd(15,45),#km/h
+              "temperature": rnd(17,25)}#°C
 
     #Consommations
-    moteur={"conso": -a(),
-            "vitesse": a()}
+    moteur={"conso": -rnd(5,15),#KW
+            "vitesse": rnd(10,20)}#km/h
 
-    equipements={"conso": -a(),
-                "duree": a()}
+    equipements={"conso": -rnd(0,5),#KW
+                "duree": rnd(7,10)}#h
 
     #Combinaisons des elements
     sources={"panneauxSolaires": panneauxSolaires,
