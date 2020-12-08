@@ -24,13 +24,13 @@ def values(self):
                       "rendement": rnd(5,20),#%
                       "ensoleillement": rnd(60,80)}#%
 
-    hydrolienne={"production": rnd(0,5),#KW
-                 "vitesse": rnd(15,40),#km/h
-                 "temperature": rnd(17,25)}#°C
+    hydroliennes={"production": rnd(0,5),#KW
+                  "vitesse": rnd(15,40),#km/h
+                  "temperature": rnd(17,25)}#°C
 
-    eolienne={"production": rnd(0,10),#KW
-              "vitesse": rnd(15,45),#km/h
-              "temperature": rnd(17,25)}#°C
+    eoliennes={"production": rnd(0,10),#KW
+               "vitesse": rnd(15,45),#km/h
+               "temperature": rnd(17,25)}#°C
 
     #Consommations
     moteur={"conso": -rnd(5,15),#KW
@@ -41,14 +41,14 @@ def values(self):
 
     #Combinaisons des elements
     sources={"panneauxSolaires": panneauxSolaires,
-             "hydrolienne": hydrolienne,
-             "eolienne": eolienne}
+             "hydroliennes": hydroliennes,
+             "eoliennes": eoliennes}
 
     consos={"moteur": moteur,
             "equipements": equipements}
 
     #Sommes
-    sommeSources = panneauxSolaires["production"] + hydrolienne["production"] + eolienne["production"]
+    sommeSources = panneauxSolaires["production"] + hydroliennes["production"] + eoliennes["production"]
 
     sommeConsos = moteur["conso"] + equipements["conso"]
 
