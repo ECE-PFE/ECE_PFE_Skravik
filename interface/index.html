@@ -12,12 +12,12 @@
    </head>
    <body>
       <div class="w3-container page" id="PageMenu">
-         <h2>Skravik</h2>
+         <img src="img/skravik_logo.png" style="height:100px">
          <div class="w3-col">
             <div class="w3-col w3-container" style="width:5%"></div>
             <div class="w3-col w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green" style="width:30%">
                <p>Panneaux Solaires</p>
-               <div class="w3-row" onclick="PagePanneauxSolaires()">                  
+               <div class="w3-row" style="cursor:pointer;" onclick="show('PagePanneauxSolaires');">
                   <div class="w3-half">
                      <img src="img/panneaux_solaire.png" style="width:75px">
                   </div>
@@ -26,7 +26,7 @@
                   </div>
                </div>
                <p>Eoliennes</p>
-               <div class="w3-row" onclick="PageEoliennes()">                  
+               <div class="w3-row" style="cursor:pointer;" onclick="show('PageEoliennes');">               
                   <div class="w3-half">
                      <img src="img/eolienne.png" style="width:75px">
                   </div>
@@ -35,7 +35,7 @@
                   </div>
                </div>
                <p>Hydroliennes</p>
-               <div class="w3-row" onclick="PageHydroliennes()">
+               <div class="w3-row" style="cursor:pointer;" onclick="show('PageHydroliennes');">
                   <div class="w3-half">
                      <img src="img/hydrolienne.png" style="width:75px">
                   </div>
@@ -72,7 +72,7 @@
             </div>
             <div class="w3-col w3-container w3-border w3-round-xlarge w3-pale-red w3-border-red" style="width:30%">
                <p>Moteur</p>
-               <div class="w3-row" onclick="PageMoteur()">                  
+               <div class="w3-row" style="cursor:pointer;" onclick="show('PageMoteur');">             
                   <div class="w3-half">
                      <img src="img/moteur.png" style="width:75px">
                   </div>
@@ -81,7 +81,7 @@
                   </div>
                </div>
                <p>Equipements</p>
-               <div class="w3-row" onclick="PageEquipements()">                  
+               <div class="w3-row" style="cursor:pointer;" onclick="show('PageEquipements');">                 
                   <div class="w3-half">
                      <img src="img/tablette.png" style="width:75px">
                   </div>
@@ -116,28 +116,61 @@
       </div>
 
       <div id="PagePanneauxSolaires" class="page" style="display:none">
-      	<p>Panneaux Solaires</p>
-        <img src="img/panneaux_solaire.png" onclick="show('PageMenu');">
+         <div class="w3-col">
+            <div class="w3-col w3-container" style="width:20%">
+               <img src="img/return.png" style="height:50px;cursor:pointer;" onclick="show('PageMenu');">
+            </div>
+            <div class="w3-col w3-container" style="width:60%">
+               <h1>Panneaux solaires</h1>
+            </div>
+            <div class="w3-col w3-container" style="width:20%">
+               <img src="img/skravik_logo.png" style="height:50px">
+            </div>
+         </div>
+      </br>
+         <div class="w3-col">
+            <div class="w3-col w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green" style="width:20%">
+               <p>Panneau solaire 1</p>
+               <img src="img/panneaux_solaire.png" style="width:75px">
+            </div>
+            <div class="w3-col w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green" style="width:20%">
+               <p>Panneau solaire 2</p>
+               <img src="img/panneaux_solaire.png" style="width:75px">
+            </div>
+            <div class="w3-col w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green" style="width:20%">
+               <p>Panneau solaire 3</p>
+               <img src="img/panneaux_solaire.png" style="width:75px">
+            </div>
+            <div class="w3-col w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green" style="width:20%">
+               <p>Panneau solaire 4</p>
+               <img src="img/panneaux_solaire.png" style="width:75px">
+            </div>
+            <div class="w3-col w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green" style="width:20%">
+               <p>Panneau solaire 5</p>
+               <img src="img/panneaux_solaire.png" style="width:75px">
+            </div>
+         </div>
+         
       </div>
 
       <div id="PageEoliennes" class="page" style="display:none">
       	<p>Eoliennes</p>
-        <img src="img/eolienne.png" onclick="show('PageMenu');">
+         <img src="img/eolienne.png" onclick="show('PageMenu');">
       </div>
 
       <div id="PageHydroliennes" class="page" style="display:none">
       	<p>Hydroliennes</p>
-        <img src="img/hydrolienne.png" onclick="show('PageMenu');">
+         <img src="img/hydrolienne.png" onclick="show('PageMenu');">
       </div>
 
       <div id="PageMoteur" class="page" style="display:none">
       	<p>Moteur</p>
-        <img src="img/moteur.png" onclick="show('PageMenu');">
+         <img src="img/moteur.png" onclick="show('PageMenu');">
       </div>
 
       <div id="PageEquipements" class="page" style="display:none">
       	<p>Equipements</p>
-        <img src="img/tablette.png" onclick="show('PageMenu');">
+         <img src="img/tablette.png" onclick="show('PageMenu');">
       </div>
    </body>
 </html>

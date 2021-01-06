@@ -1,9 +1,3 @@
-function PagePanneauxSolaires() {show('PagePanneauxSolaires');}
-function PageEoliennes() {show('PageEoliennes');}
-function PageHydroliennes() {show('PageHydroliennes');}
-function PageMoteur() {show('PageMoteur');}
-function PageEquipements() {show('PageEquipements');}
-
 function show(elementID) {
    // try to find the requested page and alert if it's not found
    var ele = document.getElementById(elementID);
