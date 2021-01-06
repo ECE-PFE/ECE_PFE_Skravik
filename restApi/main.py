@@ -1,5 +1,5 @@
-from lib import socketserver
-from lib.server import BaseHTTPRequestHandler
+import socketserver
+from http.server import BaseHTTPRequestHandler,HTTPServer
 from urllib.parse import parse_qs
 import json
 import cgi

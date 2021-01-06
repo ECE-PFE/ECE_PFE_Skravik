@@ -7,7 +7,15 @@
     var hydro = document.getElementById('hydro');     
     var div1 = document.getElementById('div1');   
     var newElement = document.createElement('div');
+    //logo
+    var rectangle_base = document.getElementById('rectangle_base');
+    var rectangle_fleche= document.getElementById('rectangle_fleche');
+    var arrow_box= document.getElementById('arrow_box');
+    var rectangle_fleche2= document.getElementById('rectangle_fleche2');
+    var rectangle_fleche3= document.getElementById('rectangle_fleche3');
+
     newElement.style.marginTop = "10px";
+
 
     if (panneaux_solaire.getAttribute('value')=="Afficher1")
     {
@@ -41,20 +49,29 @@
       if(eolienne.getAttribute('value')=="Afficher2" && hydro.getAttribute('value')=="Afficher3" )
       {
         console.log("il y a que le détail du premier")
-        //triple_fleche.style.display="none";
-        triple_fleche.setAttribute('src',"img/triple_fleche_verte_1.png")
-        triple_fleche.setAttribute('height',"380px")
+        rectangle_base.style.height = "320px";
+        rectangle_fleche.style.top = "-328px"
+        arrow_box.style.top = "-324.5px";
+        rectangle_fleche2.style.top ="-160px";
 
       }
 
       else if(eolienne.getAttribute('value')=="Cacher2" && hydro.getAttribute('value')=="Afficher3")
       {
           console.log("il y a que le détail du premier et du deuxieme")
+          rectangle_base.style.height = "355px";
+          rectangle_fleche.style.top = "-363px";
+          arrow_box.style.top = "-359.5px";
+          rectangle_fleche2.style.top ="-190px";
       }
 
        else if(eolienne.getAttribute('value')=="Afficher2" && hydro.getAttribute('value')=="Cacher3")
       {
           console.log("il y a que le détail du premier et du troisieme")
+          rectangle_base.style.height = "320px";
+          rectangle_fleche.style.top = "-328px"
+          arrow_box.style.top = "-324.5px";
+          rectangle_fleche2.style.top ="-160px";
       }
 
       else if(eolienne.getAttribute('value')=="Cacher2" && hydro.getAttribute('value')=="Cacher3")
@@ -62,6 +79,10 @@
         //triple_fleche.setAttribute('src',"img/triple_fleche_verte_123.png")
         //triple_fleche.setAttribute('height',"450px")
         console.log("il y a que le détail de tout")
+        rectangle_base.style.height = "355px";
+        rectangle_fleche.style.top = "-363px";
+        arrow_box.style.top = "-359.5px";
+        rectangle_fleche2.style.top ="-190px";
       }
 
       }
@@ -75,25 +96,40 @@
 
      if(eolienne.getAttribute('value')=="Afficher2" && hydro.getAttribute('value')=="Afficher3" )
       {
-        console.log("il y a R")
-        triple_fleche.setAttribute('src',"img/test7.png")
-        triple_fleche.setAttribute('height',"300px")
+        console.log("il y a R1")
+        rectangle_base.style.height = "265px";
+        rectangle_fleche.style.top = "-273px"
+        arrow_box.style.top = "-269.5px";
+        rectangle_fleche2.style.top ="-160px";
+
+
 
       }
 
       else if(eolienne.getAttribute('value')=="Cacher2" && hydro.getAttribute('value')=="Afficher3")
       {
           console.log("il y a que le détail du deuxieme")
-      }
+          rectangle_base.style.height = "295px";
+          rectangle_fleche.style.top = "-303px"
+          arrow_box.style.top = "-299.5px";
+          rectangle_fleche2.style.top ="-190px";      }
 
        else if(eolienne.getAttribute('value')=="Afficher2" && hydro.getAttribute('value')=="Cacher3")
       {
           console.log("il y a que le détail du troisieme")
+          rectangle_base.style.height = "265px";
+        rectangle_fleche.style.top = "-273px"
+        arrow_box.style.top = "-269.5px";
+        rectangle_fleche2.style.top ="-160px";
       }
 
       else if(eolienne.getAttribute('value')=="Cacher2" && hydro.getAttribute('value')=="Cacher3")
       {
         console.log("il y a que le détail du deuxieme et du troisieme")
+        rectangle_base.style.height = "295px";
+        rectangle_fleche.style.top = "-303px"
+        arrow_box.style.top = "-299.5px";
+        rectangle_fleche2.style.top ="-190px";
       }
 
 
@@ -135,16 +171,32 @@
       if(panneaux_solaire.getAttribute('value')=="Afficher1" && hydro.getAttribute('value')=="Afficher3" )
       {
         console.log("il y a que le détail du deuxieme")
+        rectangle_base.style.height = "295px";
+        rectangle_fleche.style.top = "-303px"
+        arrow_box.style.top = "-299.5px";
+        rectangle_fleche2.style.top ="-190px";
+
       }
 
       else if(panneaux_solaire.getAttribute('value')=="Cacher1" && hydro.getAttribute('value')=="Afficher3")
       {
           console.log("il y a que le détail du premier et du deuxieme")
+          rectangle_base.style.height = "355px";
+          rectangle_fleche.style.top = "-363px";
+          arrow_box.style.top = "-359.5px";
+          rectangle_fleche2.style.top ="-190px";
+
+
+
       }
 
        else if(panneaux_solaire.getAttribute('value')=="Afficher1" && hydro.getAttribute('value')=="Cacher3")
       {
           console.log("il y a que le détail du deuxieme et du troisieme")
+          rectangle_base.style.height = "295px";
+          rectangle_fleche.style.top = "-303px"
+          arrow_box.style.top = "-299.5px";
+          rectangle_fleche2.style.top ="-190px";
       }
 
       else if(panneaux_solaire.getAttribute('value')=="Cacher1" && hydro.getAttribute('value')=="Cacher3")
@@ -152,6 +204,10 @@
         //triple_fleche.setAttribute('src',"img/triple_fleche_verte_123.png")
         //triple_fleche.setAttribute('height',"450px")
         console.log("il y a que le détail de tout")
+        rectangle_base.style.height = "355px";
+        rectangle_fleche.style.top = "-363px";
+        arrow_box.style.top = "-359.5px";
+        rectangle_fleche2.style.top ="-190px";
       }
 
 
@@ -166,21 +222,39 @@
      if(panneaux_solaire.getAttribute('value')=="Afficher1" && hydro.getAttribute('value')=="Afficher3" )
       {
         console.log("il y a R")
+        rectangle_base.style.height = "265px";
+        rectangle_fleche.style.top = "-273px"
+        arrow_box.style.top = "-269.5px";
+        rectangle_fleche2.style.top ="-160px";
+
       }
 
       else if(panneaux_solaire.getAttribute('value')=="Cacher1" && hydro.getAttribute('value')=="Afficher3")
       {
           console.log("il y a que le détail du premier")
+          rectangle_base.style.height = "320px";
+          rectangle_fleche.style.top = "-328px"
+          arrow_box.style.top = "-324.5px";
+          rectangle_fleche2.style.top ="-160px";
       }
 
        else if(panneaux_solaire.getAttribute('value')=="Afficher1" && hydro.getAttribute('value')=="Cacher3")
       {
           console.log("il y a que le détail du troisieme")
+        rectangle_base.style.height = "265px";
+        rectangle_fleche.style.top = "-273px"
+        arrow_box.style.top = "-269.5px";
+        rectangle_fleche2.style.top ="-160px";
+
       }
 
       else if(panneaux_solaire.getAttribute('value')=="Cacher1" && hydro.getAttribute('value')=="Cacher3")
       {
         console.log("il y a que le détail du premier et du troisieme")
+        rectangle_base.style.height = "320px";
+        rectangle_fleche.style.top = "-328px"
+        arrow_box.style.top = "-324.5px";
+        rectangle_fleche2.style.top ="-160px";
       }
 
 
@@ -215,16 +289,29 @@
       if(panneaux_solaire.getAttribute('value')=="Afficher1" && eolienne.getAttribute('value')=="Afficher2" )
       {
         console.log("il y a que le détail du troisieme")
+        rectangle_base.style.height = "265px";
+        rectangle_fleche.style.top = "-273px"
+        arrow_box.style.top = "-269.5px";
+        rectangle_fleche2.style.top ="-160px";
+
       }
 
       else if(panneaux_solaire.getAttribute('value')=="Cacher1" && eolienne.getAttribute('value')=="Afficher2")
       {
           console.log("il y a que le détail du premier et du troisieme")
+          rectangle_base.style.height = "320px";
+          rectangle_fleche.style.top = "-328px"
+          arrow_box.style.top = "-324.5px";
+          rectangle_fleche2.style.top ="-160px";
       }
 
        else if(panneaux_solaire.getAttribute('value')=="Afficher1" && eolienne.getAttribute('value')=="Cacher2")
       {
           console.log("il y a que le détail du deuxieme et du troisieme")
+          rectangle_base.style.height = "295px";
+          rectangle_fleche.style.top = "-303px"
+          arrow_box.style.top = "-299.5px";
+          rectangle_fleche2.style.top ="-190px";
       }
 
       else if(panneaux_solaire.getAttribute('value')=="Cacher1" && eolienne.getAttribute('value')=="Cacher2")
@@ -232,6 +319,10 @@
         //triple_fleche.setAttribute('src',"img/triple_fleche_verte_123.png")
         //triple_fleche.setAttribute('height',"460px")
         console.log("il y a que le détail de tout")
+        rectangle_base.style.height = "355px";
+        rectangle_fleche.style.top = "-363px";
+        arrow_box.style.top = "-359.5px";
+        rectangle_fleche2.style.top ="-190px";
       }
 
 
@@ -246,21 +337,38 @@
       if(panneaux_solaire.getAttribute('value')=="Afficher1" && eolienne.getAttribute('value')=="Afficher2" )
       {
         console.log("il y a R")
+        rectangle_base.style.height = "265px";
+        rectangle_fleche.style.top = "-273px"
+        arrow_box.style.top = "-269.5px";
+        rectangle_fleche2.style.top ="-160px";
+
       }
 
       else if(panneaux_solaire.getAttribute('value')=="Cacher1" && eolienne.getAttribute('value')=="Afficher2")
       {
           console.log("il y a que le détail du premier")
+          rectangle_base.style.height = "320px";
+          rectangle_fleche.style.top = "-328px"
+          arrow_box.style.top = "-324.5px";
+          rectangle_fleche2.style.top ="-160px";
       }
 
        else if(panneaux_solaire.getAttribute('value')=="Afficher1" && eolienne.getAttribute('value')=="Cacher2")
       {
           console.log("il y a que le détail du deuxieme ")
+          rectangle_base.style.height = "295px";
+          rectangle_fleche.style.top = "-303px"
+          arrow_box.style.top = "-299.5px";
+          rectangle_fleche2.style.top ="-190px";
       }
 
       else if(panneaux_solaire.getAttribute('value')=="Cacher1" && eolienne.getAttribute('value')=="Cacher2")
       {
         console.log("il y a que le détail du premier et du deuxieme")
+        rectangle_base.style.height = "355px";
+        rectangle_fleche.style.top = "-363px";
+        arrow_box.style.top = "-359.5px";
+        rectangle_fleche2.style.top ="-190px";
       }
 
     }
@@ -372,20 +480,7 @@
         
         }
 
-
-
-
-
-
-
-
-
-        
-
         document.getElementById("panneausolaire").innerHTML = obj.data.sources.panneauxSolaires.production + " kW";
-
-        
-
         document.getElementById("eoliennes").innerHTML = obj.data.sources.eoliennes.production + " kW";
         document.getElementById("hydroliennes").innerHTML = obj.data.sources.hydroliennes.production + " kW";
         document.getElementById("moteur").innerHTML = obj.data.consos.moteur.conso + " kW";
