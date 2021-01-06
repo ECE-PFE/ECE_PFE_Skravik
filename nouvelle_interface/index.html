@@ -11,13 +11,13 @@
       </style>
    </head>
    <body>
-      <div class="w3-container">
+      <div class="w3-container page" id="PageMenu">
          <h2>Skravik</h2>
          <div class="w3-col">
             <div class="w3-col w3-container" style="width:5%"></div>
             <div class="w3-col w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green" style="width:30%">
                <p>Panneaux Solaires</p>
-               <div class="w3-row" onclick="panneauxSolairesPage()">                  
+               <div class="w3-row" onclick="PagePanneauxSolaires()">                  
                   <div class="w3-half">
                      <img src="img/panneaux_solaire.png" style="width:75px">
                   </div>
@@ -26,7 +26,7 @@
                   </div>
                </div>
                <p>Eoliennes</p>
-               <div class="w3-row" onclick="eoliennesPage()">                  
+               <div class="w3-row" onclick="PageEoliennes()">                  
                   <div class="w3-half">
                      <img src="img/eolienne.png" style="width:75px">
                   </div>
@@ -35,7 +35,7 @@
                   </div>
                </div>
                <p>Hydroliennes</p>
-               <div class="w3-row" onclick="hydroliennesPage()">
+               <div class="w3-row" onclick="PageHydroliennes()">
                   <div class="w3-half">
                      <img src="img/hydrolienne.png" style="width:75px">
                   </div>
@@ -71,15 +71,25 @@
                </div>
             </div>
             <div class="w3-col w3-container w3-border w3-round-xlarge w3-pale-red w3-border-red" style="width:30%">
-               <p>Consos1</p>
-               <p>Consos2</p>
-               <p>Consos2</p>
-               <p>Consos2</p>
-               <p>Consos2</p>
-               <p>Consos2</p>
-               <p>Consos2</p>
-               <p>Consos2</p>
-               <p>Consos2</p>
+               <p>Moteur</p>
+               <div class="w3-row" onclick="PageMoteur()">                  
+                  <div class="w3-half">
+                     <img src="img/moteur.png" style="width:75px">
+                  </div>
+                  <div class="w3-half w3-container">
+                     <p id="moteur" style="margin-left:10px">+0KW</p>
+                  </div>
+               </div>
+               <p>Equipements</p>
+               <div class="w3-row" onclick="PageEquipements()">                  
+                  <div class="w3-half">
+                     <img src="img/tablette.png" style="width:75px">
+                  </div>
+                  <div class="w3-half w3-container">
+                     <p id="equipements" style="margin-left:10px">+0KW</p>
+                  </div>
+               </div>
+               </br>
             </div>
             <div class="w3-col w3-container" style="width:5%"></div>
          </div>
@@ -100,6 +110,31 @@
             </div>
             <div class="w3-third w3-container"></div>
          </div>
+      </div>
+
+      <div id="PagePanneauxSolaires" class="page" style="display:none">
+      	<p>Panneaux Solaires</p>
+        <img src="img/panneaux_solaire.png" onclick="show('PageMenu');">
+      </div>
+
+      <div id="PageEoliennes" class="page" style="display:none">
+      	<p>Eoliennes</p>
+        <img src="img/eolienne.png" onclick="show('PageMenu');">
+      </div>
+
+      <div id="PageHydroliennes" class="page" style="display:none">
+      	<p>Hydroliennes</p>
+        <img src="img/hydrolienne.png" onclick="show('PageMenu');">
+      </div>
+
+      <div id="PageMoteur" class="page" style="display:none">
+      	<p>Moteur</p>
+        <img src="img/moteur.png" onclick="show('PageMenu');">
+      </div>
+
+      <div id="PageEquipements" class="page" style="display:none">
+      	<p>Equipements</p>
+        <img src="img/tablette.png" onclick="show('PageMenu');">
       </div>
    </body>
 </html>
