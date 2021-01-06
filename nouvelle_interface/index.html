@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
-   <title>Skravik</title>
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
    <head>
+      <title>Skravik</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+      <script type="text/javascript" src="script.js"></script>
       <style>
-         p {text-align: left; vertical-align: text-bottom;}
-         div {text-align: center; vertical-align: text-bottom;}
+         p {text-align: center; vertical-align: middle;}
+         div {text-align: center; vertical-align: middle;}
       </style>
    </head>
    <body>
@@ -15,15 +16,34 @@
          <div class="w3-col">
             <div class="w3-col w3-container" style="width:5%"></div>
             <div class="w3-col w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green" style="width:30%">
-               <p>Sources1</p>
-               <p>Sources2</p>
-               <p>Sources2</p>
-               <p>Sources2</p>
-               <p>Sources2</p>
-               <p>Sources2</p>
-               <p>Sources2</p>
-               <p>Sources2</p>
-               <p>Sources2</p>
+               <p>Panneaux Solaires</p>
+               <div class="w3-row" onclick="panneauxSolairesPage()">                  
+                  <div class="w3-half">
+                     <img src="img/panneaux_solaire.png" style="width:75px">
+                  </div>
+                  <div class="w3-half w3-container">
+                     <p id="panneauxsolaires" style="margin-left:10px">+0KW</p>
+                  </div>
+               </div>
+               <p>Eoliennes</p>
+               <div class="w3-row" onclick="eoliennesPage()">                  
+                  <div class="w3-half">
+                     <img src="img/eolienne.png" style="width:75px">
+                  </div>
+                  <div class="w3-half w3-container">
+                     <p id="eoliennes" style="margin-left:10px">+0KW</p>
+                  </div>
+               </div>
+               <p>Hydroliennes</p>
+               <div class="w3-row" onclick="hydroliennesPage()">
+                  <div class="w3-half">
+                     <img src="img/hydrolienne.png" style="width:75px">
+                  </div>
+                  <div class="w3-half w3-container">
+                     <p id="hydroliennes" style="margin-left:10px">+0KW</p>
+                  </div>
+               </div>
+               </br>
             </div>
             <div class="w3-col w3-container" style="width:30%">
                <div class="w3-col">
@@ -66,17 +86,17 @@
          <div class="w3-col">
             <div class="w3-third w3-container"></div>
             <div class="w3-third w3-container w3-pale-blue w3-border w3-round-xlarge w3-border-blue">
-            	 <div class="w3-row" style="text-align: left">
-				  <div class="w3-third w3-container">
-				    <p>Batterie1</p>
-				  </div>
-				  <div class="w3-third w3-container">
-				    <p>Batterie2</p>
-				  </div>
-				  <div class="w3-third w3-container">
-				    <p>Batterie3</p>
-				  </div>
-				</div> 
+               <div class="w3-row" style="text-align: left">
+                  <div class="w3-third w3-container">
+                     <p>Batterie1</p>
+                  </div>
+                  <div class="w3-third w3-container">
+                     <p>Batterie2</p>
+                  </div>
+                  <div class="w3-third w3-container">
+                     <p>Batterie3</p>
+                  </div>
+               </div>
             </div>
             <div class="w3-third w3-container"></div>
          </div>
