@@ -38,7 +38,10 @@ function show(elementID) {
         document.getElementById("hydroliennes").innerHTML = "+" + obj.data.sources.hydroliennes.production + " kW";
         document.getElementById("moteur").innerHTML = obj.data.consos.moteur.conso + " kW";
         document.getElementById("equipements").innerHTML = obj.data.consos.equipements.conso + " kW";
-        
+        document.getElementById("sommeSources").innerHTML = obj.data.sommes.sommeSources + " kW";
+        document.getElementById("sommeConsos").innerHTML = obj.data.sommes.sommeConsos + " kW";
+        document.getElementById("sommeTotale").innerHTML = obj.data.sommes.sommeTotale + " kW";
+
       }
     };
     xhr.send();
