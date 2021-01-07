@@ -1,23 +1,9 @@
 import numpy as np
 
-def getParams(self,paramList):
-    valuesList=[None]*len(paramList)
-
-    for index, paramName in enumerate(paramList):
-        try:
-            value=self.params[paramName][0]
-            valuesList[index]=value
-        except:
-            msg="Parameter " + paramName + " is missing"
-            self.sendContent("fail", msg)
-            return [False] + valuesList
-
-    return [True] + valuesList
-
 def rnd(min, max):
     return np.random.randint(min, max+1)
 
-def values(self):
+def generateValues():
     #Productions
     panneauxSolaires={"production": rnd(0,5),#KW
                       "inclinaison": rnd(30,45),#°
@@ -64,7 +50,4 @@ def values(self):
               "consos": consos,
               "sommes": sommes}
 
-    try:
-        self.sendContent("success", response)
-    except:
-        self.sendContent("error", "Error during computation")
+    return response
