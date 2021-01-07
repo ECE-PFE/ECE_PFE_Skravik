@@ -4,84 +4,89 @@
 Raw data can be found at [http://localhost/values](http://localhost/values), and will contain this kind of json :
 ```
 {
-   'sources':{
-      'panneauSolaire1':{
-         'production':0,
-         'inclinaison':43,
-         'rendement':5,
-         'ensoleillement':64
+   "sources":{
+      "panneauSolaire1":{
+         "production":3,
+         "inclinaison":30,
+         "rendement":6,
+         "ensoleillement":68
       },
-      'panneauSolaire2':{
-         'production':4,
-         'inclinaison':44,
-         'rendement':10,
-         'ensoleillement':78
+      "panneauSolaire2":{
+         "production":5,
+         "inclinaison":30,
+         "rendement":9,
+         "ensoleillement":69
       },
-      'panneauSolaire3':{
-         'production':2,
-         'inclinaison':35,
-         'rendement':5,
-         'ensoleillement':66
+      "panneauSolaire3":{
+         "production":0,
+         "inclinaison":37,
+         "rendement":12,
+         "ensoleillement":71
       },
-      'panneauSolaire4':{
-         'production':4,
-         'inclinaison':44,
-         'rendement':18,
-         'ensoleillement':76
+      "panneauSolaire4":{
+         "production":3,
+         "inclinaison":34,
+         "rendement":10,
+         "ensoleillement":69
       },
-      'panneauSolaire5':{
-         'production':3,
-         'inclinaison':37,
-         'rendement':6,
-         'ensoleillement':71
+      "panneauSolaire5":{
+         "production":3,
+         "inclinaison":44,
+         "rendement":15,
+         "ensoleillement":64
       },
-      'panneauxSolaires':13,
-      'eolienne1':{
-         'production':2,
-         'vitesse':35,
-         'temperature':17
+      "panneauxSolaires":14,
+      "eolienne1":{
+         "production":1,
+         "vitesse":23,
+         "temperature":18
       },
-      'eolienne2':{
-         'production':2,
-         'vitesse':23,
-         'temperature':18
+      "eolienne2":{
+         "production":2,
+         "vitesse":18,
+         "temperature":25
       },
-      'eoliennes':4,
-      'hydrolienne1':{
-         'production':3,
-         'vitesse':32,
-         'temperature':18
+      "eoliennes":3,
+      "hydrolienne1":{
+         "production":1,
+         "vitesse":15,
+         "temperature":25
       },
-      'hydrolienne2':{
-         'production':4,
-         'vitesse':35,
-         'temperature':17
+      "hydrolienne2":{
+         "production":1,
+         "vitesse":35,
+         "temperature":18
       },
-      'hydroliennes':8,
-      'alternateur':{
-         'production':1,
-         'vitesse':22,
-         'temperature':17
+      "hydroliennes":2,
+      "alternateur":{
+         "production":3,
+         "vitesse":34,
+         "temperature":22
       },
-      'groupeElectrogene':{
-         'production':0,
-         'temperature':19
+      "groupeElectrogene":{
+         "production":5,
+         "temperature":17
       }
    },
-   'consos':{
-      'moteur':{
-         'conso':-6,
-         'vitesse':18
+   "consos":{
+      "moteur":{
+         "conso":-15,
+         "vitesse":17
       },
-      'equipements':{
-         'conso':-3,
-         'duree':8
+      "equipements":{
+         "conso":-1,
+         "duree":10
       }
    },
-   'sommes':{
-      'sommeSources':26,
-      'sommeConsos':-9,
-      'sommeTotale':17
+   "sommes":{
+      "sommeSources":27,
+      "sommeConsos":-16,
+      "sommeTotale":11
+   },
+   "batteries":{
+      "batterie1":80,
+      "batterie2":17,
+      "batterie3":52
    }
 }
 ```

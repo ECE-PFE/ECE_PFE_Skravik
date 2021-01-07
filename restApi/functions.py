@@ -66,6 +66,11 @@ def generateValues():
     equipements={"conso": -rnd(0,5),#KW
                 "duree": rnd(7,10)}#h
 
+    #Stockage
+    batteries={"batterie1": rnd(80,100),#%
+               "batterie2": rnd(15,25),#%
+               "batterie3": rnd(40,60)}#%
+
     #Combinaisons des elements
     sources={"panneauSolaire1": panneauSolaire1,
              "panneauSolaire2": panneauSolaire2,
@@ -100,6 +105,7 @@ def generateValues():
     #Construction de la réponse
     response={"sources": sources,
               "consos": consos,
-              "sommes": sommes}
+              "sommes": sommes,
+              "batteries":batteries}
 
     return response
