@@ -1,7 +1,10 @@
 import numpy as np
 
+def round(n):
+    return np.round(n*10)/10
+
 def rnd(min, max):
-    return np.random.randint(min, max+1)
+    return round(np.random.uniform(low=min, high=max))
 
 def generateValues():
     #Productions
@@ -30,7 +33,7 @@ def generateValues():
                       "rendement": rnd(5,20),#%
                       "ensoleillement": rnd(60,80)}#%
 
-    panneauxSolaires = panneauSolaire1["production"] + panneauSolaire2["production"] + panneauSolaire3["production"] + panneauSolaire4["production"] + panneauSolaire5["production"]
+    panneauxSolaires = round(panneauSolaire1["production"] + panneauSolaire2["production"] + panneauSolaire3["production"] + panneauSolaire4["production"] + panneauSolaire5["production"])
 
     eolienne1={"production": rnd(0,10),#KW
                "vitesse": rnd(15,45),#km/h
@@ -40,7 +43,7 @@ def generateValues():
                "vitesse": rnd(15,45),#km/h
                "temperature": rnd(17,25)}#°C
 
-    eoliennes = eolienne1["production"] + eolienne2["production"]
+    eoliennes = round(eolienne1["production"] + eolienne2["production"])
 
     hydrolienne1={"production": rnd(0,5),#KW
                   "vitesse": rnd(15,40),#km/h
@@ -50,7 +53,7 @@ def generateValues():
                   "vitesse": rnd(15,40),#km/h
                   "temperature": rnd(17,25)}#°C
 
-    hydroliennes = hydrolienne2["production"] + hydrolienne2["production"]
+    hydroliennes = round(hydrolienne2["production"] + hydrolienne2["production"])
 
     alternateur={"production": rnd(0,5),#KW
                  "vitesse": rnd(15,40),#tour/s
@@ -91,11 +94,11 @@ def generateValues():
             "equipements": equipements}
 
     #Sommes
-    sommeSources = panneauxSolaires + hydroliennes + eoliennes + alternateur["production"] + groupeElectrogene["production"]
+    sommeSources = round(panneauxSolaires + hydroliennes + eoliennes + alternateur["production"] + groupeElectrogene["production"])
 
-    sommeConsos = moteur["conso"] + equipements["conso"]
+    sommeConsos = round(moteur["conso"] + equipements["conso"])
 
-    sommeTotale = sommeSources + sommeConsos
+    sommeTotale = round(sommeSources + sommeConsos)
 
     #Combinaison des sommes
     sommes={"sommeSources": sommeSources,
