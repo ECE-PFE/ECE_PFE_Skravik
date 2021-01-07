@@ -1,18 +1,7 @@
-import socketserver
-from http.server import BaseHTTPRequestHandler,HTTPServer
-from urllib.parse import parse_qs
-import json
-import cgi
+from http.server import BaseHTTPRequestHandler
 from functions import *
-import numpy as np
-
-def getParams(uri):
-    if "?" in uri:
-        param=uri.split("?")
-        param=param[1]
-        param=parse_qs(param)
-        return param
-    return {}
+import socketserver
+import json
 
 class MyHandler(BaseHTTPRequestHandler):
     def log_message(self, format, *args):
@@ -31,15 +20,16 @@ class MyHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         if self.path == "/favicon.ico":
             return
-        if self.path == "/":
-            self.sendContent("success", {"msg":"Hello"})
-            return
 
         print("GET {}".format(self.path))
 
         if self.path.startswith('/values'):
-            self.params=getParams(self.path)
-            values(self)
+            response = generateValues()
+            try:
+                self.sendContent("success", response)
+            except:
+                self.sendContent("error", "Error during computation")
+                print("Error during computation")
 
 print("Listening...")
 httpd = socketserver.TCPServer(("", 80), MyHandler)
