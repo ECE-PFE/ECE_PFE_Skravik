@@ -60,6 +60,24 @@ function show(elementID) {
         document.getElementById("PSRendement4").innerHTML      = "Rendement : " + obj.data.sources.panneauSolaire4.rendement + " %";
         document.getElementById("PSEnsoleillement4").innerHTML = "Ensoleillement : " + obj.data.sources.panneauSolaire4.ensoleillement + " %";
 
+        //Page Eoliennes
+        document.getElementById("EOLProduction1").innerHTML     = "Production : " + obj.data.sources.eolienne1.production + " kW";
+        document.getElementById("EOLVitesse1").innerHTML    = "Vitesse : " + obj.data.sources.eolienne1.vitesse + " m/s";
+        document.getElementById("EOLTemperature1").innerHTML      = "Temperature : " + obj.data.sources.eolienne1.temperature + " °C";
+        
+        document.getElementById("EOLProduction2").innerHTML     = "Production : " + obj.data.sources.eolienne2.production + " kW";
+        document.getElementById("EOLVitesse2").innerHTML    = "Vitesse : " + obj.data.sources.eolienne2.vitesse + " m/s";
+        document.getElementById("EOLTemperature2").innerHTML      = "Temperature : " + obj.data.sources.eolienne2.temperature + " °C";
+
+        //Page Hydroliennes
+        document.getElementById("HYDProduction1").innerHTML     = "Production : " + obj.data.sources.hydrolienne1.production + " kW";
+        document.getElementById("HYDVitesse1").innerHTML    = "Vitesse : " + obj.data.sources.hydrolienne1.vitesse + " m/s";
+        document.getElementById("HYDTemperature1").innerHTML      = "Temperature : " + obj.data.sources.hydrolienne1.temperature + " °C";
+        
+        document.getElementById("HYDProduction2").innerHTML     = "Production : " + obj.data.sources.hydrolienne2.production + " kW";
+        document.getElementById("HYDVitesse2").innerHTML    = "Vitesse : " + obj.data.sources.hydrolienne2.vitesse + " m/s";
+        document.getElementById("HYDTemperature2").innerHTML      = "Temperature : " + obj.data.sources.hydrolienne2.temperature + " °C";
+
       }
     };
     xhr.send();
