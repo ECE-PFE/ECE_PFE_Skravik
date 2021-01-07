@@ -44,3 +44,54 @@ function show(elementID) {
   window.setInterval(updateValues, 1000);
   updateValues();
 })();
+
+
+
+
+ function panneauSolaire(detailId,Affiche,panneauxSolaire){
+    var panneaux_solaire = document.getElementById(panneauxSolaire);  
+    //var detail = document.getElementById(detailId);
+    var newElement = document.createElement('div');
+    if (panneauxSolaire.getAttribute('value')==Affiche)
+    {
+    var ligne1 = document.createElement('P');
+    var ligne2 = document.createElement('P');
+    var ligne3 = document.createElement('P');
+    var ligne4 = document.createElement('P');
+    ligne1.append("Ensoleillement:")
+    ligne2.append("Temperature:")
+    ligne3.append("Rendement:")
+    ligne4.append("Inclinaison:")
+    newElement.innerHTML += '<p id="panneau_solaire_ensoleillement">' + ligne1.textContent +'</p>' 
+    //+ '<p id="panneau_solaire_temperature">' + ligne2.textContent +'</p>' 
+    + '<p id="panneau_solaire_rendement">' + ligne3.textContent +'</p>' 
+    + '<p id="panneau_solaire_inclinaison">' + ligne4.textContent +'</p>'
+    detailId.appendChild(newElement)
+    panneauxSolaire.setAttribute("value","Cacher")
+    }
+      else 
+    {
+    var child = detailId.getElementsByTagName("div")[0]
+    detailId.removeChild(child)
+    panneauxSolaire.setAttribute("value",Affiche)
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
