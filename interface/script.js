@@ -49,7 +49,6 @@ function show(elementID) {
 
 
  function panneauSolaire(detailId,Affiche,panneauxSolaire){
-    var panneaux_solaire = document.getElementById(panneauxSolaire);  
     //var detail = document.getElementById(detailId);
     var newElement = document.createElement('div');
     if (panneauxSolaire.getAttribute('value')==Affiche)
@@ -74,6 +73,30 @@ function show(elementID) {
     var child = detailId.getElementsByTagName("div")[0]
     detailId.removeChild(child)
     panneauxSolaire.setAttribute("value",Affiche)
+    }
+  }
+
+  function Eolienne(detailId,Affiche,Eolienne){      
+    var newElement = document.createElement('div');
+
+    if (Eolienne.getAttribute('value')==Affiche)
+    {
+    var ligne1 = document.createElement('P');
+    var ligne2 = document.createElement('P');
+    ligne1.append("Vitesse:")
+    ligne2.append("Temperature:")
+    
+    newElement.innerHTML += '<p id="eolienne_vitesse">' + ligne1.textContent +'</p>' 
+    //+ '<p id="panneau_solaire_temperature">' + ligne2.textContent +'</p>' 
+    + '<p id="eolienne_temperature">' + ligne2.textContent +'</p>';
+      detailId.appendChild(newElement)
+      Eolienne.setAttribute("value","Cacher")
+    }
+      else 
+    {
+    var child = detailId.getElementsByTagName("div")[0]
+    detailId.removeChild(child)
+    Eolienne.setAttribute("value",Affiche)
     }
   }
 
