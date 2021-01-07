@@ -44,6 +44,24 @@
                      <p id="hydroliennes" style="margin-left:10px">+0KW</p>
                   </div>
                </div>
+               <p>Groupe eletrogène</p>
+               <div class="w3-row" style="cursor:pointer;" onclick="show('PageGroupeEletrogene');">               
+                  <div class="w3-half">
+                     <img src="img/groupe_eletrogene.png" style="width:75px">
+                  </div>
+                  <div class="w3-half w3-container">
+                     <p id="groupeEletrogene" style="margin-left:10px">+0KW</p>
+                  </div>
+               </div>
+               <p>Alternateur</p>
+               <div class="w3-row" style="cursor:pointer;" onclick="show('PageAlternateur');">               
+                  <div class="w3-half">
+                     <img src="img/alternateur.png" style="width:75px">
+                  </div>
+                  <div class="w3-half w3-container">
+                     <p id="alternateur" style="margin-left:10px">+0KW</p>
+                  </div>
+               </div>
                </br>
             </div>
             <div class="w3-col w3-container" style="width:30%">
@@ -128,7 +146,7 @@
                <img src="img/skravik_logo.png" style="height:50px">
             </div>
          </div>
-      </br>
+         </br>
          <div class="w3-col">
             <div id="detail" class="w3-col w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green" style="width:20%">
                <p>Panneau solaire 1</p>
@@ -153,16 +171,67 @@
          </div>
 
 
+
       </div>
 
       <div id="PageEoliennes" class="page" style="display:none">
-      	<p>Eoliennes</p>
-         <img src="img/eolienne.png" onclick="show('PageMenu');">
+         <div class="w3-col">
+            <div class="w3-col w3-container" style="width:20%">
+               <img src="img/return.png" style="height:50px;cursor:pointer;" onclick="show('PageMenu');">
+            </div>
+            <div class="w3-col w3-container" style="width:60%">
+               <h1>Eoliennes</h1>
+            </div>
+            <div class="w3-col w3-container" style="width:20%">
+               <img src="img/skravik_logo.png" style="height:50px">
+            </div>
+         </div>
+         </br>
+         <div class="w3-col">
+            <div class="w3-col w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green" style="width:20%">
+               <p>Eolienne 1</p>
+               <img src="img/eolienne.png" style="width:75px">
+            </div>
+            <div class="w3-col w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green" style="width:20%">
+               <p>Eolienne 2</p>
+               <img src="img/eolienne.png" style="width:75px">
+            </div>
+         </div>
       </div>
 
       <div id="PageHydroliennes" class="page" style="display:none">
-      	<p>Hydroliennes</p>
-         <img src="img/hydrolienne.png" onclick="show('PageMenu');">
+         <div class="w3-col">
+            <div class="w3-col w3-container" style="width:20%">
+               <img src="img/return.png" style="height:50px;cursor:pointer;" onclick="show('PageMenu');">
+            </div>
+            <div class="w3-col w3-container" style="width:60%">
+               <h1>Hydroliennes</h1>
+            </div>
+            <div class="w3-col w3-container" style="width:20%">
+               <img src="img/skravik_logo.png" style="height:50px">
+            </div>
+         </div>
+         </br>
+         <div class="w3-col">
+            <div class="w3-col w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green" style="width:20%">
+               <p>Hydrolienne 1</p>
+               <img src="img/hydrolienne.png" style="width:75px">
+            </div>
+            <div class="w3-col w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green" style="width:20%">
+               <p>Hydrolienne 2</p>
+               <img src="img/hydrolienne.png" style="width:75px">
+            </div>
+         </div>
+      </div>
+
+      <div id="PageGroupeEletrogene" class="page" style="display:none">
+         <p>Groupe Eletrogène</p>
+         <img src="img/groupe_eletrogene.png" onclick="show('PageMenu');">
+      </div>
+
+      <div id="PageAlternateur" class="page" style="display:none">
+         <p>Alternateur</p>
+         <img src="img/alternateur.png" onclick="show('PageMenu');">
       </div>
 
       <div id="PageMoteur" class="page" style="display:none">
