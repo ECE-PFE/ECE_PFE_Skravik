@@ -45,6 +45,21 @@ function show(elementID) {
         document.getElementById("PSRendement1").innerHTML      = "Rendement : " + obj.data.sources.panneauSolaire1.rendement + " %";
         document.getElementById("PSEnsoleillement1").innerHTML = "Ensoleillement : " + obj.data.sources.panneauSolaire1.ensoleillement + " %";
 
+        document.getElementById("PSProduction2").innerHTML     = "Production : " + obj.data.sources.panneauSolaire2.production + " kW";
+        document.getElementById("PSInclinaison2").innerHTML    = "Inclinaison : " + obj.data.sources.panneauSolaire2.inclinaison + " °";
+        document.getElementById("PSRendement2").innerHTML      = "Rendement : " + obj.data.sources.panneauSolaire2.rendement + " %";
+        document.getElementById("PSEnsoleillement2").innerHTML = "Ensoleillement : " + obj.data.sources.panneauSolaire2.ensoleillement + " %";
+
+        document.getElementById("PSProduction3").innerHTML     = "Production : " + obj.data.sources.panneauSolaire3.production + " kW";
+        document.getElementById("PSInclinaison3").innerHTML    = "Inclinaison : " + obj.data.sources.panneauSolaire3.inclinaison + " °";
+        document.getElementById("PSRendement3").innerHTML      = "Rendement : " + obj.data.sources.panneauSolaire3.rendement + " %";
+        document.getElementById("PSEnsoleillement3").innerHTML = "Ensoleillement : " + obj.data.sources.panneauSolaire3.ensoleillement + " %";
+
+        document.getElementById("PSProduction4").innerHTML     = "Production : " + obj.data.sources.panneauSolaire4.production + " kW";
+        document.getElementById("PSInclinaison4").innerHTML    = "Inclinaison : " + obj.data.sources.panneauSolaire4.inclinaison + " °";
+        document.getElementById("PSRendement4").innerHTML      = "Rendement : " + obj.data.sources.panneauSolaire4.rendement + " %";
+        document.getElementById("PSEnsoleillement4").innerHTML = "Ensoleillement : " + obj.data.sources.panneauSolaire4.ensoleillement + " %";
+
       }
     };
     xhr.send();
