@@ -124,6 +124,6 @@ function round(x) {
     xhr.send();
   };
 
-  window.setInterval(updateValues, 5000);
+  window.setInterval(updateValues, 2000);
   updateValues();
 })();
