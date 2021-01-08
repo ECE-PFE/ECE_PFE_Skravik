@@ -91,7 +91,7 @@ def generateValues():
     sommeSources = round(panneauxSolaires + hydroliennes + eoliennes + alternateur["production"] + groupeElectrogene["production"])
     sommeConsos  = round(moteur["conso"] + equipements["conso"]) #Valeur négative
     sommeTotale  = round(sommeSources + sommeConsos)
-
+    
     if sommeSources == 0:
       sourcesVersConsos    = 0.0
       batteriesVersConsos  = - sommeConsos

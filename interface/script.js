@@ -39,8 +39,8 @@ function round(x) {
           document.getElementById("alternateur").innerHTML      = "+" + round(obj.data.sources.alternateur.production) + " kW";
           document.getElementById("moteur").innerHTML           = round(obj.data.consos.moteur.conso) + " kW";
           document.getElementById("equipements").innerHTML      = round(obj.data.consos.equipements.conso) + " kW";
-          //document.getElementById("sommeSources").innerHTML     = round(obj.data.sommes.sommeSources) + " kW";
-          //document.getElementById("sommeConsos").innerHTML      = round(obj.data.sommes.sommeConsos) + " kW";
+          document.getElementById("sommeSources").innerHTML     = "Production totale : " + round(obj.data.sommes.sommeSources) + " kW";
+          document.getElementById("sommeConsos").innerHTML      = "Consommation totale : " + round(obj.data.sommes.sommeConsos) + " kW";
           //document.getElementById("sommeTotale").innerHTML      = round(obj.data.sommes.sommeTotale) + " kW";
           document.getElementById("batterie1").innerHTML = round(obj.data.batteries.batterie1) + " %";
           document.getElementById("batterie2").innerHTML = round(obj.data.batteries.batterie2) + " %";
@@ -124,6 +124,6 @@ function round(x) {
     xhr.send();
   };
 
-  window.setInterval(updateValues, 2000);
+  window.setInterval(updateValues, 5000);
   updateValues();
 })();
