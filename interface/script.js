@@ -82,6 +82,14 @@ function show(elementID) {
           document.getElementById("HYDVitesse2").innerHTML    = "Vitesse : " + obj.data.sources.hydrolienne2.vitesse + " m/s";
           document.getElementById("HYDTemperature2").innerHTML      = "Temperature : " + obj.data.sources.hydrolienne2.temperature + " °C";
 
+          //Page Groupe electrogene
+          document.getElementById("GREProduction1").innerHTML     = "Production : " + obj.data.sources.groupeElectrogene.production + " kW";
+          document.getElementById("GRETemperature1").innerHTML      = "Temperature : " + obj.data.sources.groupeElectrogene.temperature + " °C";
+          
+          //Page Alternateur
+          document.getElementById("ALTProduction1").innerHTML     = "Production : " + obj.data.sources.alternateur.production + " kW";
+          document.getElementById("ALTTemperature1").innerHTML      = "Temperature : " + obj.data.sources.alternateur.temperature + " °C";
+          
           console.log("Data updated successfully");
         }
       }
