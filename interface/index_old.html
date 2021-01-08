@@ -13,7 +13,7 @@
    <body>
       <div class="w3-container page" id="PageMenu">
          <img src="img/skravik_logo.png" style="height:100px">
-         <div class="w3-col" style="display: flex">
+         <div class="w3-col">
             <div class="w3-col w3-container" style="width:5%"></div>
             <div class="w3-col w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green" style="width:30%">
                <p><strong>Panneaux Solaires</strong></p>
@@ -63,14 +63,33 @@
                </div>
                </br>
             </div>
-            <div class="w3-col w3-container" style="width:60%;display:flex;flex-direction: column;justify-content:space-between;">
-               <div class="w3-row w3-container" style="display: flex;align-items:center">
-                  <div class="w3-col w3-container" style="width:40%">
+            <div class="w3-col w3-container" style="width:30%">
+               <div class="w3-col">
+                  <div class="w3-col" style="width:30%">
+                     <p id="sommeSources" style="display: inline">+0KW</p>
+                  </div>
+                  <div class="w3-col w3-container" style="width:40%"></div>
+                  <div class="w3-col" style="width:30%">
+                     <p id="sommeConsos" style="display: inline">-0KW</p>
+                  </div>
+               </div>
+               <div class="w3-col">
+                  <div class="w3-col" style="width:35%">
                      <img src="img/green_arrow_right.png" style="width:100%">
                   </div>
-                  <div class="w3-col w3-container" style="width:5%"></div>
-                  <div class="w3-col w3-container w3-border w3-round-xlarge w3-pale-red w3-border-red" style="width:55%">
-                     <p><strong>Moteur</strong></p>
+                  <div class="w3-col" style="width:30%">
+                     <p id="sommeTotale">+0KW</p>
+                  </div>
+                  <div class="w3-col" style="width:35%">
+                     <img src="img/red_arrow_left.png" style="width:100%">
+                  </div>
+               </div>
+               <div>
+                  <img src="img/blue_arrow_down.png" style="height:100%">
+               </div>
+            </div>
+            <div class="w3-col w3-container w3-border w3-round-xlarge w3-pale-red w3-border-red" style="width:30%">
+               <p><strong>Moteur</strong></p>
                <div class="w3-col" style="cursor:pointer;" onclick="show('PageMoteur');">             
                   <div class="w3-half">
                      <img src="img/moteur.png" style="width:75px">
@@ -88,19 +107,15 @@
                      <p id="equipements" style="margin-left:10px">-0KW</p>
                   </div>
                </div>
-                     </br>
-                  </div>
-               </div>
-               <div class="w3-row w3-container" style="margin-left: 40%;">
-                  <img src="img/blue_arrow_down.png" style="height:50%">
-               </div>
-               <div class="w3-row w3-container" style="display: flex;align-items:center">
-                  <div class="w3-col w3-container" style="width:40%">
-                     <img src="img/green_arrow_right.png" style="width:100%">
-                  </div>
-                  <div class="w3-col w3-container" style="width:5%"></div>
-                  <div class="w3-col w3-container w3-border w3-round-xlarge w3-pale-blue w3-border-blue" style="width:55%">
-                     <div class="w3-third w3-container">
+               </br>
+            </div>
+            <div class="w3-col w3-container" style="width:5%"></div>
+         </div>
+         <div class="w3-col">
+            <div class="w3-third w3-container"></div>
+            <div class="w3-third w3-container w3-pale-blue w3-border w3-round-xlarge w3-border-blue">
+               <div class="w3-col" style="text-align: left">
+                  <div class="w3-third w3-container">
                      <p><strong>Batterie1</strong></p>
                      <img src="img/batterie.png" style="width:75px">
                      </br>
@@ -118,15 +133,11 @@
                      </br>
                      <p id="batterie3">- %</p>
                   </div>
-                     </br>
-                  </div>
                </div>
             </div>
-            <div class="w3-col w3-container" style="width:5%"></div>
+            <div class="w3-third w3-container"></div>
          </div>
       </div>
-
-      
 
       <div id="PagePanneauxSolaires" class="page" style="display:none">
          <div class="w3-col">
@@ -264,12 +275,12 @@
       </div>
 
       <div id="PageMoteur" class="page" style="display:none">
-         <p>Moteur</p>
+      	<p>Moteur</p>
          <img src="img/moteur.png" onclick="show('PageMenu');">
       </div>
 
       <div id="PageEquipements" class="page" style="display:none">
-         <p>Equipements</p>
+      	<p>Equipements</p>
          <img src="img/tablette.png" onclick="show('PageMenu');">
       </div>
    </body>
