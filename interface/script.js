@@ -39,9 +39,12 @@ function show(elementID) {
           //document.getElementById("sommeSources").innerHTML     = obj.data.sommes.sommeSources + " kW";
           //document.getElementById("sommeConsos").innerHTML      = obj.data.sommes.sommeConsos + " kW";
           //document.getElementById("sommeTotale").innerHTML      = obj.data.sommes.sommeTotale + " kW";
-          document.getElementById("batterie1").innerHTML        = obj.data.batteries.batterie1 + " %";
-          document.getElementById("batterie2").innerHTML        = obj.data.batteries.batterie2 + " %";
-          document.getElementById("batterie3").innerHTML        = obj.data.batteries.batterie3 + " %";
+          document.getElementById("batterie1").innerHTML = obj.data.batteries.batterie1 + " %";
+          document.getElementById("batterie2").innerHTML = obj.data.batteries.batterie2 + " %";
+          document.getElementById("batterie3").innerHTML = obj.data.batteries.batterie3 + " %";
+          document.getElementById("sourcesVersConsos").innerHTML    = "+" + obj.data.transferts.sourcesVersConsos + " kW";
+          document.getElementById("batteriesVersConsos").innerHTML  = "+" + obj.data.transferts.batteriesVersConsos + " kW";
+          document.getElementById("sourcesVersBatteries").innerHTML = "+" + obj.data.transferts.sourcesVersBatteries + " kW";
 
           //Page panneaux solaires
           document.getElementById("PANProduction1").innerHTML     = "Production : " + obj.data.sources.panneauSolaire1.production + " kW";
@@ -97,6 +100,6 @@ function show(elementID) {
     xhr.send();
   };
 
-  window.setInterval(updateValues, 1000);
+  window.setInterval(updateValues, 5000);
   updateValues();
 })();
