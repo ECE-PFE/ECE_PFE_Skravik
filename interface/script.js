@@ -44,25 +44,25 @@ function show(elementID) {
           document.getElementById("batterie3").innerHTML        = obj.data.batteries.batterie3 + " %";
 
           //Page panneaux solaires
-          document.getElementById("PSProduction1").innerHTML     = "Production : " + obj.data.sources.panneauSolaire1.production + " kW";
-          document.getElementById("PSInclinaison1").innerHTML    = "Inclinaison : " + obj.data.sources.panneauSolaire1.inclinaison + " °";
-          document.getElementById("PSRendement1").innerHTML      = "Rendement : " + obj.data.sources.panneauSolaire1.rendement + " %";
-          document.getElementById("PSEnsoleillement1").innerHTML = "Ensoleillement : " + obj.data.sources.panneauSolaire1.ensoleillement + " %";
+          document.getElementById("PANProduction1").innerHTML     = "Production : " + obj.data.sources.panneauSolaire1.production + " kW";
+          document.getElementById("PANInclinaison1").innerHTML    = "Inclinaison : " + obj.data.sources.panneauSolaire1.inclinaison + " °";
+          document.getElementById("PANRendement1").innerHTML      = "Rendement : " + obj.data.sources.panneauSolaire1.rendement + " %";
+          document.getElementById("PANEnsoleillement1").innerHTML = "Ensoleillement : " + obj.data.sources.panneauSolaire1.ensoleillement + " %";
 
-          document.getElementById("PSProduction2").innerHTML     = "Production : " + obj.data.sources.panneauSolaire2.production + " kW";
-          document.getElementById("PSInclinaison2").innerHTML    = "Inclinaison : " + obj.data.sources.panneauSolaire2.inclinaison + " °";
-          document.getElementById("PSRendement2").innerHTML      = "Rendement : " + obj.data.sources.panneauSolaire2.rendement + " %";
-          document.getElementById("PSEnsoleillement2").innerHTML = "Ensoleillement : " + obj.data.sources.panneauSolaire2.ensoleillement + " %";
+          document.getElementById("PANProduction2").innerHTML     = "Production : " + obj.data.sources.panneauSolaire2.production + " kW";
+          document.getElementById("PANInclinaison2").innerHTML    = "Inclinaison : " + obj.data.sources.panneauSolaire2.inclinaison + " °";
+          document.getElementById("PANRendement2").innerHTML      = "Rendement : " + obj.data.sources.panneauSolaire2.rendement + " %";
+          document.getElementById("PANEnsoleillement2").innerHTML = "Ensoleillement : " + obj.data.sources.panneauSolaire2.ensoleillement + " %";
 
-          document.getElementById("PSProduction3").innerHTML     = "Production : " + obj.data.sources.panneauSolaire3.production + " kW";
-          document.getElementById("PSInclinaison3").innerHTML    = "Inclinaison : " + obj.data.sources.panneauSolaire3.inclinaison + " °";
-          document.getElementById("PSRendement3").innerHTML      = "Rendement : " + obj.data.sources.panneauSolaire3.rendement + " %";
-          document.getElementById("PSEnsoleillement3").innerHTML = "Ensoleillement : " + obj.data.sources.panneauSolaire3.ensoleillement + " %";
+          document.getElementById("PANProduction3").innerHTML     = "Production : " + obj.data.sources.panneauSolaire3.production + " kW";
+          document.getElementById("PANInclinaison3").innerHTML    = "Inclinaison : " + obj.data.sources.panneauSolaire3.inclinaison + " °";
+          document.getElementById("PANRendement3").innerHTML      = "Rendement : " + obj.data.sources.panneauSolaire3.rendement + " %";
+          document.getElementById("PANEnsoleillement3").innerHTML = "Ensoleillement : " + obj.data.sources.panneauSolaire3.ensoleillement + " %";
 
-          document.getElementById("PSProduction4").innerHTML     = "Production : " + obj.data.sources.panneauSolaire4.production + " kW";
-          document.getElementById("PSInclinaison4").innerHTML    = "Inclinaison : " + obj.data.sources.panneauSolaire4.inclinaison + " °";
-          document.getElementById("PSRendement4").innerHTML      = "Rendement : " + obj.data.sources.panneauSolaire4.rendement + " %";
-          document.getElementById("PSEnsoleillement4").innerHTML = "Ensoleillement : " + obj.data.sources.panneauSolaire4.ensoleillement + " %";
+          document.getElementById("PANProduction4").innerHTML     = "Production : " + obj.data.sources.panneauSolaire4.production + " kW";
+          document.getElementById("PANInclinaison4").innerHTML    = "Inclinaison : " + obj.data.sources.panneauSolaire4.inclinaison + " °";
+          document.getElementById("PANRendement4").innerHTML      = "Rendement : " + obj.data.sources.panneauSolaire4.rendement + " %";
+          document.getElementById("PANEnsoleillement4").innerHTML = "Ensoleillement : " + obj.data.sources.panneauSolaire4.ensoleillement + " %";
 
           //Page Eoliennes
           document.getElementById("EOLProduction1").innerHTML     = "Production : " + obj.data.sources.eolienne1.production + " kW";
