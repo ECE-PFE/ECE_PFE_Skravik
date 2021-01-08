@@ -36,9 +36,9 @@ function show(elementID) {
           document.getElementById("alternateur").innerHTML      = "+" + obj.data.sources.alternateur.production + " kW";
           document.getElementById("moteur").innerHTML           = obj.data.consos.moteur.conso + " kW";
           document.getElementById("equipements").innerHTML      = obj.data.consos.equipements.conso + " kW";
-          document.getElementById("sommeSources").innerHTML     = obj.data.sommes.sommeSources + " kW";
-          document.getElementById("sommeConsos").innerHTML      = obj.data.sommes.sommeConsos + " kW";
-          document.getElementById("sommeTotale").innerHTML      = obj.data.sommes.sommeTotale + " kW";
+          //document.getElementById("sommeSources").innerHTML     = obj.data.sommes.sommeSources + " kW";
+          //document.getElementById("sommeConsos").innerHTML      = obj.data.sommes.sommeConsos + " kW";
+          //document.getElementById("sommeTotale").innerHTML      = obj.data.sommes.sommeTotale + " kW";
           document.getElementById("batterie1").innerHTML        = obj.data.batteries.batterie1 + " %";
           document.getElementById("batterie2").innerHTML        = obj.data.batteries.batterie2 + " %";
           document.getElementById("batterie3").innerHTML        = obj.data.batteries.batterie3 + " %";
