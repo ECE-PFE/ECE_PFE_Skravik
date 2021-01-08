@@ -92,14 +92,18 @@ def generateValues():
     sommeConsos  = round(moteur["conso"] + equipements["conso"]) #Valeur négative
     sommeTotale  = round(sommeSources + sommeConsos)
 
-    if sommeSources > - sommeConsos:
+    if sommeSources == 0:
+      sourcesVersConsos    = 0.0
+      batteriesVersConsos  = - sommeConsos
+      sourcesVersBatteries = 0.0
+    elif sommeSources > - sommeConsos:
       sourcesVersConsos    = - sommeConsos
-      batteriesVersConsos  = 0
+      batteriesVersConsos  = 0.0
       sourcesVersBatteries = round(sommeSources + sommeConsos)
     else:
       sourcesVersConsos    = sommeSources
       batteriesVersConsos  = round(- sommeConsos - sommeSources)
-      sourcesVersBatteries = 0
+      sourcesVersBatteries = 0.0
 
     #Combinaison des sommes
     sommes={"sommeSources": sommeSources,
