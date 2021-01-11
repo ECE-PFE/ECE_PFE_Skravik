@@ -8,6 +8,10 @@
       <style>
          p {text-align: center; vertical-align: middle;}
          div {text-align: center; vertical-align: middle;}
+         footer {
+		    position: absolute;
+			top: 10px; right: 10px;
+		}
       </style>
    </head>
    <body>
@@ -129,6 +133,9 @@
             </div>
             <div class="w3-col w3-container" style="width:5%"></div>
          </div>
+	    <footer>
+	        <img src="img/settings.png" style="height:50px" onclick="show('PageSettings');">
+	    </footer>
       </div>
       <div id="PagePanneauxSolaires" class="page" style="display:none">
          <div class="w3-col">
@@ -309,6 +316,10 @@
       <div id="PageEquipements" class="page" style="display:none">
          <p>Equipements</p>
          <img src="img/tablette.png" onclick="show('PageMenu');">
+      </div>
+      <div id="PageSettings" class="page" style="display:none">
+         <p>Paramètres</p>
+         <img src="img/settings.png" onclick="show('PageMenu');">
       </div>
    </body>
 </html>
