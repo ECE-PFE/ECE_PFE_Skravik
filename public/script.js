@@ -132,11 +132,13 @@ function round(x) {
 //parametrage des valeurs par defaut
 var settingsTxt = ["Seuil 1", "Seuil 2"];
 
-var defaultValues = [50,50];
-defaultValues.forEach(function(val, index, array) {
-  var tmp = 'settingsVal' + index;
-  //localStorage.setItem(tmp, val); //faut pas lee faire si c'est deja parametré
-});
+if (localStorage.getItem("settingsVal0") === null) { // si pas deja initialisé
+  var defaultValues = [50,50];
+  defaultValues.forEach(function(val, index, array) {
+    var tmp = 'settingsVal' + index;
+    localStorage.setItem(tmp, val);
+  });
+}
 
 function updateSlider(slider) {
   var id = slider.id.replace( /^\D+/g, '');
