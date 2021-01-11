@@ -311,8 +311,26 @@
          <img src="img/tablette.png" onclick="show('PageMenu');">
       </div>
       <div id="PageSettings" class="page" style="display:none">
-         <p>Paramètres</p>
-         <img src="img/settings.png" onclick="show('PageMenu');">
+      	<div class="w3-col">
+            <div class="w3-col w3-container" style="width:20%">
+               <img src="img/return.png" style="height:50px;cursor:pointer;" onclick="show('PageMenu');">
+            </div>
+            <div class="w3-col w3-container" style="width:60%">
+               <h1>Paramètres</h1>
+            </div>
+            <div class="w3-col w3-container" style="width:20%">
+               <img src="img/skravik_logo.png" style="height:50px">
+            </div>
+         </div>
+         </br>
+         <div class="w3-col">
+            <div class="w3-col w3-container" style="width:40%"></div>
+            <div class="w3-col w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green" style="width:20%">
+               <div id="sliderAmount">Valeur : 50</div>
+               <input type="range" min="1" max="100" value="50" class="slider" onchange="updateSlider(this.value)">
+            </div>
+            <div class="w3-col w3-container" style="width:40%"></div>
+         </div>
       </div>
    </body>
 </html>
