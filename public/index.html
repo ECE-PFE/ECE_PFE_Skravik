@@ -127,7 +127,7 @@
             <div class="w3-col w3-container" style="width:5%"></div>
          </div>
 	    <footer>
-	        <img src="img/settings.png" style="height:50px;cursor:pointer;" onclick="show('PageSettings');">
+	        <img src="img/settings.png" style="height:50px;cursor:pointer;" onclick="show('PageSettings');pullSettings();">
 	    </footer>
       </div>
       <div id="PagePanneauxSolaires" class="page" style="display:none">
@@ -324,12 +324,18 @@
          </div>
          </br>
          <div class="w3-col">
-            <div class="w3-col w3-container" style="width:40%"></div>
-            <div class="w3-col w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green" style="width:20%">
-               <div id="sliderAmount">Valeur : 50</div>
-               <input type="range" min="1" max="100" value="50" class="slider" onchange="updateSlider(this.value)">
+            <div class="w3-col w3-container" style="width:30%"></div>
+            <div class="w3-col w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green" style="width:40%">
+               <div>
+                  <div id="sliderTxt0">Valeur1 : 50</div>
+                  <input id="slider0" type="range" min="0" max="100" class="slider" onchange="updateSlider(this)">
+               </div>
+               <div>
+                  <div id="sliderTxt1">Valeur2 : 30</div>
+                  <input id="slider1" type="range" min="0" max="100" class="slider" onchange="updateSlider(this)">
+               </div>
             </div>
-            <div class="w3-col w3-container" style="width:40%"></div>
+            <div class="w3-col w3-container" style="width:30%"></div>
          </div>
       </div>
    </body>

@@ -129,8 +129,32 @@ function round(x) {
 })();
 
 
-function updateSlider(slideAmount) {
-  var sliderDiv = document.getElementById("sliderAmount");
-  sliderDiv.innerHTML = slideAmount;
+//parametrage des valeurs par defaut
+var settingsTxt = ["Seuil 1", "Seuil 2"];
+
+var defaultValues = [50,50];
+defaultValues.forEach(function(val, index, array) {
+  var tmp = 'settingsVal' + index;
+  //localStorage.setItem(tmp, val); //faut pas lee faire si c'est deja parametré
+});
+
+function updateSlider(slider) {
+  var id = slider.id.replace( /^\D+/g, '');
+
+  document.getElementById("sliderTxt" + id).innerHTML = settingsTxt[id] + " : " + slider.value;
+  var tmp = 'settingsVal' + id;
+  localStorage.setItem(tmp, slider.value);
+
+  console.log(tmp + " <- " + slider.value + " (ecriture)");
 }
 
+function pullSettings() {
+  console.log("on recupere tout");
+  settingsTxt.forEach(function(name, index, array) {
+    var tmp = 'settingsVal' + index;
+    var val = localStorage.getItem(tmp);
+    console.log("settingsVal" + index + " : " + val + " (lecture)");
+    document.getElementById("sliderTxt" + index).innerHTML = name + " : " + val;
+    document.getElementById("slider" + index).value = val;
+  });
+}
