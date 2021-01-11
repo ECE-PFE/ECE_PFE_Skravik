@@ -2,7 +2,7 @@
   "name": "@signalk/skravik",
   "version": "0.1",
   "description": "Skravik interface",
-  "main": "interface/index.html",
+  "main": "public/index.html",
   "keywords": [
     "signalk-webapp"
   ]
