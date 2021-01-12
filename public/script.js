@@ -93,29 +93,31 @@ function round(x) {
 
           //Page Eoliennes
           document.getElementById("EOLProduction1").innerHTML     = "Production : " + round(obj.data.sources.eolienne1.production) + " kW";
-          document.getElementById("EOLVitesse1").innerHTML    = "Vitesse : " + round(obj.data.sources.eolienne1.vitesse) + " m/s";
-          document.getElementById("EOLTemperature1").innerHTML      = "Temperature : " + round(obj.data.sources.eolienne1.temperature) + " °C";
+          document.getElementById("EOLVitesse1").innerHTML        = "Vitesse : " + round(obj.data.sources.eolienne1.vitesse) + " m/s";
+          document.getElementById("EOLTemperature1").innerHTML    = "Temperature : " + round(obj.data.sources.eolienne1.temperature) + " °C";
           
           document.getElementById("EOLProduction2").innerHTML     = "Production : " + round(obj.data.sources.eolienne2.production) + " kW";
-          document.getElementById("EOLVitesse2").innerHTML    = "Vitesse : " + round(obj.data.sources.eolienne2.vitesse) + " m/s";
-          document.getElementById("EOLTemperature2").innerHTML      = "Temperature : " + round(obj.data.sources.eolienne2.temperature) + " °C";
+          document.getElementById("EOLVitesse2").innerHTML        = "Vitesse : " + round(obj.data.sources.eolienne2.vitesse) + " m/s";
+          document.getElementById("EOLTemperature2").innerHTML    = "Temperature : " + round(obj.data.sources.eolienne2.temperature) + " °C";
+          
+          document.getElementById("ANMVitesse").innerHTML         = "Vitesse du vent : " + round(obj.data.anomometre.vitesseVent) + " m/s";
 
           //Page Hydroliennes
           document.getElementById("HYDProduction1").innerHTML     = "Production : " + round(obj.data.sources.hydrolienne1.production) + " kW";
-          document.getElementById("HYDVitesse1").innerHTML    = "Vitesse : " + round(obj.data.sources.hydrolienne1.vitesse) + " m/s";
-          document.getElementById("HYDTemperature1").innerHTML      = "Temperature : " + round(obj.data.sources.hydrolienne1.temperature) + " °C";
+          document.getElementById("HYDVitesse1").innerHTML        = "Vitesse : " + round(obj.data.sources.hydrolienne1.vitesse) + " m/s";
+          document.getElementById("HYDTemperature1").innerHTML    = "Temperature : " + round(obj.data.sources.hydrolienne1.temperature) + " °C";
           
           document.getElementById("HYDProduction2").innerHTML     = "Production : " + round(obj.data.sources.hydrolienne2.production) + " kW";
-          document.getElementById("HYDVitesse2").innerHTML    = "Vitesse : " + round(obj.data.sources.hydrolienne2.vitesse) + " m/s";
-          document.getElementById("HYDTemperature2").innerHTML      = "Temperature : " + round(obj.data.sources.hydrolienne2.temperature) + " °C";
+          document.getElementById("HYDVitesse2").innerHTML        = "Vitesse : " + round(obj.data.sources.hydrolienne2.vitesse) + " m/s";
+          document.getElementById("HYDTemperature2").innerHTML    = "Temperature : " + round(obj.data.sources.hydrolienne2.temperature) + " °C";
 
           //Page Groupe electrogene
           document.getElementById("GREProduction1").innerHTML     = "Production : " + round(obj.data.sources.groupeElectrogene.production) + " kW";
-          document.getElementById("GRETemperature1").innerHTML      = "Temperature : " + round(obj.data.sources.groupeElectrogene.temperature) + " °C";
+          document.getElementById("GRETemperature1").innerHTML    = "Temperature : " + round(obj.data.sources.groupeElectrogene.temperature) + " °C";
           
           //Page Alternateur
           document.getElementById("ALTProduction1").innerHTML     = "Production : " + round(obj.data.sources.alternateur.production) + " kW";
-          document.getElementById("ALTTemperature1").innerHTML      = "Temperature : " + round(obj.data.sources.alternateur.temperature) + " °C";
+          document.getElementById("ALTTemperature1").innerHTML    = "Temperature : " + round(obj.data.sources.alternateur.temperature) + " °C";
           
           console.log("Data updated successfully");
         }
