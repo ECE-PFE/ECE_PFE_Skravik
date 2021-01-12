@@ -132,7 +132,9 @@ function round(x) {
 
 
 //parametrage des valeurs par defaut
-var settingsTxt = ["Seuil 1", "Seuil 2"];
+var settingsTxt = ["Vitesse de vent max", "Seuil 2"];
+var settingsMins = [0 , 0];
+var settingsMaxs = [33, 100];
 
 if (localStorage.getItem("settingsVal0") === null) { // si pas deja initialisé
   var defaultValues = [50,50];
@@ -144,12 +146,14 @@ if (localStorage.getItem("settingsVal0") === null) { // si pas deja initialisé
 
 function updateSlider(slider) {
   var id = slider.id.replace( /^\D+/g, '');
+  var val = slider.value;
+  var name = settingsTxt[id];
 
-  document.getElementById("sliderTxt" + id).innerHTML = settingsTxt[id] + " : " + slider.value;
+  document.getElementById("sliderTxt" + id).innerHTML = name + " : " + val;
   var tmp = 'settingsVal' + id;
-  localStorage.setItem(tmp, slider.value);
+  localStorage.setItem(tmp, val);
 
-  console.log(tmp + " <- " + slider.value + " (ecriture)");
+  console.log(tmp + " <- " + val + " (ecriture)");
 }
 
 function pullSettings() {
@@ -157,8 +161,14 @@ function pullSettings() {
   settingsTxt.forEach(function(name, index, array) {
     var tmp = 'settingsVal' + index;
     var val = localStorage.getItem(tmp);
-    console.log("settingsVal" + index + " : " + val + " (lecture)");
+    var min = settingsMins[index];
+    var max = settingsMaxs[index];
+
     document.getElementById("sliderTxt" + index).innerHTML = name + " : " + val;
     document.getElementById("slider" + index).value = val;
+    document.getElementById("slider" + index).min   = min;
+    document.getElementById("slider" + index).max   = max;
+
+    console.log("settingsVal" + index + " : " + val + " (lecture)");
   });
 }
