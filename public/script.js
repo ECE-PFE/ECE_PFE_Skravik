@@ -1,24 +1,8 @@
-function show(elementID) {
-   // try to find the requested page and alert if it's not found
-   var ele = document.getElementById(elementID);
-   if (!ele) {
-       alert("no such element");
-       return;
-   }
 
-   // get all pages, loop through them and hide them
-   var pages = document.getElementsByClassName('page');
-   for(var i = 0; i < pages.length; i++) {
-       pages[i].style.display = 'none';
-   }
 
-   // then show the requested page
-   ele.style.display = 'block';
-}
-
-function round(x) {
-  return Number.parseFloat(x).toFixed(1);
-}
+/////////////////////////////////////
+//////// Gestion des données ////////
+/////////////////////////////////////
 
 (function () {
   var updateValues = function () {
@@ -131,14 +115,48 @@ function round(x) {
 })();
 
 
-//parametrage des valeurs par defaut
+//////////////////////////////////////////////////
+//////// Gestion de l'affichage des pages ////////
+//////////////////////////////////////////////////
+
+function show(elementID) {
+   // try to find the requested page and alert if it's not found
+   var ele = document.getElementById(elementID);
+   if (!ele) {
+       alert("no such element");
+       return;
+   }
+
+   // get all pages, loop through them and hide them
+   var pages = document.getElementsByClassName('page');
+   for(var i = 0; i < pages.length; i++) {
+       pages[i].style.display = 'none';
+   }
+
+   // then show the requested page
+   ele.style.display = 'block';
+}
+
+
+/////////////////////////////////////////
+//////// Gestion page paramètres ////////
+/////////////////////////////////////////
+function round(x) {
+  return Number.parseFloat(x).toFixed(1);
+}
+
+
+/////////////////////////////////////////
+//////// Gestion page paramètres ////////
+/////////////////////////////////////////
+
 var settingsTxt = ["Vitesse de vent max", "Seuil 2"];
 var settingsMins = [0 , 0];
 var settingsMaxs = [33, 100];
+var settingsDefaults = [33, 50];
 
-if (localStorage.getItem("settingsVal0") === null) { // si pas deja initialisé
-  var defaultValues = [50,50];
-  defaultValues.forEach(function(val, index, array) {
+if (localStorage.getItem("settingsVal0") === null) { // si pas encore initialisé
+  settingsDefaults.forEach(function(val, index, array) {
     var tmp = 'settingsVal' + index;
     localStorage.setItem(tmp, val);
   });
@@ -172,3 +190,8 @@ function pullSettings() {
     console.log("settingsVal" + index + " : " + val + " (lecture)");
   });
 }
+
+
+/////////////////////////////////////////////
+//////// Gestion page avertissements ////////
+/////////////////////////////////////////////
