@@ -131,7 +131,7 @@
            <img src="img/settings.png" style="height:50px;cursor:pointer;" onclick="show('PageSettings');pullSettings();">
        </settings>
        <warnings>
-           <img src="img/warning.gif" style="height:75px;cursor:pointer;" onclick="alert('coucou');">
+           <img src="img/warning.gif" style="height:75px;cursor:pointer;" onclick="show('PageWarnings');">
        </warnings>
       </div>
       <div id="PagePanneauxSolaires" class="page" style="display:none">
@@ -313,6 +313,43 @@
       <div id="PageEquipements" class="page" style="display:none">
          <p>Equipements</p>
          <img src="img/tablette.png" onclick="show('PageMenu');">
+      </div>
+      <div id="PageWarnings" class="page" style="display:none">
+         <div class="w3-col">
+            <div class="w3-col w3-container" style="width:20%">
+               <img src="img/return.png" style="height:50px;cursor:pointer;" onclick="show('PageMenu');">
+            </div>
+            <div class="w3-col w3-container" style="width:60%">
+               <h1>Avertissements</h1>
+            </div>
+            <div class="w3-col w3-container" style="width:20%">
+               <img src="img/skravik_logo.png" style="height:50px">
+            </div>
+         </div>
+         </br>
+         <div class="w3-col">
+            <div class="w3-col w3-container" style="width:40%"></div>
+            <div class="w3-col w3-container w3-border w3-round-xlarge w3-khaki w3-border-deep-orange" style="width:20%">
+               <p>Blabla probleme avec le truc 1</p>
+            </div>
+            <div class="w3-col w3-container" style="width:40%"></div>
+         </div>
+         </br>
+         <div class="w3-col">
+            <div class="w3-col w3-container" style="width:40%"></div>
+            <div class="w3-col w3-container w3-border w3-round-xlarge w3-khaki w3-border-deep-orange" style="width:20%">
+               <p>Et pis ce truc marche pas 2</p>
+            </div>
+            <div class="w3-col w3-container" style="width:40%"></div>
+         </div>
+         </br>
+         <div class="w3-col">
+            <div class="w3-col w3-container" style="width:40%"></div>
+            <div class="w3-col w3-container w3-border w3-round-xlarge w3-khaki w3-border-deep-orange" style="width:20%">
+               <p>Avertissement 3</p>
+            </div>
+            <div class="w3-col w3-container" style="width:40%"></div>
+         </div>
       </div>
       <div id="PageSettings" class="page" style="display:none">
       	<div class="w3-col">
