@@ -12,7 +12,13 @@ var settingsDefaults = [33, 50];
 /////////////////////////////////////////////
 //////// Gestion page avertissements ////////
 /////////////////////////////////////////////
+function warningShow(id){
+  document.getElementById(id).style.display = 'block';
+}
 
+function warningHide(id){
+  document.getElementById(id).style.display = 'none';
+}
 
 function checkWarnings(data) {
   //Vent trop rapide
@@ -21,19 +27,23 @@ function checkWarnings(data) {
 
   var warning = false;
 
+  //Verification de chaque alerte possible
   if (vitesseVent > valMax) {
-    console.log('Trop de vent');
+    warningShow("warningTropDeVent");
     warning=true;
   }
+  else warningHide("warningTropDeVent");
 
+  //Changement de l'icone
   if (warning){
     document.getElementById("warningImg").setAttribute("src", "img/warning.gif");
+    warningHide("warningOK");
   }
   else {
     document.getElementById("warningImg").setAttribute("src", "img/green_check.png");
+    warningShow("warningOK");
   }
 }
-
 
 /////////////////////////////////////
 //////// Gestion des données ////////
