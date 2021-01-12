@@ -51,22 +51,21 @@ function checkWarnings(data) {
 
 function updatePages(data) {
   //Page menu
-  document.getElementById("panneauxsolaires").innerHTML = "+" + round(data.sources.panneauxSolaires) + " kW";
-  document.getElementById("eoliennes").innerHTML        = "+" + round(data.sources.eoliennes) + " kW";
-  document.getElementById("hydroliennes").innerHTML     = "+" + round(data.sources.hydroliennes) + " kW";
-  document.getElementById("groupeEletrogene").innerHTML = "+" + round(data.sources.groupeElectrogene.production) + " kW";
-  document.getElementById("alternateur").innerHTML      = "+" + round(data.sources.alternateur.production) + " kW";
-  document.getElementById("moteur").innerHTML           = round(data.consos.moteur.conso) + " kW";
-  document.getElementById("equipements").innerHTML      = round(data.consos.equipements.conso) + " kW";
-  document.getElementById("sommeSources").innerHTML     = "Production totale : " + round(data.sommes.sommeSources) + " kW";
-  document.getElementById("sommeConsos").innerHTML      = "Consommation totale : " + round(data.sommes.sommeConsos) + " kW";
-  //document.getElementById("sommeTotale").innerHTML      = round(data.sommes.sommeTotale) + " kW";
-  document.getElementById("batterie1").innerHTML = round(data.batteries.batterie1) + " %";
-  document.getElementById("batterie2").innerHTML = round(data.batteries.batterie2) + " %";
-  document.getElementById("batterie3").innerHTML = round(data.batteries.batterie3) + " %";
-  document.getElementById("sourcesVersConsos").innerHTML    = "+" + round(data.transferts.sourcesVersConsos) + " kW";
-  document.getElementById("batteriesVersConsos").innerHTML  = "+" + round(data.transferts.batteriesVersConsos) + " kW";
-  document.getElementById("sourcesVersBatteries").innerHTML = "+" + round(data.transferts.sourcesVersBatteries) + " kW";
+  document.getElementById("panneauxsolaires").innerHTML     = round(data.sources.panneauxSolaires);
+  document.getElementById("eoliennes").innerHTML            = round(data.sources.eoliennes);
+  document.getElementById("hydroliennes").innerHTML         = round(data.sources.hydroliennes);
+  document.getElementById("groupeEletrogene").innerHTML     = round(data.sources.groupeElectrogene.production);
+  document.getElementById("alternateur").innerHTML          = round(data.sources.alternateur.production);
+  document.getElementById("moteur").innerHTML               = round(data.consos.moteur.conso);
+  document.getElementById("equipements").innerHTML          = round(data.consos.equipements.conso);
+  document.getElementById("sommeSources").innerHTML         = round(data.sommes.sommeSources);
+  document.getElementById("sommeConsos").innerHTML          = round(data.sommes.sommeConsos);
+  document.getElementById("batterie1").innerHTML            = round(data.batteries.batterie1);
+  document.getElementById("batterie2").innerHTML            = round(data.batteries.batterie2);
+  document.getElementById("batterie3").innerHTML            = round(data.batteries.batterie3);
+  document.getElementById("sourcesVersConsos").innerHTML    = round(data.transferts.sourcesVersConsos);
+  document.getElementById("batteriesVersConsos").innerHTML  = round(data.transferts.batteriesVersConsos);
+  document.getElementById("sourcesVersBatteries").innerHTML = round(data.transferts.sourcesVersBatteries);
 
   if (data.transferts.sourcesVersConsos == 0)
        document.getElementById("IMGSourcesVersConsos").setAttribute("src", "img/grey_arrow_right.png");
@@ -81,53 +80,53 @@ function updatePages(data) {
   else document.getElementById("IMGSourcesVersBatteries").setAttribute("src", "img/green_arrow_right.png");
 
   //Page panneaux solaires
-  document.getElementById("PANProduction1").innerHTML     = "Production : " + round(data.sources.panneauSolaire1.production) + " kW";
-  document.getElementById("PANInclinaison1").innerHTML    = "Inclinaison : " + round(data.sources.panneauSolaire1.inclinaison) + " °";
-  document.getElementById("PANRendement1").innerHTML      = "Rendement : " + round(data.sources.panneauSolaire1.rendement) + " %";
-  document.getElementById("PANEnsoleillement1").innerHTML = "Ensoleillement : " + round(data.sources.panneauSolaire1.ensoleillement) + " %";
+  document.getElementById("PANProduction1").innerHTML     = round(data.sources.panneauSolaire1.production);
+  document.getElementById("PANInclinaison1").innerHTML    = round(data.sources.panneauSolaire1.inclinaison);
+  document.getElementById("PANRendement1").innerHTML      = round(data.sources.panneauSolaire1.rendement);
+  document.getElementById("PANEnsoleillement1").innerHTML = round(data.sources.panneauSolaire1.ensoleillement);
 
-  document.getElementById("PANProduction2").innerHTML     = "Production : " + round(data.sources.panneauSolaire2.production) + " kW";
-  document.getElementById("PANInclinaison2").innerHTML    = "Inclinaison : " + round(data.sources.panneauSolaire2.inclinaison) + " °";
-  document.getElementById("PANRendement2").innerHTML      = "Rendement : " + round(data.sources.panneauSolaire2.rendement) + " %";
-  document.getElementById("PANEnsoleillement2").innerHTML = "Ensoleillement : " + round(data.sources.panneauSolaire2.ensoleillement) + " %";
+  document.getElementById("PANProduction2").innerHTML     = round(data.sources.panneauSolaire2.production);
+  document.getElementById("PANInclinaison2").innerHTML    = round(data.sources.panneauSolaire2.inclinaison);
+  document.getElementById("PANRendement2").innerHTML      = round(data.sources.panneauSolaire2.rendement);
+  document.getElementById("PANEnsoleillement2").innerHTML = round(data.sources.panneauSolaire2.ensoleillement);
 
-  document.getElementById("PANProduction3").innerHTML     = "Production : " + round(data.sources.panneauSolaire3.production) + " kW";
-  document.getElementById("PANInclinaison3").innerHTML    = "Inclinaison : " + round(data.sources.panneauSolaire3.inclinaison) + " °";
-  document.getElementById("PANRendement3").innerHTML      = "Rendement : " + round(data.sources.panneauSolaire3.rendement) + " %";
-  document.getElementById("PANEnsoleillement3").innerHTML = "Ensoleillement : " + round(data.sources.panneauSolaire3.ensoleillement) + " %";
+  document.getElementById("PANProduction3").innerHTML     = round(data.sources.panneauSolaire3.production);
+  document.getElementById("PANInclinaison3").innerHTML    = round(data.sources.panneauSolaire3.inclinaison);
+  document.getElementById("PANRendement3").innerHTML      = round(data.sources.panneauSolaire3.rendement);
+  document.getElementById("PANEnsoleillement3").innerHTML = round(data.sources.panneauSolaire3.ensoleillement);
 
-  document.getElementById("PANProduction4").innerHTML     = "Production : " + round(data.sources.panneauSolaire4.production) + " kW";
-  document.getElementById("PANInclinaison4").innerHTML    = "Inclinaison : " + round(data.sources.panneauSolaire4.inclinaison) + " °";
-  document.getElementById("PANRendement4").innerHTML      = "Rendement : " + round(data.sources.panneauSolaire4.rendement) + " %";
-  document.getElementById("PANEnsoleillement4").innerHTML = "Ensoleillement : " + round(data.sources.panneauSolaire4.ensoleillement) + " %";
+  document.getElementById("PANProduction4").innerHTML     = round(data.sources.panneauSolaire4.production);
+  document.getElementById("PANInclinaison4").innerHTML    = round(data.sources.panneauSolaire4.inclinaison);
+  document.getElementById("PANRendement4").innerHTML      = round(data.sources.panneauSolaire4.rendement);
+  document.getElementById("PANEnsoleillement4").innerHTML = round(data.sources.panneauSolaire4.ensoleillement);
 
   //Page Eoliennes
-  document.getElementById("EOLProduction1").innerHTML     = "Production : " + round(data.sources.eolienne1.production) + " kW";
-  document.getElementById("EOLVitesse1").innerHTML        = "Vitesse : " + round(data.sources.eolienne1.vitesse) + " m/s";
-  document.getElementById("EOLTemperature1").innerHTML    = "Temperature : " + round(data.sources.eolienne1.temperature) + " °C";
+  document.getElementById("EOLProduction1").innerHTML     = round(data.sources.eolienne1.production);
+  document.getElementById("EOLVitesse1").innerHTML        = round(data.sources.eolienne1.vitesse);
+  document.getElementById("EOLTemperature1").innerHTML    = round(data.sources.eolienne1.temperature);
   
-  document.getElementById("EOLProduction2").innerHTML     = "Production : " + round(data.sources.eolienne2.production) + " kW";
-  document.getElementById("EOLVitesse2").innerHTML        = "Vitesse : " + round(data.sources.eolienne2.vitesse) + " m/s";
-  document.getElementById("EOLTemperature2").innerHTML    = "Temperature : " + round(data.sources.eolienne2.temperature) + " °C";
+  document.getElementById("EOLProduction2").innerHTML     = round(data.sources.eolienne2.production);
+  document.getElementById("EOLVitesse2").innerHTML        = round(data.sources.eolienne2.vitesse);
+  document.getElementById("EOLTemperature2").innerHTML    = round(data.sources.eolienne2.temperature);
   
-  document.getElementById("ANMVitesse").innerHTML         = "Vitesse du vent : " + round(data.anomometre.vitesseVent) + " m/s";
+  document.getElementById("ANMVitesse").innerHTML         = round(data.anomometre.vitesseVent);
 
   //Page Hydroliennes
-  document.getElementById("HYDProduction1").innerHTML     = "Production : " + round(data.sources.hydrolienne1.production) + " kW";
-  document.getElementById("HYDVitesse1").innerHTML        = "Vitesse : " + round(data.sources.hydrolienne1.vitesse) + " m/s";
-  document.getElementById("HYDTemperature1").innerHTML    = "Temperature : " + round(data.sources.hydrolienne1.temperature) + " °C";
+  document.getElementById("HYDProduction1").innerHTML     = round(data.sources.hydrolienne1.production);
+  document.getElementById("HYDVitesse1").innerHTML        = round(data.sources.hydrolienne1.vitesse);
+  document.getElementById("HYDTemperature1").innerHTML    = round(data.sources.hydrolienne1.temperature);
   
-  document.getElementById("HYDProduction2").innerHTML     = "Production : " + round(data.sources.hydrolienne2.production) + " kW";
-  document.getElementById("HYDVitesse2").innerHTML        = "Vitesse : " + round(data.sources.hydrolienne2.vitesse) + " m/s";
-  document.getElementById("HYDTemperature2").innerHTML    = "Temperature : " + round(data.sources.hydrolienne2.temperature) + " °C";
+  document.getElementById("HYDProduction2").innerHTML     = round(data.sources.hydrolienne2.production);
+  document.getElementById("HYDVitesse2").innerHTML        = round(data.sources.hydrolienne2.vitesse);
+  document.getElementById("HYDTemperature2").innerHTML    = round(data.sources.hydrolienne2.temperature);
 
   //Page Groupe electrogene
-  document.getElementById("GREProduction1").innerHTML     = "Production : " + round(data.sources.groupeElectrogene.production) + " kW";
-  document.getElementById("GRETemperature1").innerHTML    = "Temperature : " + round(data.sources.groupeElectrogene.temperature) + " °C";
+  document.getElementById("GREProduction1").innerHTML     = round(data.sources.groupeElectrogene.production);
+  document.getElementById("GRETemperature1").innerHTML    = round(data.sources.groupeElectrogene.temperature);
   
   //Page Alternateur
-  document.getElementById("ALTProduction1").innerHTML     = "Production : " + round(data.sources.alternateur.production) + " kW";
-  document.getElementById("ALTTemperature1").innerHTML    = "Temperature : " + round(data.sources.alternateur.temperature) + " °C"; 
+  document.getElementById("ALTProduction1").innerHTML     = round(data.sources.alternateur.production);
+  document.getElementById("ALTTemperature1").innerHTML    = round(data.sources.alternateur.temperature); 
 }
 
 function updateDisplay(event) {

@@ -14,14 +14,14 @@
          <div class="w3-col">
             <div class="w3-col w3-container marge"></div>
             <div class="w3-col w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green colonne" style="width:30%">
-               <h3 id="sommeSources">Production totale : - kW</h3>
+               <h3>Production totale : <span id="sommeSources">-</span> kW</h3>
                <div class="w3-col lien" onclick="show('PagePanneauxSolaires');">
                   <p><strong>Panneaux Solaires</strong></p>
                   <div class="w3-half">
                      <img class="icone" src="img/panneaux_solaire.png">
                   </div>
                   <div class="w3-half w3-container">
-                     <p id="panneauxsolaires">- kW</p>
+                     <p><span id="panneauxsolaires">-</span> kW</p>
                   </div>
                </div>
                <div class="w3-col lien" onclick="show('PageEoliennes');">
@@ -30,7 +30,7 @@
                      <img class="icone" src="img/eolienne.png">
                   </div>
                   <div class="w3-half w3-container">
-                     <p id="eoliennes">- kW</p>
+                     <p><span id="eoliennes">-</span> kW</p>
                   </div>
                </div>
                <div class="w3-col lien" onclick="show('PageHydroliennes');">
@@ -39,7 +39,7 @@
                      <img class="icone" src="img/hydrolienne.png">
                   </div>
                   <div class="w3-half w3-container">
-                     <p id="hydroliennes">- kW</p>
+                     <p><span id="hydroliennes">-</span> kW</p>
                   </div>
                </div>
                <div class="w3-col lien" onclick="show('PageGroupeEletrogene');">
@@ -48,7 +48,7 @@
                      <img class="icone" src="img/groupe_electrogene.png">
                   </div>
                   <div class="w3-half w3-container">
-                     <p id="groupeEletrogene">- kW</p>
+                     <p><span id="groupeEletrogene">-</span> kW</p>
                   </div>
                </div>
                <div class="w3-col lien" onclick="show('PageAlternateur');">
@@ -57,19 +57,19 @@
                      <img class="icone" src="img/alternateur.png">
                   </div>
                   <div class="w3-half w3-container">
-                     <p id="alternateur">- kW</p>
+                     <p><span id="alternateur">-</span> kW</p>
                   </div>
                </div>
             </div>
             <div class="w3-col w3-container colonne" style="width:60%">
                <div class="w3-row w3-container" style="display: flex;align-items:center">
                   <div class="w3-col w3-container" style="width:40%">
-                     <p id="sourcesVersConsos">- Kw</p>
+                     <p>+ <span id="sourcesVersConsos">-</span> kW</p>
                      <img class="flecheH" id="IMGSourcesVersConsos" src="img/grey_arrow_right.png">
                   </div>
                   <div class="w3-col w3-container marge"></div>
                   <div class="w3-col w3-container w3-border w3-round-xlarge w3-pale-red w3-border-red" style="width:55%">
-                     <h3 id="sommeConsos">Consommation totale : - kW</h3>
+                     <h3>Consommation totale : <span id="sommeConsos">-</span> kW</h3>
                      <div>
                         <p><strong>Moteur</strong></p>
                         <div class="w3-col lien" onclick="show('PageMoteur');">
@@ -77,7 +77,7 @@
                               <img class="icone" src="img/moteur.png">
                            </div>
                            <div class="w3-half w3-container">
-                              <p id="moteur">- kW</p>
+                              <p><span id="moteur">-</span> kW</p>
                            </div>
                         </div>
                      </div>
@@ -88,7 +88,7 @@
                               <img class="icone" src="img/tablette.png">
                            </div>
                            <div class="w3-half w3-container">
-                              <p id="equipements">- kW</p>
+                              <p><span id="equipements">-</span> kW</p>
                            </div>
                         </div>
                      </div>
@@ -97,11 +97,11 @@
                </div>
                <div class="w3-row w3-container" style="margin-left:40%;height:200px">
                   <img class="flecheV" id="IMGBatteriesVersConsos" src="img/grey_arrow_up.png">
-                  <p id="batteriesVersConsos" style="display:inline;width:70px">- Kw</p>
+                  <p id="" style="display:inline;width:70px">+ <span id="batteriesVersConsos">-</span> kW</p>
                </div>
                <div class="w3-row w3-container" style="display:flex;align-items:center">
                   <div class="w3-col w3-container" style="width:40%">
-                     <p id="sourcesVersBatteries">- Kw</p>
+                     <p>+ <span id="sourcesVersBatteries">-</span> kW</p>
                      <img class="flecheH" id="IMGSourcesVersBatteries" src="img/grey_arrow_right.png">
                   </div>
                   <div class="w3-col w3-container marge"></div>
@@ -109,17 +109,17 @@
                      <div class="w3-third w3-container">
                         <p><strong>Batterie1</strong></p>
                         <img class="icone" src="img/batterie.png">
-                        <p id="batterie1">- %</p>
+                        <p><span id="batterie1">-</span> %</p>
                      </div>
                      <div class="w3-third w3-container">
                         <p><strong>Batterie2</strong></p>
                         <img class="icone" src="img/batterie.png">
-                        <p id="batterie2">- %</p>
+                        <p><span id="batterie2">-</span> %</p>
                      </div>
                      <div class="w3-third w3-container">
                         <p><strong>Batterie3</strong></p>
                         <img class="icone" src="img/batterie.png">
-                        <p id="batterie3">- %</p>
+                        <p><span id="batterie3">-</span> %</p>
                      </div>
                      </br>
                   </div>
@@ -152,37 +152,37 @@
                <p>Panneau solaire 1</p>
                <img class="icone" src="img/panneaux_solaire.png">
                </br>
-               <p id="PANProduction1" >Production : - W</p>
-               <p id="PANInclinaison1" >Inclinaison : - °</p>
-               <p id="PANRendement1" >Rendement : - %</p>
-               <p id="PANEnsoleillement1" >Ensoleillement : - %</p>
+               <p>Production : <span id="PANProduction1">-</span> W</p>
+               <p>Inclinaison : <span id="PANInclinaison1">-</span> °</p>
+               <p>Rendement : <span id="PANRendement1">-</span> %</p>
+               <p>Ensoleillement : <span id="PANEnsoleillement1">-</span> %</p>
             </div>
             <div class="w3-quarter w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green case">
                <p>Panneau solaire 2</p>
                <img class="icone" src="img/panneaux_solaire.png">
                </br>
-               <p id="PANProduction2" >Production : - W</p>
-               <p id="PANInclinaison2" >Inclinaison : - °</p>
-               <p id="PANRendement2" >Rendement : - %</p>
-               <p id="PANEnsoleillement2" >Ensoleillement : - %</p>
+               <p>Production : <span id="PANProduction2">-</span> W</p>
+               <p>Inclinaison : <span id="PANInclinaison2">-</span> °</p>
+               <p>Rendement : <span id="PANRendement2">-</span> %</p>
+               <p>Ensoleillement : <span id="PANEnsoleillement2">-</span> %</p>
             </div>
             <div class="w3-quarter w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green case">
                <p>Panneau solaire 3</p>
                <img class="icone" src="img/panneaux_solaire.png">
                </br>
-               <p id="PANProduction3" >Production : - W</p>
-               <p id="PANInclinaison3" >Inclinaison : - °</p>
-               <p id="PANRendement3" >Rendement : - %</p>
-               <p id="PANEnsoleillement3" >Ensoleillement : - %</p>
+               <p" >Production : <span id="PANProduction3">-</span> W</p>
+               <p" >Inclinaison : <span id="PANInclinaison3">-</span> °</p>
+               <p" >Rendement : <span id="PANRendement3">-</span> %</p>
+               <p" >Ensoleillement : <span id="PANEnsoleillement3">-</span> %</p>
             </div>
             <div class="w3-quarter w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green case">
                <p>Panneau solaire 4</p>
                <img class="icone" src="img/panneaux_solaire.png">
                </br>
-               <p id="PANProduction4" >Production : - W</p>
-               <p id="PANInclinaison4" >Inclinaison : - °</p>
-               <p id="PANRendement4" >Rendement : - %</p>
-               <p id="PANEnsoleillement4" >Ensoleillement : - %</p>
+               <p" >Production : <span id="PANProduction4">-</span> W</p>
+               <p" >Inclinaison : <span id="PANInclinaison4">-</span> °</p>
+               <p" >Rendement : <span id="PANRendement4">-</span> %</p>
+               <p" >Ensoleillement : <span id="PANEnsoleillement4">-</span> %</p>
             </div>
          </div>
       </div>
@@ -204,23 +204,23 @@
                <p>Eolienne 1</p>
                <img class="icone" src="img/eolienne.png">
                </br>
-               <p id="EOLProduction1" >Production : - W</p>
-               <p id="EOLVitesse1" >Vitesse : - m/s</p>
-               <p id="EOLTemperature1" >Temperature : - °C</p>
+               <p>Production : <span id="EOLProduction1">-</span> W</p>
+               <p>Vitesse : <span id="EOLVitesse1">-</span> m/s</p>
+               <p>Temperature : <span id="EOLTemperature1">-</span> °C</p>
             </div>
             <div class="w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green case">
                <p>Eolienne 2</p>
                <img class="icone" src="img/eolienne.png">
                </br>
-               <p id="EOLProduction2" >Production : - W</p>
-               <p id="EOLVitesse2" >Vitesse : - m/s</p>
-               <p id="EOLTemperature2" >Temperature : - °C</p>
+               <p>Production : <span id="EOLProduction2">-</span> W</p>
+               <p>Vitesse : <span id="EOLVitesse2">-</span> m/s</p>
+               <p>Temperature : <span id="EOLTemperature2">-</span> °C</p>
             </div>
             <div class="w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green case">
                <p>Anemometre</p>
                <img class="icone" src="img/anemometre.png">
                </br>
-               <p id="ANMVitesse" >Vitesse du vent : - m/s</p>
+               <p>Vitesse du vent : <span id="ANMVitesse">-</span> m/s</p>
             </div>
          </div>
       </div>
@@ -242,17 +242,17 @@
                <p>Hydrolienne 1</p>
                <img class="icone" src="img/hydrolienne.png">
                </br>
-               <p id="HYDProduction1" >Production : - W</p>
-               <p id="HYDVitesse1" >Vitesse : - m/s</p>
-               <p id="HYDTemperature1" >Temperature : - °C</p>
+               <p>Production : <span id="HYDProduction1">-</span> W</p>
+               <p>Vitesse : <span id="HYDVitesse1">-</span> m/s</p>
+               <p>Temperature : <span id="HYDTemperature1">-</span> °C</p>
             </div>
             <div class="w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green case">
                <p>Hydrolienne 2</p>
                <img class="icone" src="img/hydrolienne.png">
                </br>
-               <p id="HYDProduction2" >Production : - W</p>
-               <p id="HYDVitesse2" >Vitesse : - m/s</p>
-               <p id="HYDTemperature2" >Temperature : - °C</p>
+               <p>Production : <span id="HYDProduction2">-</span> W</p>
+               <p>Vitesse : <span id="HYDVitesse2">-</span> m/s</p>
+               <p>Temperature : <span id="HYDTemperature2">-</span> °C</p>
             </div>
          </div>
       </div>
@@ -274,8 +274,8 @@
                <p>Groupe Electrogène 1</p>
                <img class="icone" src="img/groupe_electrogene.png">
                </br>
-               <p id="GREProduction1" >Production : - W</p>
-               <p id="GRETemperature1" >Temperature : - °C</p>
+               <p>Production : <span id="GREProduction1">-</span> W</p>
+               <p>Temperature : <span id="GRETemperature1">-</span> °C</p>
             </div>
          </div>
       </div>
@@ -297,8 +297,8 @@
                <p>Alternateur 1</p>
                <img class="icone" src="img/alternateur.png">
                </br>
-               <p id="ALTProduction1" >Production : - W</p>
-               <p id="ALTTemperature1" >Temperature : - °C</p>
+               <p>Production : <span id="ALTProduction1">-</span> W</p>
+               <p>Temperature : <span id="ALTTemperature1">-</span> °C</p>
             </div>
          </div>
       </div>
