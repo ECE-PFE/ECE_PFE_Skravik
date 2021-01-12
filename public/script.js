@@ -3,10 +3,11 @@
 //////// Paramètres des settings ////////
 /////////////////////////////////////////
 
-var settingsTxt = ["Vitesse de vent max", "Seuil 2"];
-var settingsMins = [0 , 0];
-var settingsMaxs = [33, 100];
-var settingsDefaults = [33, 50];
+var settings =[
+  [0,  33,   33,   "Vitesse de vent max"],
+  [75, 80,   80,   "Temperature max des panneaux solaires"],
+  [0,  2935, 2935, "Conso max des équipements"]
+]//min, max, default, text
 
 
 /////////////////////////////////////////////
@@ -191,16 +192,18 @@ function round(x) {
 /////////////////////////////////////////
 
 if (localStorage.getItem("settingsVal0") === null) { // si pas encore initialisé
-  settingsDefaults.forEach(function(val, index, array) {
+  console.log("Application des paramètres par defaut.")
+  settings.forEach(function(element, index, array) {
     var tmp = 'settingsVal' + index;
-    localStorage.setItem(tmp, val);
+    localStorage.setItem(tmp, element[2]);
+    console.log(tmp + " <- " + element[2] + " (ecriture)");
   });
 }
 
 function updateSlider(slider) {
   var id = slider.id.replace( /^\D+/g, '');
   var val = slider.value;
-  var name = settingsTxt[id];
+  var name = settings[id][3];
 
   document.getElementById("sliderTxt" + id).innerHTML = name + " : " + val;
   var IDname = 'settingsVal' + id;
@@ -210,14 +213,14 @@ function updateSlider(slider) {
 }
 
 function pullSettings() {
-  console.log("on recupere tout");
-  settingsTxt.forEach(function(name, index, array) {
+  console.log("Recuperation des parametres actuels");
+  settings.forEach(function(element, index, array) {
     var IDname = 'settingsVal' + index;
     var val = localStorage.getItem(IDname);
-    var min = settingsMins[index];
-    var max = settingsMaxs[index];
+    var min = settings[index][0];
+    var max = settings[index][1];
 
-    document.getElementById("sliderTxt" + index).innerHTML = name + " : " + val;
+    document.getElementById("sliderTxt" + index).innerHTML = element[3] + " : " + val;
     document.getElementById("slider" + index).value = val;
     document.getElementById("slider" + index).min   = min;
     document.getElementById("slider" + index).max   = max;
