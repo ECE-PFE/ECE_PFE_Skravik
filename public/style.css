@@ -1,3 +1,30 @@
+.flecheV {height: 100%}
+.flecheH {width: 100%}
+.icone {width: 75px}
+.logo {height: 50px}
+.marge {width: 5%}
+.lien {cursor: pointer}
+.case {width: 20%}
+.headerImg {width: 20%}
+.headerTitle {width: 60%}
+.alerte {margin-bottom: 10px}
+
+.retour {
+   cursor: pointer;
+   height: 50px;
+}
+
+.ligne {
+   display: flex;
+   justify-content: space-evenly;
+}
+
+.colonne {
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+}
+
 p {
    text-align: center;
    vertical-align: middle;
