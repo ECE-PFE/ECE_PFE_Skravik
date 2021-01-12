@@ -18,8 +18,19 @@ function checkWarnings(data) {
   //Vent trop rapide
   var vitesseVent = data.anomometre.vitesseVent;
   var valMax = localStorage.getItem('settingsVal0');
+
+  var warning = false;
+
   if (vitesseVent > valMax) {
-    //console.log('Trop de vent');
+    console.log('Trop de vent');
+    warning=true;
+  }
+
+  if (warning){
+    document.getElementById("warningImg").setAttribute("src", "img/warning.gif");
+  }
+  else {
+    document.getElementById("warningImg").setAttribute("src", "img/green_check.png");
   }
 }
 
