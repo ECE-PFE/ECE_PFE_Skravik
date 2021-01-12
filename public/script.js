@@ -15,7 +15,12 @@ var settingsDefaults = [33, 50];
 
 
 function checkWarnings(data) {
-  //1
+  //Vent trop rapide
+  var vitesseVent = data.anomometre.vitesseVent;
+  var valMax = localStorage.getItem('settingsVal0');
+  if (vitesseVent > valMax) {
+    //console.log('Trop de vent');
+  }
 }
 
 
@@ -104,31 +109,30 @@ function updatePages(data) {
   document.getElementById("ALTTemperature1").innerHTML    = "Temperature : " + round(data.sources.alternateur.temperature) + " °C"; 
 }
 
-(function () {
-  var updateValues = function () {
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'http://localhost/values');
+function updateDisplay(event) {
+  var json = event.target.responseText;
 
-    xhr.onreadystatechange = function () {
-      if (xhr.status === 200) {
-        const json = xhr.responseText;
-        if (json) {
-          const data = (JSON.parse(json)).data;
+  const data = (JSON.parse(json)).data;
 
-          updatePages(data);
-          console.log("Data updated successfully");
+  updatePages(data);
+  console.log("Data updated successfully.");
 
-          checkWarnings(data);
-          console.log("Warnings checked ...");
-        }
-      }
-    };
-    xhr.send();
-  };
+  checkWarnings(data);
+  console.log("Warnings checked.");
 
-  window.setInterval(updateValues, 2000);
-  updateValues();
-})();
+  setTimeout(fetchDataFromRestApi, 5000);
+}
+
+function fetchDataFromRestApi()  {
+  console.log("Getting data...");
+  var oReq = new XMLHttpRequest();
+  oReq.addEventListener("load", updateDisplay);
+  oReq.open("GET", "http://localhost/values");
+  oReq.send();
+}
+
+//First call
+fetchDataFromRestApi();
 
 
 //////////////////////////////////////////////////
@@ -179,17 +183,17 @@ function updateSlider(slider) {
   var name = settingsTxt[id];
 
   document.getElementById("sliderTxt" + id).innerHTML = name + " : " + val;
-  var tmp = 'settingsVal' + id;
-  localStorage.setItem(tmp, val);
+  var IDname = 'settingsVal' + id;
+  localStorage.setItem(IDname, val);
 
-  console.log(tmp + " <- " + val + " (ecriture)");
+  console.log(IDname + " <- " + val + " (ecriture)");
 }
 
 function pullSettings() {
   console.log("on recupere tout");
   settingsTxt.forEach(function(name, index, array) {
-    var tmp = 'settingsVal' + index;
-    var val = localStorage.getItem(tmp);
+    var IDname = 'settingsVal' + index;
+    var val = localStorage.getItem(IDname);
     var min = settingsMins[index];
     var max = settingsMaxs[index];
 
