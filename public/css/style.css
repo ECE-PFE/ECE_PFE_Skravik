@@ -7,9 +7,6 @@
 .case {width: 20%}
 .headerImg {width: 20%}
 .headerTitle {width: 60%}
-<<<<<<< HEAD
-.alerte {margin-bottom: 10px}
-=======
 
 .alerte {
    margin-bottom: 10px;
@@ -24,7 +21,6 @@
 .alerte p {
    text-align:left
 }
->>>>>>> master
 
 .retour {
    cursor: pointer;
