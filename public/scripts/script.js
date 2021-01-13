@@ -6,7 +6,8 @@
 var settings =[
   [0,  33,   33,   "Vitesse de vent max"],
   [75, 80,   80,   "Temperature max des panneaux solaires"],
-  [0,  2935, 2935, "Conso max des équipements"]
+  [0,  2935, 2935, "Conso max des équipements"],
+  [0,  200, 200,   "Prod panneau solaire minimale"]
 ]//min, max, default, text
 
 
@@ -24,16 +25,131 @@ function warningHide(id){
 function checkWarnings(data) {
   //Vent trop rapide
   var vitesseVent = data.anomometre.vitesseVent;
-  var valMax = localStorage.getItem('settingsVal0');
+  var ventMax = localStorage.getItem('settingsVal0');
+  var prodEOL1 = data.sources.eolienne1.production;
+  var prodEOL2 = data.sources.eolienne2.production;
+  var sourcesTotales = data.sommes.sommeSources;
+  var consosTotales = data.sommes.sommeSources;
+  var prodVersBat = data.transferts.sourcesVersBatteries;
+  var chargeBat1 = data.batteries.batterie1;// a changer pour la charge totale ?
+  //var tempPS1 = data;
+  //var tempPS2 = data;
+  //var tempPS3 = data;
+  //var tempPS4 = data;
+  var tempMaxPS = localStorage.getItem('settingsVal1');
+  var prodPS1 = data.sources.panneauSolaire1.production;
+  var prodPS2 = data.sources.panneauSolaire2.production;
+  var prodPS3 = data.sources.panneauSolaire3.production;
+  var prodPS4 = data.sources.panneauSolaire4.production;
+  var prodMinPS = localStorage.getItem('settingsVal3');
+  //var lum = data;
+  //var vitBateau = data;
+  //var hydroH240DansEau = data;
+  //var hydroPOD600DansEau = data;
+  var tempPileHG = data.sources.pilehydrogene.temperature;
+  //var tensionPileHG = data;
+  //var consoPileHG = data;
+  var consoEquip = data.consos.equipements.conso;
+  var consoMaxEquip = localStorage.getItem('settingsVal2');
 
   var warning = false;
 
   //Verification de chaque alerte possible
-  if (vitesseVent > valMax) {
-    warningShow("warningTropDeVent");
-    warning=true;
-  }
-  else warningHide("warningTropDeVent");
+  if (vitesseVent > 2.5 && prodEOL1 == 0)
+      {warningShow("pbProdEol1");warning=true;}
+  else warningHide("pbProdEol1");
+
+  if (vitesseVent > 2.5 && prodEOL2 == 0)
+      {warningShow("pbProdEol2");warning=true;}
+  else warningHide("pbProdEol2");
+
+  if (vitesseVent > ventMax)
+      {warningShow("tropDeVent");warning=true;}
+  else warningHide("tropDeVent");
+
+  if (sourcesTotales > consosTotales && prodVersBat == 0 && chargeBat1 == 1)
+      {warningShow("pbChargeBat");warning=true;}
+  else warningHide("pbChargeBat");
+
+  /*
+  if (tempPS1 > tempMaxPS)
+      {warningShow("chauffePS1");warning=true;}
+  else warningHide("chauffePS1");
+
+  if (tempPS2 > tempMaxPS)
+      {warningShow("chauffePS2");warning=true;}
+  else warningHide("chauffePS2");
+
+  if (tempPS3 > tempMaxPS)
+      {warningShow("chauffePS3");warning=true;}
+  else warningHide("chauffePS3");
+
+  if (tempPS4 > tempMaxPS)
+      {warningShow("chauffePS4");warning=true;}
+  else warningHide("chauffePS4");
+
+  if (tempPS1 > 85)
+      {warningShow("surchauffePS1");warning=true;}
+  else warningHide("surchauffePS1");
+
+  if (tempPS2 > 85)
+      {warningShow("surchauffePS2");warning=true;}
+  else warningHide("surchauffePS2");
+
+  if (tempPS3 > 85)
+      {warningShow("surchauffePS3");warning=true;}
+  else warningHide("surchauffePS3");
+
+  if (tempPS4 > 85)
+      {warningShow("surchauffePS4");warning=true;}
+  else warningHide("surchauffePS4");
+
+  if (prodPS1 < prodMinPS && lum > 200)
+      {warningShow("pbProdPS1");warning=true;}
+  else warningHide("pbProdPS1");
+
+  if (prodPS2 < prodMinPS && lum > 200)
+      {warningShow("pbProdPS2");warning=true;}
+  else warningHide("pbProdPS2");
+
+  if (prodPS3 < prodMinPS && lum > 200)
+      {warningShow("pbProdPS3");warning=true;}
+  else warningHide("pbProdPS3");
+
+  if (prodPS4 < prodMinPS && lum > 200)
+      {warningShow("pbProdPS4");warning=true;}
+  else warningHide("pbProdPS4");
+
+  if (vitBateau > 10 && hydroH240DansEau)
+      {warningShow("pbVitHYD1");warning=true;}
+  else warningHide("pbVitHYD1");
+
+  if (vitBateau > 12 && hydroPOD600DansEau)
+      {warningShow("pbVitHYD2");warning=true;}
+  else warningHide("pbVitHYD2");
+  */
+
+  if (tempPileHG > 45)
+      {warningShow("surchauffePileHG");warning=true;}
+  else warningHide("surchauffePileHG");
+
+  if (tempPileHG < 5)
+      {warningShow("tropFroidPileHG");warning=true;}
+  else warningHide("tropFroidPileHG");
+
+  /*
+  if (tensionPileHG < 52 || tensionPileHG > 80)
+      {warningShow("pbProdPileHG");warning=true;}
+  else warningHide("pbProdPileHG");
+
+  if (consoPileHG > 65)
+      {warningShow("pbConsoPileHG");warning=true;}
+  else warningHide("pbConsoPileHG");
+  */
+
+  if (consoEquip > consoMaxEquip)
+      {warningShow("pbConsosEquip");warning=true;}
+  else warningHide("pbConsosEquip");
 
   //Changement de l'icone
   if (warning){
@@ -107,18 +223,18 @@ function updatePages(data) {
   document.getElementById("EOLProduction1").innerHTML     = round(data.sources.eolienne1.production);
   document.getElementById("EOLVitesse1").innerHTML        = round(data.sources.eolienne1.vitesse);
   document.getElementById("EOLTemperature1").innerHTML    = round(data.sources.eolienne1.temperature);
-  
+ 
   document.getElementById("EOLProduction2").innerHTML     = round(data.sources.eolienne2.production);
   document.getElementById("EOLVitesse2").innerHTML        = round(data.sources.eolienne2.vitesse);
   document.getElementById("EOLTemperature2").innerHTML    = round(data.sources.eolienne2.temperature);
-  
+ 
   document.getElementById("ANMVitesse").innerHTML         = round(data.anomometre.vitesseVent);
 
   //Page Hydroliennes
   document.getElementById("HYDProduction1").innerHTML     = round(data.sources.hydrolienne1.production);
   document.getElementById("HYDVitesse1").innerHTML        = round(data.sources.hydrolienne1.vitesse);
   document.getElementById("HYDTemperature1").innerHTML    = round(data.sources.hydrolienne1.temperature);
-  
+ 
   document.getElementById("HYDProduction2").innerHTML     = round(data.sources.hydrolienne2.production);
   document.getElementById("HYDVitesse2").innerHTML        = round(data.sources.hydrolienne2.vitesse);
   document.getElementById("HYDTemperature2").innerHTML    = round(data.sources.hydrolienne2.temperature);
@@ -126,14 +242,14 @@ function updatePages(data) {
   //Page Groupe electrogene
   document.getElementById("GREProduction1").innerHTML     = round(data.sources.groupeElectrogene.production);
   document.getElementById("GRETemperature1").innerHTML    = round(data.sources.groupeElectrogene.temperature);
-  
+ 
   //Page Alternateur
   document.getElementById("ALTProduction1").innerHTML     = round(data.sources.alternateur.production);
-  document.getElementById("ALTTemperature1").innerHTML    = round(data.sources.alternateur.temperature); 
+  document.getElementById("ALTTemperature1").innerHTML    = round(data.sources.alternateur.temperature);
 
   //Page pile à hydrogène
   document.getElementById("PHDProduction1").innerHTML     = round(data.sources.pilehydrogene.production);
-  document.getElementById("PHDTemperature1").innerHTML    = round(data.sources.pilehydrogene.temperature); 
+  document.getElementById("PHDTemperature1").innerHTML    = round(data.sources.pilehydrogene.temperature);
 }
 
 function updateDisplay(event) {
