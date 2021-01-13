@@ -1,0 +1,80 @@
+.flecheV {height: 100%}
+.flecheH {width: 100%}
+.icone {width: 75px}
+.logo {height: 50px;pointer-events:none}
+.marge {width: 5%}
+.lien {cursor: pointer}
+.case {width: 20%}
+.headerImg {width: 20%}
+.headerTitle {width: 60%}
+.alerte {margin-bottom: 10px}
+
+.retour {
+   cursor: pointer;
+   height: 50px
+}
+
+.ligne {
+   display: flex;
+   justify-content: space-evenly;
+}
+
+.colonne {
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+}
+
+p {
+   text-align: center;
+   vertical-align: middle;
+}
+
+div {
+   text-align: center;
+   vertical-align: middle;
+}
+
+settings {
+   position: absolute;
+   top: 10px;
+   right: 10px;
+}
+
+warnings {
+   position: absolute;
+   top: 10px;
+   left: 10px;
+}
+
+
+.slider {
+   -webkit-appearance: none;
+   width: 100%;
+   height: 25px;
+   background: #d3d3d3;
+   outline: none;
+   opacity: 0.7;
+   -webkit-transition: .2s;
+   transition: opacity .2s;
+}
+
+.slider:hover {
+   opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+   -webkit-appearance: none;
+   appearance: none;
+   width: 25px;
+   height: 25px;
+   background: #4CAF50;
+   cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+   width: 25px;
+   height: 25px;
+   background: #4CAF50;
+   cursor: pointer;
+}

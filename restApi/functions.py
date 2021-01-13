@@ -28,6 +28,8 @@ def generateValues():
                       "rendement"     : rnd(5,20),#%
                       "ensoleillement": rnd(60,80)}#%
 
+    anomometre = {"vitesseVent": rnd(0,45)} #m/s
+
     panneauxSolaires = round(panneauSolaire1["production"] + panneauSolaire2["production"] + panneauSolaire3["production"] + panneauSolaire4["production"])
 
     eolienne1={"production" : rnd(0,3),#KW
@@ -121,6 +123,7 @@ def generateValues():
               "consos"    : consos,
               "sommes"    : sommes,
               "transferts": transferts,
-              "batteries" : batteries}
+              "batteries" : batteries,
+              "anomometre": anomometre}
 
     return response
