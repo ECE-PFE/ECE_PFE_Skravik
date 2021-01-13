@@ -7,7 +7,24 @@
 .case {width: 20%}
 .headerImg {width: 20%}
 .headerTitle {width: 60%}
+<<<<<<< HEAD
 .alerte {margin-bottom: 10px}
+=======
+
+.alerte {
+   margin-bottom: 10px;
+   display:none;
+   border-color:#ff5722!important; /*w3-border-deep-orange*/
+   color:#000!important; /*w3-khaki*/
+   background-color:#f0e68c!important; /*w3-khaki*/
+   border-radius:16px;/*w3-round-xlarge*/
+   border:1px solid #ccc!important;/*w3-border*/
+}
+
+.alerte p {
+   text-align:left
+}
+>>>>>>> master
 
 .retour {
    cursor: pointer;
