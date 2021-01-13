@@ -4,13 +4,13 @@
    <head>
       <title>Skravik</title>
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-      <link rel="stylesheet" href="style.css">
-      <script type="text/javascript" src="script.js"></script>
+      <link rel="stylesheet" href="css/w3.css">
+      <link rel="stylesheet" href="css/style.css">
+      <script type="text/javascript" src="scripts/script.js"></script>
    </head>
    <body>
       <div class="w3-container page" id="PageMenu">
-         <img src="img/skravik_logo.png" style="height:100px">
+         <img src="img/skravik_logo.png" style="height:100px;pointer-events:none">
          <div class="w3-col">
             <div class="w3-col w3-container marge"></div>
             <div class="w3-col w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green colonne" style="width:30%">
@@ -328,12 +328,8 @@
                <div id="warningTropDeVent" class="w3-col w3-container w3-border w3-round-xlarge w3-khaki w3-border-deep-orange alerte">
                   <p>Il y a trop de vent</p>
                </div>
-               <div id="warningProblemeEolienne" class="w3-col w3-container w3-border w3-round-xlarge w3-khaki w3-border-deep-orange alerte">
-                  <p style="text-align:left">L'eolienne 1 ne produit pas d'energie, veuillez verifier que :
-                                        </br>- L'interrupteur n'est pas eteint
-                                        </br>- Les pales ne sont pas bloquées
-                                        </br>- blabla
-                                        </br>- blabla
+               <div id="warningProblemeEolienne" class="w3-col w3-container w3-border w3-round-xlarge w3-khaki w3-border-deep-orange alerte" style="display:none">
+                  <p style="text-align:left">L'eolienne 1 ne produit pas d'energie, veuillez verifier que :</br>- L'interrupteur n'est pas eteint</br>- Les pales ne sont pas bloquées</br>- blabla</br>- blabla
                   </p>
                </div>
                <div id="warningOK" class="w3-col w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green alerte">

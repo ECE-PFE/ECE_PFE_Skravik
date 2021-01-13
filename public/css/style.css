@@ -1,7 +1,7 @@
 .flecheV {height: 100%}
 .flecheH {width: 100%}
 .icone {width: 75px}
-.logo {height: 50px}
+.logo {height: 50px;pointer-events:none}
 .marge {width: 5%}
 .lien {cursor: pointer}
 .case {width: 20%}
@@ -11,7 +11,7 @@
 
 .retour {
    cursor: pointer;
-   height: 50px;
+   height: 50px
 }
 
 .ligne {
