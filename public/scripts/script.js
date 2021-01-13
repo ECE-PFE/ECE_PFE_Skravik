@@ -55,11 +55,11 @@ function checkWarnings(data) {
   var warning = false;
 
   //Verification de chaque alerte possible
-  if (vitesseVent > 2.5 && prodEOL1 == 0)
+  if (vitesseVent > 2.5 && prodEOL1 == 0 && vitesseVent < ventMax)
       {warningShow("pbProdEol1");warning=true;}
   else warningHide("pbProdEol1");
 
-  if (vitesseVent > 2.5 && prodEOL2 == 0)
+  if (vitesseVent > 2.5 && prodEOL2 == 0 && vitesseVent < ventMax)
       {warningShow("pbProdEol2");warning=true;}
   else warningHide("pbProdEol2");
 
