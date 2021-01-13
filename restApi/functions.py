@@ -40,6 +40,8 @@ def generateValues():
                "vitesse"    : rnd(15,45),#km/h
                "temperature": rnd(17,25)}#°C
 
+    if rnd(0,100)<80: eolienne2["production"]=0
+
     eoliennes = round(eolienne1["production"] + eolienne2["production"])
 
     hydrolienne1={"production" : rnd(0,5),#KW
