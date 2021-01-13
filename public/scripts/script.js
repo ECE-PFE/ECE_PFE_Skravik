@@ -1,3 +1,9 @@
+/////////////////////////////////////////////
+//////// Paramètres REST API SignalK ////////
+/////////////////////////////////////////////
+var host = "localhost";
+var port = 3000;
+var endpoint = "signalk/api/v1/vessels/";
 
 /////////////////////////////////////////
 //////// Paramètres des settings ////////
@@ -46,6 +52,8 @@ function checkWarnings(data) {
   }
 }
 
+
+
 /////////////////////////////////////
 //////// Gestion des données ////////
 /////////////////////////////////////
@@ -81,7 +89,7 @@ function updatePages(data) {
   else document.getElementById("IMGSourcesVersBatteries").setAttribute("src", "img/green_arrow_right.png");
 
   //Page panneaux solaires
-  document.getElementById("PANProduction1").innerHTML     = round(data.sources.panneauSolaire1.production);
+  document.getElementById("PANProduction1").innerHTML     = round(data.eletrical.panneauSolaire1.production);
   document.getElementById("PANInclinaison1").innerHTML    = round(data.sources.panneauSolaire1.inclinaison);
   document.getElementById("PANRendement1").innerHTML      = round(data.sources.panneauSolaire1.rendement);
   document.getElementById("PANEnsoleillement1").innerHTML = round(data.sources.panneauSolaire1.ensoleillement);
@@ -148,7 +156,7 @@ function fetchDataFromRestApi()  {
   console.log("Getting data...");
   var oReq = new XMLHttpRequest();
   oReq.addEventListener("load", updateDisplay);
-  oReq.open("GET", "http://localhost/values");
+  oReq.open("GET", "http://" + host + ":" + port + "/" + endpoint);
   oReq.send();
 }
 
