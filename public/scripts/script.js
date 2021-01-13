@@ -51,12 +51,14 @@ function checkWarnings(data) {
 /////////////////////////////////////
 
 function updatePages(data) {
+  console.log(data);
   //Page menu
   document.getElementById("panneauxsolaires").innerHTML     = round(data.sources.panneauxSolaires);
   document.getElementById("eoliennes").innerHTML            = round(data.sources.eoliennes);
   document.getElementById("hydroliennes").innerHTML         = round(data.sources.hydroliennes);
   document.getElementById("groupeEletrogene").innerHTML     = round(data.sources.groupeElectrogene.production);
   document.getElementById("alternateur").innerHTML          = round(data.sources.alternateur.production);
+  document.getElementById("pilehydrogene").innerHTML        = round(data.sources.pilehydrogene.production);
   document.getElementById("moteur").innerHTML               = round(data.consos.moteur.conso);
   document.getElementById("equipements").innerHTML          = round(data.consos.equipements.conso);
   document.getElementById("sommeSources").innerHTML         = round(data.sommes.sommeSources);
@@ -128,6 +130,10 @@ function updatePages(data) {
   //Page Alternateur
   document.getElementById("ALTProduction1").innerHTML     = round(data.sources.alternateur.production);
   document.getElementById("ALTTemperature1").innerHTML    = round(data.sources.alternateur.temperature); 
+
+  //Page pile à hydrogène
+  document.getElementById("PHDProduction1").innerHTML     = round(data.sources.pilehydrogene.production);
+  document.getElementById("PHDTemperature1").innerHTML    = round(data.sources.pilehydrogene.temperature); 
 }
 
 function updateDisplay(event) {

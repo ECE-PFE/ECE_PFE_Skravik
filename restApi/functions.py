@@ -56,6 +56,10 @@ def generateValues():
                  "vitesse"    : rnd(15,40),#tour/s
                  "temperature": rnd(17,25)}#°C
 
+    pilehydrogene={"production" : rnd(0,5),#KW
+                   "vitesse"    : rnd(15,40),#tour/s
+                   "temperature": rnd(17,25)}#°C
+
     groupeElectrogene={"production" : rnd(0,5),#KW
                        "temperature": rnd(17,25)}#°C
 
@@ -84,6 +88,7 @@ def generateValues():
              "hydrolienne2": hydrolienne2,
              "hydroliennes": hydroliennes,
              "alternateur": alternateur,
+             "pilehydrogene": pilehydrogene,
              "groupeElectrogene": groupeElectrogene}
 
     consos={"moteur": moteur,

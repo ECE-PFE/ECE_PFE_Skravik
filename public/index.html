@@ -60,6 +60,15 @@
                      <p><span id="alternateur">-</span> kW</p>
                   </div>
                </div>
+               <div class="w3-col lien" onclick="show('PagePileHydrogene');">
+                  <p><strong>Pile à hydrogène</strong></p>
+                  <div class="w3-half">
+                     <img class="icone" src="img/pilehydrogene.png">
+                  </div>
+                  <div class="w3-half w3-container">
+                     <p><span id="pilehydrogene">-</span> kW</p>
+                  </div>
+               </div>
             </div>
             <div class="w3-col w3-container colonne" style="width:60%">
                <div class="w3-row w3-container" style="display: flex;align-items:center">
@@ -95,7 +104,7 @@
                      </br></br></br>
                   </div>
                </div>
-               <div class="w3-row w3-container" style="margin-left:40%;height:200px">
+               <div class="w3-row w3-container" style="margin-left:40%;margin-top:3%;margin-bottom:3%;height:200px">
                   <img class="flecheV" id="IMGBatteriesVersConsos" src="img/grey_arrow_up.png">
                   <p id="" style="display:inline;width:70px">+ <span id="batteriesVersConsos">-</span> kW</p>
                </div>
@@ -299,6 +308,29 @@
                </br>
                <p>Production : <span id="ALTProduction1">-</span> W</p>
                <p>Temperature : <span id="ALTTemperature1">-</span> °C</p>
+            </div>
+         </div>
+      </div>
+      <div id="PagePileHydrogene" class="page" style="display:none">
+         <div class="w3-col">
+            <div class="w3-col w3-container headerImg">
+               <img class="retour" src="img/return.png" onclick="show('PageMenu');">
+            </div>
+            <div class="w3-col w3-container headerTitle">
+               <h1>Pile à hydrogène</h1>
+            </div>
+            <div class="w3-col w3-container headerImg">
+               <img class="logo" src="img/skravik_logo.png">
+            </div>
+         </div>
+         </br>
+         <div class="w3-col ligne">
+            <div class="w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green case">
+               <p>Pile à hydrogène 1</p>
+               <img class="icone" src="img/pilehydrogene.png">
+               </br>
+               <p>Production : <span id="PHDProduction1">-</span> W</p>
+               <p>Temperature : <span id="PHDTemperature1">-</span> °C</p>
             </div>
          </div>
       </div>
