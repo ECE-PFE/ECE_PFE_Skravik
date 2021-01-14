@@ -280,27 +280,25 @@ function updatePages(data) {
 //   else document.getElementById("IMGSourcesVersBatteries").setAttribute("src", "img/green_arrow_right.png"");
 
   //Page panneaux solaires
-  //document.getElementById("PANInclinaison1").innerHTML    = get(data, "electrical.solar.panneauSolaire1.tilt.value");
-  document.getElementById("PANProduction1").innerHTML     = get(data, "electrical.solar.panneauSolaire1.power.value");
-//   document.getElementById("PANRendement1").innerHTML      = get(data, "electrical.solar.panneauSolaire1.efficiency.value");
-//   document.getElementById("PANEnsoleillement1").innerHTML = get(data, "electrical.solar.panneauSolaire1.illuminance.value");
-//   document.getElementById("PANTemperature1").innerHTML = get(data, "electrical.solar.panneauSolaire1.temperature.value");
+  document.getElementById("PANInclinaison1").innerHTML    = get(data, "electrical.solar.solarPanel1.tilt.value");
+  document.getElementById("PANProduction1").innerHTML     = get(data, "electrical.solar.solarPanel1.power.value");
+  document.getElementById("PANEnsoleillement1").innerHTML = get(data, "electrical.solar.solarPanel1.illuminance.value");
+  document.getElementById("PANTemperature1").innerHTML = get(data, "electrical.solar.solarPanel1.temperature.value");
 
-//   document.getElementById("PANInclinaison2").innerHTML    = get(data, "electrical.solar.panneauSolaire2.tilt.value");
-  document.getElementById("PANProduction2").innerHTML     = get(data, "electrical.solar.panneauSolaire2.power.value");
-//   document.getElementById("PANRendement2").innerHTML      = get(data, "electrical.solar.panneauSolaire2.efficiency.value");
-//   document.getElementById("PANEnsoleillement2").innerHTML = get(data, "electrical.solar.panneauSolaire2.illuminance.value");
-//   document.getElementById("PANTemperature2").innerHTML = get(data, "electrical.solar.panneauSolaire2.temperature.value");
+  document.getElementById("PANInclinaison2").innerHTML    = get(data, "electrical.solar.solarPanel2.tilt.value");
+  document.getElementById("PANProduction2").innerHTML     = get(data, "electrical.solar.solarPanel2.power.value");
+  document.getElementById("PANEnsoleillement2").innerHTML = get(data, "electrical.solar.solarPanel2.illuminance.value");
+  document.getElementById("PANTemperature2").innerHTML = get(data, "electrical.solar.solarPanel2.temperature.value");
 
-  document.getElementById("PANInclinaison3").innerHTML    = get(data, "electrical.solar.panneauSolaire3.tilt.value");
-  document.getElementById("PANProduction3").innerHTML     = get(data, "electrical.solar.panneauSolaire3.power.value");
-  document.getElementById("PANEnsoleillement3").innerHTML = get(data, "electrical.solar.panneauSolaire3.illuminance.value");
-  document.getElementById("PANTemperature3").innerHTML    = get(data, "electrical.solar.panneauSolaire3.temperature.value");
+  document.getElementById("PANInclinaison3").innerHTML    = get(data, "electrical.solar.solarPanel3.tilt.value");
+  document.getElementById("PANProduction3").innerHTML     = get(data, "electrical.solar.solarPanel3.power.value");
+  document.getElementById("PANEnsoleillement3").innerHTML = get(data, "electrical.solar.solarPanel3.illuminance.value");
+  document.getElementById("PANTemperature3").innerHTML    = get(data, "electrical.solar.solarPanel3.temperature.value");
 
-  document.getElementById("PANInclinaison4").innerHTML    = get(data, "electrical.solar.panneauSolaire4.tilt.value");
-  document.getElementById("PANProduction4").innerHTML     = get(data, "electrical.solar.panneauSolaire4.power.value");
-  document.getElementById("PANEnsoleillement4").innerHTML = get(data, "electrical.solar.panneauSolaire4.illuminance.value");
-  document.getElementById("PANTemperature4").innerHTML    = get(data, "electrical.solar.panneauSolaire4.temperature.value");
+  document.getElementById("PANInclinaison4").innerHTML    = get(data, "electrical.solar.solarPanel4.tilt.value");
+  document.getElementById("PANProduction4").innerHTML     = get(data, "electrical.solar.solarPanel4.power.value");
+  document.getElementById("PANEnsoleillement4").innerHTML = get(data, "electrical.solar.solarPanel4.illuminance.value");
+  document.getElementById("PANTemperature4").innerHTML    = get(data, "electrical.solar.solarPanel4.temperature.value");
 
   //Page Eoliennes
   document.getElementById("EOLProduction1").innerHTML     = get(data, "electrical.windTurbine.windTurbine1.power.value");
