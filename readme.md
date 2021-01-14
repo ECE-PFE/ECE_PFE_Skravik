@@ -10,7 +10,7 @@ Note : On notera `%SignalK%` le dossier d'installation de signalK
 - Aller sur `http://localhost:3000` dans le navigateur internet.
 	- Si la page de répond pas (donc que le serveur signalK ne tourne pas déjà) : 
 		- Dans le dossier `%SignalK%\tools`, lancer le racourci `SignalK-CLI`, puis ecrire dans la fenetre qui s'ouvre : `signalk-server.cmd`. Si tout se passe bien il devrait y avoir de nombreuses lignes commencant par GET.
-	- Si la page répond et que vous arrivez sur une interface de SignalK, passez au point suivant
+	- Si la page répond et que vous arrivez sur une interface de SignalK, l'installation est terminée.
 
 ## Simulation
 - Dans l'interface de SignalK, aller dans `Webapps`, ouvrir dans deux nouveaux onglets `Skravik` et `Skravik_sim`
