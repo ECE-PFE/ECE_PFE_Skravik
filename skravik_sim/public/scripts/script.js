@@ -36,11 +36,12 @@ function post(){
     var msg = [];
     var datas = document.getElementsByTagName("input");
     for(var k=0; k<datas.length; k++){
-        if(datas[k].hasAttribute("id")){
+        if(datas[k].hasAttribute("path_sk")){
             if(datas[k].path_sk != ""){
-                msg.push({
-                    "path" : datas[k].getAttribute("path_sk"),
-                    "value": parseFloat(datas[k].value)
+                msg.push(
+                {
+                        "path" : datas[k].getAttribute("path_sk"),
+                        "value": parseFloat(datas[k].value)
                 });
             }
         }

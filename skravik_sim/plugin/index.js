@@ -7,7 +7,7 @@ module.exports = (app) => {
   
     plugin.id = 'skravik-sim-plugin';
     plugin.name = 'Skravik Simulator';
-    plugin.description = 'Simule la production et consommation en kW';
+    plugin.description = 'Simule la production et la consommation en kW';
 
     plugin.start = function (options, restartPlugin) {
         // Here we put our plugin logic
@@ -42,7 +42,14 @@ module.exports = (app) => {
             return;
         }
 
-        app.handleMessage(null, { updates: [{ values: data }] });
+        app.handleMessage(plugin.id, 
+            { 
+                updates: [
+                    { 
+                        values: data 
+                    }
+                ] 
+            });
     };
     
     plugin.schema = {
