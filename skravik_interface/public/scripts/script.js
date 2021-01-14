@@ -294,44 +294,39 @@ function updatePages(data) {
 
   document.getElementById("PANInclinaison3").innerHTML    = get(data, "electrical.solar.panneauSolaire3.tilt.value");
   document.getElementById("PANProduction3").innerHTML     = get(data, "electrical.solar.panneauSolaire3.power.value");
-  document.getElementById("PANRendement3").innerHTML      = get(data, "electrical.solar.panneauSolaire3.efficiency.value");
   document.getElementById("PANEnsoleillement3").innerHTML = get(data, "electrical.solar.panneauSolaire3.illuminance.value");
-  //document.getElementById("PANTemperature3").innerHTML    = get(data, "electrical.solar.panneauSolaire3.temperature.value");
+  document.getElementById("PANTemperature3").innerHTML    = get(data, "electrical.solar.panneauSolaire3.temperature.value");
 
   document.getElementById("PANInclinaison4").innerHTML    = get(data, "electrical.solar.panneauSolaire4.tilt.value");
   document.getElementById("PANProduction4").innerHTML     = get(data, "electrical.solar.panneauSolaire4.power.value");
-  document.getElementById("PANRendement4").innerHTML      = get(data, "electrical.solar.panneauSolaire4.efficiency.value");
   document.getElementById("PANEnsoleillement4").innerHTML = get(data, "electrical.solar.panneauSolaire4.illuminance.value");
-  //document.getElementById("PANTemperature4").innerHTML    = get(data, "electrical.solar.panneauSolaire4.temperature.value");
+  document.getElementById("PANTemperature4").innerHTML    = get(data, "electrical.solar.panneauSolaire4.temperature.value");
 
   //Page Eoliennes
   document.getElementById("EOLProduction1").innerHTML     = get(data, "electrical.windTurbine.windTurbine1.power.value");
   document.getElementById("EOLVitesse1").innerHTML        = get(data, "electrical.windTurbine.windTurbine1.windTurbineSpeed.value");
-  document.getElementById("EOLTemperature1").innerHTML    = get(data, "electrical.windTurbine.windTurbine1.temperature.value");
   
   document.getElementById("EOLProduction2").innerHTML     = get(data, "electrical.windTurbine.windTurbine2.power.value");
   document.getElementById("EOLVitesse2").innerHTML        = get(data, "electrical.windTurbine.windTurbine2.windTurbineSpeed.value");
-  document.getElementById("EOLTemperature2").innerHTML    = get(data, "electrical.windTurbine.windTurbine2.temperature.value");
   
   document.getElementById("ANMVitesse").innerHTML         = get(data, "environment.wind.speedTrue.value");
 
   //Page Hydroliennes
   document.getElementById("HYDProduction1").innerHTML     = get(data, "electrical.waterdTurbine.waterTurbine1.power.value");
   document.getElementById("HYDVitesse1").innerHTML        = get(data, "electrical.waterdTurbine.waterTurbine1.waterTurbineSpeed.value");
-  document.getElementById("HYDTemperature1").innerHTML    = get(data, "environment.water.temperature.value");
   
   document.getElementById("HYDProduction2").innerHTML     = get(data, "electrical.waterTurbine.waterTurbine2.power.value");
   document.getElementById("HYDVitesse2").innerHTML        = get(data, "electrical.waterdTurbine.waterTurbine2.waterTurbineSpeed.value");
-  document.getElementById("HYDTemperature2").innerHTML    = get(data, "environment.water.temperature.value");
-
+  
   //Page Groupe electrogene
   document.getElementById("GREProduction1").innerHTML     = get(data, "electrical.generators.generator1.power.value");
   document.getElementById("GRETemperature1").innerHTML    = get(data, "electrical.generators.generator1.temperature.value");
   
   //Page Alternateur
   document.getElementById("ALTProduction1").innerHTML     = get(data, "electrical.alternators.alternator1.power.value");
-  document.getElementById("ALTTemperature1").innerHTML    = get(data, "electrical.alternators.alternator1.temperature.value"); 
-}
+
+  document.getElementById("ALTProduction2").innerHTML     = get(data, "electrical.alternators.alternator2.power.value");
+  }
 
 function updateDisplay(event) {
   var json = event.target.responseText;
