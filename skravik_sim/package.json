@@ -1,0 +1,16 @@
+{
+  "name": "skravik_sim",
+  "version": "1.0.0",
+  "description": "Interface de simulation",
+  "main": "plugin/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "signalk-node-server-plugin",
+    "signalk-webapp"
+  ],
+  "signalk-plugin-enabled-by-default": true,
+  "author": "",
+  "license": "ISC"
+}
