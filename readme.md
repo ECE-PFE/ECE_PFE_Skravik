@@ -1,7 +1,6 @@
 
 # (ECE) PFE Skravik
-## Installation
-#### Installation de signalK
+## Installation de signalK
 Note : On notera `%SignalK%` le dossier d'installation de signalK
 - [Telecharger l'installeur de signalK server ici](https://github.com/SignalK/signalk-server-windows)
 - Dans signalk_interface, lancer `npm link`
