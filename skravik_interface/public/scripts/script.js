@@ -217,7 +217,7 @@ function get(data, path){
     pathArray.forEach(function(item){
       object = object[item];
     });
-    return round(object);
+    return object;
   } catch (error) {
     console.log("Note found : " + path);
     return "-";
