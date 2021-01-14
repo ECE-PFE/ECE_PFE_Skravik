@@ -16,6 +16,9 @@ var settings =[
   [0,  200, 200,   "Prod panneau solaire minimale"]
 ]//min, max, default, text
 
+function round(x) {
+    return Number.parseFloat(x).toFixed(1);
+  }
 
 /////////////////////////////////////////////
 //////// Gestion page avertissements ////////
@@ -195,6 +198,8 @@ function checkWarnings(data) {
 /////////////////////////////////////
 
 function updatePages(data) {
+
+    console.log(data);
   //Page menu
 //   document.getElementById("panneauxsolaires").innerHTML     = round(data.sources.panneauxSolaires);
 //   document.getElementById("eoliennes").innerHTML            = round(data.sources.eoliennes);
@@ -205,37 +210,37 @@ function updatePages(data) {
 //   document.getElementById("equipements").innerHTML          = round(data.consos.equipements.conso);
 //   document.getElementById("sommeSources").innerHTML         = round(data.sommes.sommeSources);
 //   document.getElementById("sommeConsos").innerHTML          = round(data.sommes.sommeConsos);
-  document.getElementById("batterie1").innerHTML            = round(data.electrical.batteries[0].capacity.stateOfCharge.value);
-  document.getElementById("batterie2").innerHTML            = round(data.electrical.batteries[1].capacity.stateOfCharge.value);
-  document.getElementById("batterie3").innerHTML            = round(data.electrical.batteries[2].capacity.stateOfCharge.value);
+//   document.getElementById("batterie1").innerHTML            = round(data.electrical.batteries[0].capacity.stateOfCharge.value);
+//   document.getElementById("batterie2").innerHTML            = round(data.electrical.batteries[1].capacity.stateOfCharge.value);
+//   document.getElementById("batterie3").innerHTML            = round(data.electrical.batteries[2].capacity.stateOfCharge.value);
 //   document.getElementById("sourcesVersConsos").innerHTML    = round(data.transferts.sourcesVersConsos);
 //   document.getElementById("batteriesVersConsos").innerHTML  = round(data.transferts.batteriesVersConsos);
 //   document.getElementById("sourcesVersBatteries").innerHTML = round(data.transferts.sourcesVersBatteries);
 
-  if (data.transferts.sourcesVersConsos == 0)
-       document.getElementById("IMGSourcesVersConsos").setAttribute("src", "img/grey_arrow_right.png");
-  else document.getElementById("IMGSourcesVersConsos").setAttribute("src", "img/green_arrow_right.png");
+//   if (data.transferts.sourcesVersConsos == 0)
+//        document.getElementById("IMGSourcesVersConsos").setAttribute("src", "img/grey_arrow_right.png");
+//   else document.getElementById("IMGSourcesVersConsos").setAttribute("src", "img/green_arrow_right.png");
 
-  if (data.transferts.batteriesVersConsos == 0)
-       document.getElementById("IMGBatteriesVersConsos").setAttribute("src", "img/grey_arrow_up.png");
-  else document.getElementById("IMGBatteriesVersConsos").setAttribute("src", "img/green_arrow_up.png");
+//   if (data.transferts.batteriesVersConsos == 0)
+//        document.getElementById("IMGBatteriesVersConsos").setAttribute("src", "img/grey_arrow_up.png");
+//   else document.getElementById("IMGBatteriesVersConsos").setAttribute("src", "img/green_arrow_up.png");
 
-  if (data.transferts.sourcesVersBatteries == 0)
-       document.getElementById("IMGSourcesVersBatteries").setAttribute("src", "img/grey_arrow_right.png");
-  else document.getElementById("IMGSourcesVersBatteries").setAttribute("src", "img/green_arrow_right.png");
+//   if (data.transferts.sourcesVersBatteries == 0)
+//        document.getElementById("IMGSourcesVersBatteries").setAttribute("src", "img/grey_arrow_right.png");
+//   else document.getElementById("IMGSourcesVersBatteries").setAttribute("src", "img/green_arrow_right.png");
 
   //Page panneaux solaires
-  document.getElementById("PANInclinaison1").innerHTML    = round(data.electrical.solar.panneauSolaire1.tilt.value);
+  //document.getElementById("PANInclinaison1").innerHTML    = round(data.electrical.solar.panneauSolaire1.tilt.value);
   document.getElementById("PANProduction1").innerHTML     = round(data.electrical.solar.panneauSolaire1.power.value);
-  document.getElementById("PANRendement1").innerHTML      = round(data.electrical.solar.panneauSolaire1.efficiency.value);
-  document.getElementById("PANEnsoleillement1").innerHTML = round(data.electrical.solar.panneauSolaire1.illuminance.value);
-  document.getElementById("PANTemperature1").innerHTML = round(data.electrical.solar.panneauSolaire1.temperature.value);
+//   document.getElementById("PANRendement1").innerHTML      = round(data.electrical.solar.panneauSolaire1.efficiency.value);
+//   document.getElementById("PANEnsoleillement1").innerHTML = round(data.electrical.solar.panneauSolaire1.illuminance.value);
+//   document.getElementById("PANTemperature1").innerHTML = round(data.electrical.solar.panneauSolaire1.temperature.value);
 
-  document.getElementById("PANInclinaison2").innerHTML    = round(data.electrical.solar.panneauSolaire2.tilt.value);
+//   document.getElementById("PANInclinaison2").innerHTML    = round(data.electrical.solar.panneauSolaire2.tilt.value);
   document.getElementById("PANProduction2").innerHTML     = round(data.electrical.solar.panneauSolaire2.power.value);
-  document.getElementById("PANRendement2").innerHTML      = round(data.electrical.solar.panneauSolaire2.efficiency.value);
-  document.getElementById("PANEnsoleillement2").innerHTML = round(data.electrical.solar.panneauSolaire2.illuminance.value);
-  document.getElementById("PANTemperature2").innerHTML = round(data.electrical.solar.panneauSolaire2.temperature.value);
+//   document.getElementById("PANRendement2").innerHTML      = round(data.electrical.solar.panneauSolaire2.efficiency.value);
+//   document.getElementById("PANEnsoleillement2").innerHTML = round(data.electrical.solar.panneauSolaire2.illuminance.value);
+//   document.getElementById("PANTemperature2").innerHTML = round(data.electrical.solar.panneauSolaire2.temperature.value);
 
   document.getElementById("PANInclinaison3").innerHTML    = round(data.electrical.solar.panneauSolaire3.tilt.value);
   document.getElementById("PANProduction3").innerHTML     = round(data.electrical.solar.panneauSolaire3.power.value);
@@ -261,12 +266,12 @@ function updatePages(data) {
   document.getElementById("ANMVitesse").innerHTML         = round(data.environment.wind.speedTrue.value);
 
   //Page Hydroliennes
-  document.getElementById("HYDProduction1").innerHTML     = round(data.electrical.windTurbine.waterTurbine1.power.value);
-  document.getElementById("HYDVitesse1").innerHTML        = round(data.electrical.windTurbine.waterTurbine1.waterTurbineSpeed.value);
+  document.getElementById("HYDProduction1").innerHTML     = round(data.electrical.waterdTurbine.waterTurbine1.power.value);
+  document.getElementById("HYDVitesse1").innerHTML        = round(data.electrical.waterdTurbine.waterTurbine1.waterTurbineSpeed.value);
   document.getElementById("HYDTemperature1").innerHTML    = round(data.environment.water.temperature.value);
   
-  document.getElementById("HYDProduction2").innerHTML     = round(data.electrical.windTurbine.waterTurbine2.power.value);
-  document.getElementById("HYDVitesse2").innerHTML        = round(data.electrical.windTurbine.waterTurbine2.waterTurbineSpeed.value);
+  document.getElementById("HYDProduction2").innerHTML     = round(data.electrical.waterTurbine.waterTurbine2.power.value);
+  document.getElementById("HYDVitesse2").innerHTML        = round(data.electrical.waterdTurbine.waterTurbine2.waterTurbineSpeed.value);
   document.getElementById("HYDTemperature2").innerHTML    = round(data.environment.water.temperature.value);
 
   //Page Groupe electrogene
@@ -324,14 +329,6 @@ function show(elementID) {
 
    // then show the requested page
    ele.style.display = 'block';
-}
-
-
-/////////////////////////////////////////
-//////// Gestion page paramètres ////////
-/////////////////////////////////////////
-function round(x) {
-  return Number.parseFloat(x).toFixed(1);
 }
 
 
