@@ -219,7 +219,7 @@ function get(data, path){
     });
     return object;
   } catch (error) {
-    console.log("Note found : " + path);
+    console.error("Note found : " + path);
     return "-";
   }
 }
