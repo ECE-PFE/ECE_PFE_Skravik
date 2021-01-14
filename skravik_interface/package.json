@@ -1,0 +1,25 @@
+{
+  "name": "skravik",
+  "version": "1.0.0",
+  "description": "Interface Skravik",
+  "main": "public/index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ECE-PFE/ECE_PFE_Skravik.git"
+  },
+  "keywords": [
+    "signalk-webapp"
+  ],
+  "author": "Skravik",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ECE-PFE/ECE_PFE_Skravik/issues"
+  },
+  "homepage": "https://github.com/ECE-PFE/ECE_PFE_Skravik#readme",
+  "dependencies": {
+    "@signalk/client": "^2.1.6"
+  }
+}
