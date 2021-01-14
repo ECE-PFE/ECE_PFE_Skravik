@@ -140,7 +140,7 @@
             <img class="retour"  src="img/settings.png" onclick="show('PageSettings');pullSettings();">
          </settings>
          <warnings>
-            <img class="icone lien" id="warningImg" src="img/warning.gif" onclick="show('PageWarnings');">
+            <img class="icone lien" id="warningImg" src="img/error.png" onclick="show('PageWarnings');">
          </warnings>
       </div>
       <div id="PagePanneauxSolaires" class="page" style="display:none">
@@ -426,8 +426,11 @@
                <div class="w3-col w3-container alerte" id="pbConsosEquip">
                   <p>La consommation des équipements est anormalement élevée, veuillez vérifier que tous les appareils branchés sont réellement en cours d’utilisation.</p>
                </div>
-               <div id="warningOK" class="w3-col w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green" style="margin-bottom: 10px;">
+               <div id="warningOK" class="w3-col w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green" style="margin-bottom: 10px;display:none">
                   <p>Tout va bien</p>
+               </div>
+               <div id="warningERR" class="w3-col w3-container w3-border w3-round-xlarge w3-pale-red w3-border-red" style="margin-bottom: 10px;">
+                  <p>Erreur générale</p>
                </div>
             </div>
          </div>

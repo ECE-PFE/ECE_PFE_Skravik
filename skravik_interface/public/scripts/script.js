@@ -62,123 +62,100 @@ function checkWarnings(data) {
   var consoMaxEquip = localStorage.getItem('settingsVal2');
 
   var warning = false;
+  var warningEOL = false;
+  var warningEOL1 = false;
+  var warningEOL2 = false;
+  var warningPS = false;
   var warningPS1 = false;
   var warningPS2 = false;
   var warningPS3 = false;
   var warningPS4 = false;
+  var warningHYD = false;
   var warningHYD1 = false;
   var warningHYD2 = false;
   var warningPHG = false;
 
   //Verification de chaque alerte possible
-  if (vitesseVent > ventMax){
-    warning=true;
-    warningShow("tropDeVent");
-    document.getElementById("IMGeolienne1").setAttribute("src", "img/eolienne_alerte.gif");
-    document.getElementById("IMGeolienne2").setAttribute("src", "img/eolienne_alerte.gif");
-    document.getElementById("IMGeolienne").setAttribute("src", "img/eolienne_alerte.gif");
-  }
-  else {
-    warningHide("tropDeVent");
-    
-    if (vitesseVent > 2.5 && prodEOL1 == 0){
-      document.getElementById("IMGeolienne1").setAttribute("src", "img/eolienne_alerte.gif");
-      document.getElementById("IMGeolienne").setAttribute("src", "img/eolienne_alerte.gif");
-      warningShow("pbProdEol1");
-      warning=true;
-    }
-    else {
-      warningHide("pbProdEol1");
-      document.getElementById("IMGeolienne1").setAttribute("src", "img/eolienne.png");
-      document.getElementById("IMGeolienne").setAttribute("src", "img/eolienne.png");
-    }
-    
-    if (vitesseVent > 2.5 && prodEOL2 == 0){
-      document.getElementById("IMGeolienne2").setAttribute("src", "img/eolienne_alerte.gif");
-      document.getElementById("IMGeolienne").setAttribute("src", "img/eolienne_alerte.gif");
-      warningShow("pbProdEol2");
-      warning=true;
-    }
-    else {
-      warningHide("pbProdEol2");
-      document.getElementById("IMGeolienne2").setAttribute("src", "img/eolienne.png");
-      document.getElementById("IMGeolienne").setAttribute("src", "img/eolienne.png");
-    }
-  }
+  if (vitesseVent > 2.5 && prodEOL1 == 0 && vitesseVent < ventMax)
+      {warningShow("pbProdEol1");warning=true;warningEOL=true;warningEOL1=true;}
+  else warningHide("pbProdEol1");
 
-  
+  if (vitesseVent > 2.5 && prodEOL2 == 0 && vitesseVent < ventMax)
+      {warningShow("pbProdEol2");warning=true;warningEOL=true;warningEOL2=true;}
+  else warningHide("pbProdEol2");
+
+  if (vitesseVent > ventMax)
+      {warningShow("tropDeVent");warning=true;warningEOL=true;}
+  else warningHide("tropDeVent");
 
   if (sourcesTotales > consosTotales && prodVersBat == 0 && chargeBat1 == 1)
       {warningShow("pbChargeBat");warning=true;}
   else warningHide("pbChargeBat");
-
   /*
   if (tempPS1 > tempMaxPS)
-      {warningShow("chauffePS1");warning=true;warningPS1=true;}
+     {warningShow("chauffePS1");warning=true;warningPS=true;warningPS1=true;}
   else warningHide("chauffePS1");
 
   if (tempPS2 > tempMaxPS)
-      {warningShow("chauffePS2");warning=true;warningPS2=true;}
+      {warningShow("chauffePS2");warning=true;warningPS=true;warningPS2=true;}
   else warningHide("chauffePS2");
 
   if (tempPS3 > tempMaxPS)
-      {warningShow("chauffePS3");warning=true;warningPS3=true;}
+      {warningShow("chauffePS3");warning=true;warningPS=true;warningPS3=true;}
   else warningHide("chauffePS3");
 
   if (tempPS4 > tempMaxPS)
-      {warningShow("chauffePS4");warning=true;warningPS4=true;}
+      {warningShow("chauffePS4");warning=true;warningPS=true;warningPS4=true;}
   else warningHide("chauffePS4");
 
   if (tempPS1 > 85)
-      {warningShow("surchauffePS1");warning=true;warningPS1=true;}
+      {warningShow("surchauffePS1");warning=true;warningPS=true;warningPS1=true;}
   else warningHide("surchauffePS1");
 
   if (tempPS2 > 85)
-      {warningShow("surchauffePS2");warning=true;warningPS2=true;}
+      {warningShow("surchauffePS2");warning=true;warningPS=true;warningPS2=true;}
   else warningHide("surchauffePS2");
 
   if (tempPS3 > 85)
-      {warningShow("surchauffePS3");warning=true;warningPS3=true;}
+      {warningShow("surchauffePS3");warning=true;warningPS=true;warningPS3=true;}
   else warningHide("surchauffePS3");
 
   if (tempPS4 > 85)
-      {warningShow("surchauffePS4");warning=true;warningPS4=true;}
+      {warningShow("surchauffePS4");warning=true;warningPS=true;warningPS4=true;}
   else warningHide("surchauffePS4");
 
   if (prodPS1 < prodMinPS && lum > 200)
-      {warningShow("pbProdPS1");warning=true;warningPS1=true;}
+      {warningShow("pbProdPS1");warning=true;warningPS=true;warningPS1=true;}
   else warningHide("pbProdPS1");
 
   if (prodPS2 < prodMinPS && lum > 200)
-      {warningShow("pbProdPS2");warning=true;warningPS2=true;}
+      {warningShow("pbProdPS2");warning=true;warningPS=true;warningPS2=true;}
   else warningHide("pbProdPS2");
 
   if (prodPS3 < prodMinPS && lum > 200)
-      {warningShow("pbProdPS3");warning=true;warningPS3=true;}
+      {warningShow("pbProdPS3");warning=true;warningPS=true;warningPS3=true;}
   else warningHide("pbProdPS3");
 
   if (prodPS4 < prodMinPS && lum > 200)
-      {warningShow("pbProdPS4");warning=true;warningPS4=true;}
+      {warningShow("pbProdPS4");warning=true;warningPS=true;warningPS4=true;}
   else warningHide("pbProdPS4");
 
   if (vitBateau > 10 && hydroH240DansEau)
-      {warningShow("pbVitHYD1");warning=true;warningHYD1=true;}
+      {warningShow("pbVitHYD1");warning=true;warningHYD=true;warningHYD1=true;}
   else warningHide("pbVitHYD1");
 
   if (vitBateau > 12 && hydroPOD600DansEau)
-      {warningShow("pbVitHYD2");warning=true;warningHYD2=true;}
+      {warningShow("pbVitHYD2");warning=true;warningHYD=true;warningHYD2=true;}
   else warningHide("pbVitHYD2");
-  */
 
   if (tempPileHG > 45)
-      {warningShow("surchauffePileHG");warning=true;}
+      {warningShow("surchauffePileHG");warning=true;warningPHG=true;}
   else warningHide("surchauffePileHG");
 
   if (tempPileHG < 5)
-      {warningShow("tropFroidPileHG");warning=true;}
+      {warningShow("tropFroidPileHG");warning=true;warningPHG=true;}
   else warningHide("tropFroidPileHG");
 
-  /*
   if (tensionPileHG < 52 || tensionPileHG > 80)
       {warningShow("pbProdPileHG");warning=true;warningPHG=true;}
   else warningHide("pbProdPileHG");
@@ -187,13 +164,12 @@ function checkWarnings(data) {
       {warningShow("pbConsoPileHG");warning=true;warningPHG=true;}
   else warningHide("pbConsoPileHG");
   */
-
   if (consoEquip > consoMaxEquip)
       {warningShow("pbConsosEquip");warning=true;}
   else warningHide("pbConsosEquip");
 
   //Changement des icones
-  if (warning){
+  if (warning * warningEOL * warningPS * warningHYD * warningPHG){
     document.getElementById("warningImg").setAttribute("src", "img/warning.gif");
     warningHide("warningOK");
   }
@@ -201,8 +177,55 @@ function checkWarnings(data) {
     document.getElementById("warningImg").setAttribute("src", "img/green_check.png");
     warningShow("warningOK");
   }
-}
 
+  if (warningEOL)
+       document.getElementById("IMGeolienne").setAttribute("src", "img/eolienne_alerte.gif");
+  else document.getElementById("IMGeolienne").setAttribute("src", "img/eolienne.png");
+
+  if (warningEOL1)
+       document.getElementById("IMGeolienne1").setAttribute("src", "img/eolienne_alerte.gif");
+  else document.getElementById("IMGeolienne1").setAttribute("src", "img/eolienne.png");
+
+  if (warningEOL2)
+       document.getElementById("IMGeolienne2").setAttribute("src", "img/eolienne_alerte.gif");
+  else document.getElementById("IMGeolienne2").setAttribute("src", "img/eolienne.png");
+
+  if (warningPS)
+       document.getElementById("IMGpanneauxSolaires").setAttribute("src", "img/panneaux_solaire_alerte.gif");
+  else document.getElementById("IMGpanneauxSolaires").setAttribute("src", "img/panneaux_solaire.png");
+
+  if (warningPS1)
+       document.getElementById("IMGpanneauSolaire1").setAttribute("src", "img/panneaux_solaire_alerte.gif");
+  else document.getElementById("IMGpanneauSolaire1").setAttribute("src", "img/panneaux_solaire.png");
+
+  if (warningPS2)
+       document.getElementById("IMGpanneauSolaire2").setAttribute("src", "img/panneaux_solaire_alerte.gif");
+  else document.getElementById("IMGpanneauSolaire2").setAttribute("src", "img/panneaux_solaire.png");
+
+  if (warningPS3)
+       document.getElementById("IMGpanneauSolaire3").setAttribute("src", "img/panneaux_solaire_alerte.gif");
+  else document.getElementById("IMGpanneauSolaire3").setAttribute("src", "img/panneaux_solaire.png");
+
+  if (warningPS4)
+       document.getElementById("IMGpanneauSolaire4").setAttribute("src", "img/panneaux_solaire_alerte.gif");
+  else document.getElementById("IMGpanneauSolaire4").setAttribute("src", "img/panneaux_solaire.png");
+
+  if (warningHYD)
+       document.getElementById("IMGhydrolienne").setAttribute("src", "img/hydrolienne_alerte.gif");
+  else document.getElementById("IMGhydrolienne").setAttribute("src", "img/hydrolienne.png");
+
+  if (warningHYD1)
+       document.getElementById("IMGhydrolienne1").setAttribute("src", "img/hydrolienne_alerte.gif");
+  else document.getElementById("IMGhydrolienne1").setAttribute("src", "img/hydrolienne.png");
+
+  if (warningHYD2)
+       document.getElementById("IMGhydrolienne2").setAttribute("src", "img/hydrolienne_alerte.gif");
+  else document.getElementById("IMGhydrolienne2").setAttribute("src", "img/hydrolienne.png");
+
+  if (warningPHG)
+       document.getElementById("IMGpileHydrogene").setAttribute("src", "img/pilehydrogene_alerte.gif");
+  else document.getElementById("IMGpileHydrogene").setAttribute("src", "img/pilehydrogene.png");
+}
 
 
 /////////////////////////////////////
@@ -219,7 +242,7 @@ function get(data, path){
     });
     return object;
   } catch (error) {
-    console.error("Not found : " + path);
+    console.warn("Not found : " + path);
     return "-";
   }
 }
@@ -320,6 +343,8 @@ function updateDisplay(event) {
 
   checkWarnings(data);
   console.log("Warnings checked.");
+
+  warningHide("warningERR");//Si on reussi jusque la sans erreur c'est bon signe
 
   setTimeout(fetchDataFromRestApi, 1000);
 }
