@@ -31,34 +31,36 @@ function warningHide(id){
   document.getElementById(id).style.display = 'none';
 }
 
-function checkWarnings(data) {
-  //Vent trop rapide
-  var vitesseVent = get(data,"anomometre.vitesseVent");
+function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, sourcesVersBatteries
+  var vitesseVent = get(data,"environment.wind.speedTrue.value");
   var ventMax = localStorage.getItem('settingsVal0');
-  var prodEOL1 = get(data,"sources.eolienne1.production");
-  var prodEOL2 = get(data,"sources.eolienne2.production");
-  var sourcesTotales = get(data,"sommes.sommeSources");
-  var consosTotales = get(data,"sommes.sommeSources");
-  var prodVersBat = get(data,"transferts.sourcesVersBatteries");
-  var chargeBat1 = get(data,"batteries.batterie1");// a changer pour la charge totale ?
-  //var tempPS1 = data;
-  //var tempPS2 = data;
-  //var tempPS3 = data;
-  //var tempPS4 = data;
+  var prodEOL1 = get(data,"electrical.windTurbine.windTurbine1.power.value");
+  var prodEOL2 = get(data,"electrical.windTurbine.windTurbine2.power.value");
+  var sourcesTotales = sommeSources;
+  var consosTotales = sommeConsos;
+  var prodVersBat = sourcesVersBatteries;
+  var chargeBat1 = get(data,"electrical.batteries.0.capacity.stateOfCharge.value");// a changer pour la charge totale ?
+  var tempPS1 = get(data, "electrical.solar.panneauSolaire1.temperature.value");
+  var tempPS2 = get(data, "electrical.solar.panneauSolaire2.temperature.value");
+  var tempPS3 = get(data, "electrical.solar.panneauSolaire3.temperature.value");
+  var tempPS4 = get(data, "electrical.solar.panneauSolaire4.temperature.value");
   var tempMaxPS = localStorage.getItem('settingsVal1');
-  var prodPS1 = get(data,"sources.panneauSolaire1.production");
-  var prodPS2 = get(data,"sources.panneauSolaire2.production");
-  var prodPS3 = get(data,"sources.panneauSolaire3.production");
-  var prodPS4 = get(data,"sources.panneauSolaire4.production");
+  var prodPS1 = get(data,"electrical.solar.panneauSolaire1.power.value");
+  var prodPS2 = get(data,"electrical.solar.panneauSolaire2.power.value");
+  var prodPS3 = get(data,"electrical.solar.panneauSolaire3.power.value");
+  var prodPS4 = get(data,"electrical.solar.panneauSolaire4.power.value");
   var prodMinPS = localStorage.getItem('settingsVal3');
-  //var lum = data;
-  //var vitBateau = data;
-  //var hydroH240DansEau = data;
-  //var hydroPOD600DansEau = data;
-  var tempPileHG = get(data,"sources.pilehydrogene.temperature");
-  //var tensionPileHG = data;
-  //var consoPileHG = data;
-  var consoEquip = get(data,"consos.equipements.conso");
+  var lum1 = get(data, "electrical.solar.panneauSolaire1.illuminance.value");;
+  var lum2 = get(data, "electrical.solar.panneauSolaire2.illuminance.value");;
+  var lum3 = get(data, "electrical.solar.panneauSolaire3.illuminance.value");;
+  var lum4 = get(data, "electrical.solar.panneauSolaire4.illuminance.value");;
+  var vitBateau = "-";
+  var hydroH240DansEau = "-";
+  var hydroPOD600DansEau = "-";
+  var tempPileHG = get(data,"electrical.pileHydrogene.power.value");
+  var tensionPileHG = "-";
+  var consoPileHG = "-";
+  var consoEquip = sommeEquipements;
   var consoMaxEquip = localStorage.getItem('settingsVal2');
 
   var warning = false;
@@ -91,7 +93,7 @@ function checkWarnings(data) {
   if (sourcesTotales > consosTotales && prodVersBat == 0 && chargeBat1 == 1)
       {warningShow("pbChargeBat");warning=true;}
   else warningHide("pbChargeBat");
-  /*
+  
   if (tempPS1 > tempMaxPS)
      {warningShow("chauffePS1");warning=true;warningPS=true;warningPS1=true;}
   else warningHide("chauffePS1");
@@ -124,19 +126,19 @@ function checkWarnings(data) {
       {warningShow("surchauffePS4");warning=true;warningPS=true;warningPS4=true;}
   else warningHide("surchauffePS4");
 
-  if (prodPS1 < prodMinPS && lum > 200)
+  if (prodPS1 < prodMinPS && lum1 > 200)
       {warningShow("pbProdPS1");warning=true;warningPS=true;warningPS1=true;}
   else warningHide("pbProdPS1");
 
-  if (prodPS2 < prodMinPS && lum > 200)
+  if (prodPS2 < prodMinPS && lum2 > 200)
       {warningShow("pbProdPS2");warning=true;warningPS=true;warningPS2=true;}
   else warningHide("pbProdPS2");
 
-  if (prodPS3 < prodMinPS && lum > 200)
+  if (prodPS3 < prodMinPS && lum3 > 200)
       {warningShow("pbProdPS3");warning=true;warningPS=true;warningPS3=true;}
   else warningHide("pbProdPS3");
 
-  if (prodPS4 < prodMinPS && lum > 200)
+  if (prodPS4 < prodMinPS && lum4 > 200)
       {warningShow("pbProdPS4");warning=true;warningPS=true;warningPS4=true;}
   else warningHide("pbProdPS4");
 
@@ -163,7 +165,7 @@ function checkWarnings(data) {
   if (consoPileHG > 65)
       {warningShow("pbConsoPileHG");warning=true;warningPHG=true;}
   else warningHide("pbConsoPileHG");
-  */
+
   if (consoEquip > consoMaxEquip)
       {warningShow("pbConsosEquip");warning=true;}
   else warningHide("pbConsosEquip");
@@ -323,17 +325,17 @@ function updatePages(data) {
   document.getElementById("batterie2").innerHTML        = get(data, "electrical.batteries.1.capacity.stateOfCharge.value");
   document.getElementById("batterie3").innerHTML        = get(data, "electrical.batteries.2.capacity.stateOfCharge.value");
 
-//   if (data.transferts.sourcesVersConsos == 0)
-//        document.getElementById("IMGSourcesVersConsos").setAttribute("src", "img/grey_arrow_right.png"");
-//   else document.getElementById("IMGSourcesVersConsos").setAttribute("src", "img/green_arrow_right.png"");
+  if (sourcesVersConsos == 0)
+    document.getElementById("IMGSourcesVersConsos").setAttribute("src", "img/grey_arrow_right.png");
+  else document.getElementById("IMGSourcesVersConsos").setAttribute("src", "img/green_arrow_right.png");
 
-//   if (data.transferts.batteriesVersConsos == 0)
-//        document.getElementById("IMGBatteriesVersConsos").setAttribute("src", "img/grey_arrow_up.png"");
-//   else document.getElementById("IMGBatteriesVersConsos").setAttribute("src", "img/green_arrow_up.png"");
+  if (batteriesVersConsos == 0)
+    document.getElementById("IMGBatteriesVersConsos").setAttribute("src", "img/grey_arrow_up.png");
+  else document.getElementById("IMGBatteriesVersConsos").setAttribute("src", "img/green_arrow_up.png");
 
-//   if (data.transferts.sourcesVersBatteries == 0)
-//        document.getElementById("IMGSourcesVersBatteries").setAttribute("src", "img/grey_arrow_right.png"");
-//   else document.getElementById("IMGSourcesVersBatteries").setAttribute("src", "img/green_arrow_right.png"");
+  if (sourcesVersBatteries == 0)
+    document.getElementById("IMGSourcesVersBatteries").setAttribute("src", "img/grey_arrow_right.png");
+  else document.getElementById("IMGSourcesVersBatteries").setAttribute("src", "img/green_arrow_right.png");
 
   //Page panneaux solaires
   document.getElementById("PANInclinaison1").innerHTML    = get(data, "electrical.solar.panneauSolaire1.tilt.value");
@@ -383,6 +385,7 @@ function updatePages(data) {
   
   //Page Pile à hydrogene
   document.getElementById("PHDProduction1").innerHTML     = get(data, "electrical.pileHydrogene.power.value");
+  document.getElementById("PHDTemperature1").innerHTML    = get(data, "electrical.pileHydrogene.temperature.value");
   }
 
 function updateDisplay(event) {
@@ -398,7 +401,7 @@ function updateDisplay(event) {
 
   warningHide("warningERR");//Si on reussi jusque la sans erreur c'est bon signe
 
-  setTimeout(fetchDataFromRestApi, 1000);
+  setTimeout(fetchDataFromRestApi, 3000);
 }
 
 function fetchDataFromRestApi()  {
