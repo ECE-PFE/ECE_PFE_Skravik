@@ -1,24 +1,22 @@
 /////////////////////////////////////////////
 //////// Paramètres REST API SignalK ////////
 /////////////////////////////////////////////
-var host = "localhost";
-var port = 3000;
-var endpoint = "signalk/v1/api/vessels/self/";
+const host = "localhost";
+const port = 3000;
+const endpoint = "signalk/v1/api/vessels/self/";
+
 
 /////////////////////////////////////////
 //////// Paramètres des settings ////////
 /////////////////////////////////////////
 
-var settings =[
+const settings =[
   [0,  33,   33,   "Vitesse de vent max"],
   [75, 80,   80,   "Temperature max des panneaux solaires"],
   [0,  2935, 2935, "Conso max des équipements"],
   [0,  200, 200,   "Prod panneau solaire minimale"]
 ]//min, max, default, text
 
-function round(x) {
-    return Number.parseFloat(x).toFixed(1);
-  }
 
 /////////////////////////////////////////////
 //////// Gestion page avertissements ////////
@@ -31,51 +29,51 @@ function warningHide(id){
   document.getElementById(id).style.display = 'none';
 }
 
-function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, sourcesVersBatteries
-  var vitesseVent = get(data,"environment.wind.speedTrue.value");
-  var ventMax = localStorage.getItem('settingsVal0');
-  var prodEOL1 = get(data,"electrical.windTurbine.windTurbine1.power.value");
-  var prodEOL2 = get(data,"electrical.windTurbine.windTurbine2.power.value");
-  var sourcesTotales = sommeSources;
-  var consosTotales = sommeConsos;
-  var prodVersBat = sourcesVersBatteries;
-  var chargeBat1 = get(data,"electrical.batteries.0.capacity.stateOfCharge.value");// a changer pour la charge totale ?
-  var tempPS1 = get(data, "electrical.solar.panneauSolaire1.temperature.value");
-  var tempPS2 = get(data, "electrical.solar.panneauSolaire2.temperature.value");
-  var tempPS3 = get(data, "electrical.solar.panneauSolaire3.temperature.value");
-  var tempPS4 = get(data, "electrical.solar.panneauSolaire4.temperature.value");
-  var tempMaxPS = localStorage.getItem('settingsVal1');
-  var prodPS1 = get(data,"electrical.solar.panneauSolaire1.power.value");
-  var prodPS2 = get(data,"electrical.solar.panneauSolaire2.power.value");
-  var prodPS3 = get(data,"electrical.solar.panneauSolaire3.power.value");
-  var prodPS4 = get(data,"electrical.solar.panneauSolaire4.power.value");
-  var prodMinPS = localStorage.getItem('settingsVal3');
-  var lum1 = get(data, "electrical.solar.panneauSolaire1.illuminance.value");;
-  var lum2 = get(data, "electrical.solar.panneauSolaire2.illuminance.value");;
-  var lum3 = get(data, "electrical.solar.panneauSolaire3.illuminance.value");;
-  var lum4 = get(data, "electrical.solar.panneauSolaire4.illuminance.value");;
-  var vitBateau = "-";
-  var hydroH240DansEau = "-";
-  var hydroPOD600DansEau = "-";
-  var tempPileHG = get(data,"electrical.pileHydrogene.power.value");
-  var tensionPileHG = "-";
-  var consoPileHG = "-";
-  var consoEquip = sommeEquipements;
-  var consoMaxEquip = localStorage.getItem('settingsVal2');
+function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, sourcesVersBatteries sont dispo par effet de bord
+  let vitesseVent = get(data,"environment.wind.speedTrue.value");
+  let ventMax = localStorage.getItem('settingsVal0');
+  let prodEOL1 = get(data,"electrical.windTurbine.windTurbine1.power.value");
+  let prodEOL2 = get(data,"electrical.windTurbine.windTurbine2.power.value");
+  let sourcesTotales = sommeSources;
+  let consosTotales = sommeConsos;
+  let prodVersBat = sourcesVersBatteries;
+  let chargeBat1 = get(data,"electrical.batteries.0.capacity.stateOfCharge.value");// a changer pour la charge totale ?
+  let tempPS1 = get(data, "electrical.solar.panneauSolaire1.temperature.value");
+  let tempPS2 = get(data, "electrical.solar.panneauSolaire2.temperature.value");
+  let tempPS3 = get(data, "electrical.solar.panneauSolaire3.temperature.value");
+  let tempPS4 = get(data, "electrical.solar.panneauSolaire4.temperature.value");
+  let tempMaxPS = localStorage.getItem('settingsVal1');
+  let prodPS1 = get(data,"electrical.solar.panneauSolaire1.power.value");
+  let prodPS2 = get(data,"electrical.solar.panneauSolaire2.power.value");
+  let prodPS3 = get(data,"electrical.solar.panneauSolaire3.power.value");
+  let prodPS4 = get(data,"electrical.solar.panneauSolaire4.power.value");
+  let prodMinPS = localStorage.getItem('settingsVal3');
+  let lum1 = get(data, "electrical.solar.panneauSolaire1.illuminance.value");;
+  let lum2 = get(data, "electrical.solar.panneauSolaire2.illuminance.value");;
+  let lum3 = get(data, "electrical.solar.panneauSolaire3.illuminance.value");;
+  let lum4 = get(data, "electrical.solar.panneauSolaire4.illuminance.value");;
+  let vitBateau = "-";
+  let hydroH240DansEau = "-";
+  let hydroPOD600DansEau = "-";
+  let tempPileHG = get(data,"electrical.pileHydrogene.power.value");
+  let tensionPileHG = "-";
+  let consoPileHG = "-";
+  let consoEquip = sommeEquipements;
+  let consoMaxEquip = localStorage.getItem('settingsVal2');
 
-  var warning = false;
-  var warningEOL = false;
-  var warningEOL1 = false;
-  var warningEOL2 = false;
-  var warningPS = false;
-  var warningPS1 = false;
-  var warningPS2 = false;
-  var warningPS3 = false;
-  var warningPS4 = false;
-  var warningHYD = false;
-  var warningHYD1 = false;
-  var warningHYD2 = false;
-  var warningPHG = false;
+  let warning = false;
+  let warningEOL = false;
+  let warningEOL1 = false;
+  let warningEOL2 = false;
+  let warningPS = false;
+  let warningPS1 = false;
+  let warningPS2 = false;
+  let warningPS3 = false;
+  let warningPS4 = false;
+  let warningHYD = false;
+  let warningHYD1 = false;
+  let warningHYD2 = false;
+  let warningPHG = false;
 
   //Verification de chaque alerte possible
   if (vitesseVent > 2.5 && prodEOL1 == 0 && vitesseVent < ventMax)
@@ -236,8 +234,8 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
 
 function get(data, path){
   try {
-    var pathArray = path.split(".");
-    var object = data;
+    let pathArray = path.split(".");
+    let object = data;
 
     pathArray.forEach(function(item){
       object = object[item];
@@ -294,11 +292,11 @@ function updatePages(data) {
     else if (sommeSources > - sommeConsos){
       sourcesVersConsos    = - sommeConsos;
       batteriesVersConsos  = 0.0;
-      sourcesVersBatteries = round(sommeSources + sommeConsos);
+      sourcesVersBatteries = sommeSources + sommeConsos;
     }
     else {
       sourcesVersConsos    = sommeSources;
-      batteriesVersConsos  = round(- sommeConsos - sommeSources);
+      batteriesVersConsos  = - sommeConsos - sommeSources;
       sourcesVersBatteries = 0.0;
     }
   }
@@ -389,7 +387,7 @@ function updatePages(data) {
   }
 
 function updateDisplay(event) {
-  var json = event.target.responseText;
+  const json = event.target.responseText;
 
   const data = JSON.parse(json);
 
@@ -445,20 +443,21 @@ function show(elementID) {
 
 if (localStorage.getItem("settingsVal0") === null) { // si pas encore initialisé
   console.log("Application des paramètres par defaut.")
+  let tmp;
   settings.forEach(function(element, index, array) {
-    var tmp = 'settingsVal' + index;
+    tmp = 'settingsVal' + index;
     localStorage.setItem(tmp, element[2]);
     console.log(tmp + " <- " + element[2] + " (ecriture)");
   });
 }
 
 function updateSlider(slider) {
-  var id = slider.id.replace( /^\D+/g, '');
-  var val = slider.value;
-  var name = settings[id][3];
+  const id = slider.id.replace( /^\D+/g, '');
+  const val = slider.value;
+  const name = settings[id][3];
 
   document.getElementById("sliderTxt" + id).innerHTML = name + " : " + val;
-  var IDname = 'settingsVal' + id;
+  const IDname = 'settingsVal' + id;
   localStorage.setItem(IDname, val);
 
   console.log(IDname + " <- " + val + " (ecriture)");
@@ -467,10 +466,10 @@ function updateSlider(slider) {
 function pullSettings() {
   console.log("Recuperation des parametres actuels");
   settings.forEach(function(element, index, array) {
-    var IDname = 'settingsVal' + index;
-    var val = localStorage.getItem(IDname);
-    var min = settings[index][0];
-    var max = settings[index][1];
+    const IDname = 'settingsVal' + index;
+    const val = localStorage.getItem(IDname);
+    const min = settings[index][0];
+    const max = settings[index][1];
 
     document.getElementById("sliderTxt" + index).innerHTML = element[3] + " : " + val;
     document.getElementById("slider" + index).value = val;
