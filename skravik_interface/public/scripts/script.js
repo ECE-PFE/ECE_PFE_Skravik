@@ -278,9 +278,28 @@ function updatePages(data) {
   sommeConsos = sommePanneauxSolaires + sommeEquipements;
   if (isNaN(sommeConsos)) sommeConsos = "-";
 
-  sourcesVersConsos    ="-";
-  batteriesVersConsos  ="-";
-  sourcesVersBatteries ="-";
+  if (isNaN(sommeSources + sommeConsos)){//si pas nombre valide
+    sourcesVersConsos    ="-";
+    batteriesVersConsos  ="-";
+    sourcesVersBatteries ="-";
+  }
+  else {
+    if (sommeSources == 0){
+      sourcesVersConsos    = 0.0;
+      batteriesVersConsos  = - sommeConsos;
+      sourcesVersBatteries = 0.0;
+    }
+    else if (sommeSources > - sommeConsos){
+      sourcesVersConsos    = - sommeConsos;
+      batteriesVersConsos  = 0.0;
+      sourcesVersBatteries = round(sommeSources + sommeConsos);
+    }
+    else {
+      sourcesVersConsos    = sommeSources;
+      batteriesVersConsos  = round(- sommeConsos - sommeSources);
+      sourcesVersBatteries = 0.0;
+    }
+  }
 
   //Page menu
   document.getElementById("panneauxsolaires").innerHTML = sommePanneauxSolaires;
