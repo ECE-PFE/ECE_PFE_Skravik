@@ -297,8 +297,8 @@ function updatePages(data) {
   document.getElementById("equipements").innerHTML      = sommeEquipements;
 
   document.getElementById("sourcesVersConsos").innerHTML    = sourcesVersConsos;
-  document.getElementById("batteriesVersConsos").innerHTML  = transferts.batteriesVersConsos;
-  document.getElementById("sourcesVersBatteries").innerHTML = transferts.sourcesVersBatteries;
+  document.getElementById("batteriesVersConsos").innerHTML  = batteriesVersConsos;
+  document.getElementById("sourcesVersBatteries").innerHTML = sourcesVersBatteries;
 
   document.getElementById("batterie1").innerHTML        = get(data, "electrical.batteries.0.capacity.stateOfCharge.value");
   document.getElementById("batterie2").innerHTML        = get(data, "electrical.batteries.1.capacity.stateOfCharge.value");
