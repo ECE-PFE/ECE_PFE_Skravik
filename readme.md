@@ -3,7 +3,7 @@
 # ECE-PFE Skravik
 ## Installation du serveur signalK (Windows)
 - [Telecharger l'installeur de signalK server ici](https://github.com/SignalK/signalk-server-windows/releases/latest/download/signalk-server-setup.exe)
-- Executez ce fichier pour installer signalK sur votre ordinateur.
+- Executez ce fichier pour installer signalK sur votre ordinateur. (Notez bien le dossier d'installation de signalK, cela servira pour demarrer le serveur ensuite)
 
 ## Démarrage du serveur signalK (Windows)
 Note : 
