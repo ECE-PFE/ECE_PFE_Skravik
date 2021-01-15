@@ -22,6 +22,7 @@
                   </div>
                   <div class="w3-half w3-container">
                      <p><span id="panneauxsolaires">-</span> kW</p>
+                     <p class="prev">(Prev: <span id="panneauxsolairesPrev">-</span> kW)</p>
                   </div>
                </div>
                <div class="w3-col lien" onclick="show('PageEoliennes');">
@@ -31,6 +32,7 @@
                   </div>
                   <div class="w3-half w3-container">
                      <p><span id="eoliennes">-</span> kW</p>
+                     <p class="prev">(Prev: <span id="eoliennesPrev">-</span> kW)</p>
                   </div>
                </div>
                <div class="w3-col lien" onclick="show('PageHydroliennes');">
@@ -40,6 +42,7 @@
                   </div>
                   <div class="w3-half w3-container">
                      <p><span id="hydroliennes">-</span> kW</p>
+                     <p class="prev">(Prev: <span id="hydroliennesPrev">-</span> kW)</p>
                   </div>
                </div>
                <div class="w3-col lien" onclick="show('PageGroupeEletrogene');">
@@ -49,6 +52,7 @@
                   </div>
                   <div class="w3-half w3-container">
                      <p><span id="groupeEletrogene">-</span> kW</p>
+                     <p class="prev">(Prev: <span id="groupeEletrogenePrev">-</span> kW)</p>
                   </div>
                </div>
                <div class="w3-col lien" onclick="show('PageAlternateur');">
@@ -58,6 +62,7 @@
                   </div>
                   <div class="w3-half w3-container">
                      <p><span id="alternateur">-</span> kW</p>
+                     <p class="prev">(Prev: <span id="alternateurPrev">-</span> kW)</p>
                   </div>
                </div>
                <div class="w3-col lien" onclick="show('PagePileHydrogene');">
@@ -67,6 +72,7 @@
                   </div>
                   <div class="w3-half w3-container">
                      <p><span id="pilehydrogene">-</span> kW</p>
+                     <p class="prev">(Prev: <span id="pilehydrogenePrev">-</span> kW)</p>
                   </div>
                </div>
             </div>
@@ -136,8 +142,11 @@
             </div>
             <div class="w3-col w3-container marge"></div>
          </div>
+         <prevBtn>
+            <img class="bouton" src="img/prevision.png" onclick="togglePrev();">
+         </prevBtn>
          <settings>
-            <img class="retour"  src="img/settings.png" onclick="show('PageSettings');pullSettings();">
+            <img class="bouton" src="img/settings.png" onclick="show('PageSettings');pullSettings();">
          </settings>
          <warnings>
             <img class="icone lien" id="warningImg" src="img/error.png" onclick="show('PageWarnings');">

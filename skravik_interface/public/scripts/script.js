@@ -479,3 +479,34 @@ function pullSettings() {
     console.log("settingsVal" + index + " : " + val + " (lecture)");
   });
 }
+
+
+///////////////////////////////////
+//////// Gestion page Menu ////////
+///////////////////////////////////
+
+function hidePrev(){
+  let elements = document.getElementsByClassName("prev");
+  for (let elem of elements) {
+    elem.setAttribute("style", "display:none");
+  }
+}
+
+function showPrev(){
+  let elements = document.getElementsByClassName("prev");
+  for (let elem of elements) {
+    elem.setAttribute("style", "display:block");
+  }
+}
+
+var prev = false; 
+function togglePrev(){
+  if (prev) {
+    hidePrev();
+    prev = false; 
+  }
+  else {
+    showPrev();
+    prev = true; 
+  }
+}
