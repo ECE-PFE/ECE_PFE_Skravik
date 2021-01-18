@@ -17,9 +17,9 @@
     var theme = 'https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png';
     var lat = 48.25321;
     var lon = -5.219605;
-    var alt =481;
+    var alt = 481;
     var macarte = null;
-    var bool=false;
+    var IsMarker = false;
     //var trace = new Array();
     var i = 0;
     //var marker1;
@@ -34,8 +34,25 @@
     // Servira à stocker les groupes de marqueurs
     var popup = L.popup();
 
-    function initMap(){
+    function post(latlng){
+        var msg = [{
+                    "path" : "position.tomorrow",
+                    "value":    
+                                {
+                                    "latitude" : latlng.lat,
+                                    "longitude" : latlng.lng
+                                }
+                    }];
 
+        console.log(msg);
+        
+        var oReq = new XMLHttpRequest();
+        oReq.open("POST", "/skServer/plugins/skravik-admin-plugin/api");
+        oReq.setRequestHeader("Content-Type", "application/json");
+        oReq.send(JSON.stringify(msg));
+}
+
+    function initMap(){
       // Nous définissons le dossier qui contiendra les marqueurs
       //var iconBase = 'img';
       // Créer l'objet "macarte" et l'insèrer dans l'élément HTML qui a l'ID "map"
@@ -53,29 +70,29 @@
     }
 
 
-    function onMapClick(e,bool=false) {
+    function onMapClick(e) {
+        IsMarker = false;
+        console.log(e.latlng);
 
-        popup
-            .setLatLng(e.latlng)
-            .setContent(e.latlng.toString())
-            .openOn(macarte);
+        popup.setLatLng(e.latlng).setContent(e.latlng.toString()).openOn(macarte);
+
         var marker = L.marker(e.latlng).addTo(macarte).on('click', onClick);
-        if(bool)
+
+        if(IsMarker)
         {
-          console.log("on passe")
+          console.log("on passe");
           macarte.removeLayer(marker);
         }
+
+        post(e.latlng);
         
         
     }
 
     function onClick(e) {
-        popup
-            .setLatLng(e.latlng)
-            .setContent(e.latlng.toString())
-            .openOn(macarte);
+        popup.setLatLng(e.latlng).setContent(e.latlng.toString()).openOn(macarte);
 
-        bool=true;
+        IsMarker = true;
     }
 
 

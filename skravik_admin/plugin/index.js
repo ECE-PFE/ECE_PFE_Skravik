@@ -1,3 +1,5 @@
+const http = require("http")
+
 module.exports = (app) => {
     // ******************************************
     let config; // ** applied configuration settings          
@@ -21,39 +23,80 @@ module.exports = (app) => {
         }
     };
 
+    ///////////////////////////
+    /// Démarrage du plugin ///
+    ///////////////////////////
     plugin.start = function (options, restartPlugin) {
-        // Here we put our plugin logic
         app.debug('Plugin started');
 
         api_key = options.api_key;
+
+        app.handleMessage(plugin.id, 
+            { 
+                updates: [
+                    { 
+                        values: [
+                            {
+                                path: 'position.tomorrow',
+                                value: {}
+                            }
+                        ]
+                    }
+                ] 
+            });
 
         let localSubscription = {
             context: 'self', // Get data for all contexts
             subscribe: [
                 {
                     path: 'position.tomorrow',
-                    period: 300000 // 300 secondes
+                    period: 1000 //300000 <=> 300 secondes
                 }
             ]
         };
         
         app.subscriptionmanager.subscribe(
             localSubscription,
-            subscribtions,
+            subscriptions,
             subscriptionError => {
               app.error('Error:' + subscriptionError);
             },
             delta => {
-              delta.updates.forEach(u => {
-                    app.debug(u);
+                delta.updates.forEach(update => {
 
-                    let positionTomorrow = u.values[0].value;
+                    let positionTomorrow = update.values[0].value;
 
-                    let infosWeatherTomorrow = getWeather(positionTomorrow);
+                    console.log(positionTomorrow);
 
-                    computeSolarForecastProduction(infosWeatherTomorrow); // en Wh
-                    computeWindTurbineForecastProduction(infosWeatherTomorrow); // en Wh
-              });
+                    if(Object.entries(positionTomorrow).length !== 0){
+                        let infosWeatherTomorrow = getWeather(positionTomorrow);
+    
+                        let solarMeanPowerTomorrow = computeSolarForecastProduction(infosWeatherTomorrow); // en W
+                        let windTurbineMeanPowerTomorrow = computeWindTurbineForecastProduction(infosWeatherTomorrow); // en W
+    
+                        app.handleMessage(plugin.id, 
+                            {
+                                updates: [
+                                    {
+                                        values: [
+                                            {
+                                                path: 'electrical.solar.solarPanel.prev.meanPower',
+                                                value: solarMeanPowerTomorrow
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        values: [
+                                            {
+                                                path: 'electrical.windTurbines.windTurbine.prev.meanPower',
+                                                value: windTurbineMeanPowerTomorrow
+                                            }
+                                        ]
+                                    }
+                                ]
+                            });
+                    }
+                });
             }
         );
     };
@@ -104,21 +147,42 @@ module.exports = (app) => {
             var windSpeed_forecast; // m/s
             var illuminance_forecast; // pourcentage d'ensoleillement
 
-            var Http = new XMLHttpRequest();
-
-            xmlHttp.onreadystatechange = function() { 
-                if (Http.readyState == 4 && Http.status == 200)
+            http.request(
                 {
-                    var response = JSON.parse(Http.responseText)
-                    temperature_forecast = response.daily[0].temp.day;
-                    windSpeed_forecast = response.daily[0].wind_speed;
-                    illuminance_forecast = 100 - response.daily[0].clouds;
-                }
-            }
+                    hostname: "api.openweathermap.org",
+                    path: "/data/2.5/onecall?lat="+ position.latitude +"&lon="+ position.longitude +"&appid=" + api_key
+                },
+                    res => {
+                        let data = ""
 
-            Http.open("GET", "https://api.openweathermap.org/data/2.5/onecall?lat="+ position.lattitude +"&lon="+ position.longitude +"&appid=" + api_key, true);
+                        res.on("data", d => {
+                            data += d
+                        })
+
+                        res.on("end", () => {
+                            var response = JSON.parse(data);
+
+                            //console.log(response);
+
+                            temperature_forecast = response.daily[0].temp.day;
+                            windSpeed_forecast = response.daily[0].wind_speed;
+                            illuminance_forecast = 100 - response.daily[0].clouds;
+                        })
+                    }
+            ).end()
+
             return [temperature_forecast, windSpeed_forecast, illuminance_forecast];
     };
+
+    const computeSolarForecastProduction = (infosWeather) => {
+        //TODO
+        return 10;
+    }
+
+    const computeWindTurbineForecastProduction = (infosWeather) => {
+        //TODO
+        return 25;
+    }
     
     return plugin;
 }
