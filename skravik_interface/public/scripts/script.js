@@ -336,15 +336,15 @@ function updatePages(data) {
   else document.getElementById("IMGSourcesVersBatteries").setAttribute("src", "img/green_arrow_right.png");
 
   //Page menu prevision
-  document.getElementById("panneauxsolairesPrev").innerHTML = get(data, "electrical.prev.solar.panneauSolaire.power.value");
-  document.getElementById("eoliennesPrev").innerHTML        = get(data, "electrical.prev.solar.windTurbine.power.value");
+  document.getElementById("panneauxsolairesPrev").innerHTML = get(data, "electrical.solar.solarPanel.prev.meanPower.value");
+  document.getElementById("eoliennesPrev").innerHTML        = get(data, "electrical.windTurbines.windTurbine.prev.meanPower.value");
   document.getElementById("hydroliennesPrev").innerHTML     = get(data, "electrical.prev.solar.waterTurbine.power.value");
   document.getElementById("groupeEletrogenePrev").innerHTML = get(data, "electrical.prev.solar.generators.power.value");
   document.getElementById("alternateurPrev").innerHTML      = get(data, "electrical.prev.solar.alternators.power.value");
   document.getElementById("pilehydrogenePrev").innerHTML    = get(data, "electrical.prev.solar.pileHydrogene.power.value");
 
-  sommeSourcesPrev = get(data, "electrical.prev.solar.panneauSolaire.power.value")
-                   + get(data, "electrical.prev.solar.windTurbine.power.value")
+  sommeSourcesPrev = get(data, "electrical.solar.solarPanel.prev.meanPower.value")
+                   + get(data, "electrical.windTurbines.windTurbine.prev.meanPower.value")
                    + get(data, "electrical.prev.solar.waterTurbine.power.value")
                    + get(data, "electrical.prev.solar.generators.power.value")
                    + get(data, "electrical.prev.solar.alternators.power.value")

@@ -71,8 +71,8 @@ module.exports = (app) => {
                     if(Object.entries(positionTomorrow).length !== 0){
                         let infosWeatherTomorrow = getWeather(positionTomorrow);
     
-                        let solarMeanPowerTomorrow = computeSolarForecastProduction(infosWeatherTomorrow); // en W
-                        let windTurbineMeanPowerTomorrow = computeWindTurbineForecastProduction(infosWeatherTomorrow); // en W
+                        let solarMeanPowerTomorrow = computeSolarForecastProduction(infosWeatherTomorrow); // en kW
+                        let windTurbineMeanPowerTomorrow = computeWindTurbineForecastProduction(infosWeatherTomorrow); // en kW
     
                         app.handleMessage(plugin.id, 
                             {
@@ -176,12 +176,12 @@ module.exports = (app) => {
 
     const computeSolarForecastProduction = (infosWeather) => {
         //TODO
-        return 10;
+        return 10; // en kW
     }
 
     const computeWindTurbineForecastProduction = (infosWeather) => {
         //TODO
-        return 25;
+        return 25; // en kW
     }
     
     return plugin;
