@@ -14,14 +14,14 @@
          <div class="w3-col">
             <div class="w3-col w3-container marge"></div>
             <div class="w3-col w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green colonne" style="width:30%">
-               <h3>Production totale : <span id="sommeSources">-</span> kW</h3>
+               <h3>Production totale : <span id="sommeSources">-</span> kW <span class="prev">(Prev: <span id="sommeSourcesPrev">-</span> kW)</span></h3>
                <div class="w3-col lien" onclick="show('PagePanneauxSolaires');">
                   <p><strong>Panneaux Solaires</strong></p>
                   <div class="w3-half">
                      <img id="IMGpanneauxSolaires" class="icone" src="img/panneaux_solaire.png">
                   </div>
                   <div class="w3-half w3-container">
-                     <p><span id="panneauxsolaires">-</span> kW</p>
+                     <p><span id="panneauxsolaires">-</span> kW <span class="prev">(Prev: <span id="panneauxsolairesPrev">-</span> kW)</span></p>
                   </div>
                </div>
                <div class="w3-col lien" onclick="show('PageEoliennes');">
@@ -30,7 +30,7 @@
                      <img id="IMGeolienne" class="icone" src="img/eolienne.png">
                   </div>
                   <div class="w3-half w3-container">
-                     <p><span id="eoliennes">-</span> kW</p>
+                     <p><span id="eoliennes">-</span> kW <span class="prev">(Prev: <span id="eoliennesPrev">-</span> kW)</span></p>
                   </div>
                </div>
                <div class="w3-col lien" onclick="show('PageHydroliennes');">
@@ -39,7 +39,7 @@
                      <img id="IMGhydrolienne" class="icone" src="img/hydrolienne.png">
                   </div>
                   <div class="w3-half w3-container">
-                     <p><span id="hydroliennes">-</span> kW</p>
+                     <p><span id="hydroliennes">-</span> kW <span class="prev">(Prev: <span id="hydroliennesPrev">-</span> kW)</span></p>
                   </div>
                </div>
                <div class="w3-col lien" onclick="show('PageGroupeEletrogene');">
@@ -48,7 +48,7 @@
                      <img class="icone" src="img/groupe_electrogene.png">
                   </div>
                   <div class="w3-half w3-container">
-                     <p><span id="groupeEletrogene">-</span> kW</p>
+                     <p><span id="groupeEletrogene">-</span> kW <span class="prev">(Prev: <span id="groupeEletrogenePrev">-</span> kW)</span></p>
                   </div>
                </div>
                <div class="w3-col lien" onclick="show('PageAlternateur');">
@@ -57,7 +57,7 @@
                      <img class="icone" src="img/alternateur.png">
                   </div>
                   <div class="w3-half w3-container">
-                     <p><span id="alternateur">-</span> kW</p>
+                     <p><span id="alternateur">-</span> kW <span class="prev">(Prev: <span id="alternateurPrev">-</span> kW)</span></p>
                   </div>
                </div>
                <div class="w3-col lien" onclick="show('PagePileHydrogene');">
@@ -66,7 +66,7 @@
                      <img id="IMGpileHydrogene" class="icone" src="img/pilehydrogene.png">
                   </div>
                   <div class="w3-half w3-container">
-                     <p><span id="pilehydrogene">-</span> kW</p>
+                     <p><span id="pilehydrogene">-</span> kW <span class="prev">(Prev: <span id="pilehydrogenePrev">-</span> kW)</span></p>
                   </div>
                </div>
             </div>
@@ -136,8 +136,11 @@
             </div>
             <div class="w3-col w3-container marge"></div>
          </div>
+         <prevBtn>
+            <img class="bouton" src="img/prevision.png" onclick="togglePrev();">
+         </prevBtn>
          <settings>
-            <img class="retour"  src="img/settings.png" onclick="show('PageSettings');pullSettings();">
+            <img class="bouton" src="img/settings.png" onclick="show('PageSettings');pullSettings();">
          </settings>
          <warnings>
             <img class="icone lien" id="warningImg" src="img/error.png" onclick="show('PageWarnings');">
