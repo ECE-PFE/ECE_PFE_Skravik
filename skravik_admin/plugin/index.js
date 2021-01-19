@@ -5,13 +5,13 @@ module.exports = (app) => {
     let config; // ** applied configuration settings          
     let subscriptions = [];
     let api_key;
+    let path_positionTomorrow = "position.tomorrow";
     // ******** REQUIRED PLUGIN DEFINITION *******
-    var plugin = {};
+    let plugin = {};
   
     plugin.id = 'skravik-admin-plugin';
     plugin.name = 'Skravik Admin';
-    plugin.description = 'Configuration de Skravik';
-
+    plugin.description = 'Configuration du catamaran Skravik';
     plugin.schema = {
         "title": "Configuration pour prédiction de la production de demain",
         "type": "object",
@@ -19,6 +19,67 @@ module.exports = (app) => {
             "api_key": {
                 "type": "string",
                 "title": "API Key OpenWeatherMap"
+            },
+            
+            "solarPanel" : {
+                "title": "Panneaux solaires",
+                "type": "object",
+                "properties": {
+
+                    "meanIlluminance": {
+                        "type": "number",
+                        "title": "Ensoleillement moyen (kWh/m2/j)",
+                        "default": 5.73874
+                    },
+
+                    "minIlluminance": {
+                        "type": "number",
+                        "title": "Ensoleillement minimum (kWh/m2/j)",
+                        "default": 4.98
+                    },
+
+                    "solarPanelSurface": {
+                        "type": "number",
+                        "title": "Surface (m2)",
+                        "default": 20
+                    },
+
+                    "solarPanelEfficiency": {
+                        "type": "number",
+                        "title": "Rendement (%)",
+                        "default": 20
+                    },
+
+                    "solarPanelLossCoeff": {
+                        "type": "number",
+                        "title": "Perte (%)",
+                        "default": 80
+                    }
+                }
+            },
+
+            "windTurbine": {
+                "title": "Eolienne",
+                "type": "object",
+                "properties": {
+                    "windTurbineNumber": {
+                        "type": "number",
+                        "title": "Nombre d'éoliens",
+                        "default": 2
+                    },
+
+                    "windTurbineBladeDiameter": {
+                        "type": "number",
+                        "title": "Diamètre (m)",
+                        "default": 1.15
+                    },
+
+                    "windTurbineLoss": {
+                        "type": "number",
+                        "title": "Perte (%)",
+                        "default": 50
+                    }
+                }
             }
         }
     };
@@ -27,9 +88,11 @@ module.exports = (app) => {
     /// Démarrage du plugin ///
     ///////////////////////////
     plugin.start = function (options, restartPlugin) {
-        app.debug('Plugin started');
 
-        api_key = options.api_key;
+        config = options;
+        api_key = config.api_key;
+
+        console.log(config);
 
         app.handleMessage(plugin.id, 
             { 
@@ -37,7 +100,7 @@ module.exports = (app) => {
                     { 
                         values: [
                             {
-                                path: 'position.tomorrow',
+                                path: path_positionTomorrow,
                                 value: {}
                             }
                         ]
@@ -49,8 +112,8 @@ module.exports = (app) => {
             context: 'self', // Get data for all contexts
             subscribe: [
                 {
-                    path: 'position.tomorrow',
-                    period: 1000 //300000 <=> 300 secondes
+                    path: path_positionTomorrow,
+                    period: 1000
                 }
             ]
         };
@@ -66,35 +129,44 @@ module.exports = (app) => {
 
                     let positionTomorrow = update.values[0].value;
 
+                    console.log("Position à J+1 : ");
                     console.log(positionTomorrow);
 
                     if(Object.entries(positionTomorrow).length !== 0){
-                        let infosWeatherTomorrow = getWeather(positionTomorrow);
+
+                        // anonymous async function to execute some code synchronously after http request
+                        (async function () {
+                            // wait to http request to finish
+                            let infosWeatherTomorrow = await makeSynchronousRequest(positionTomorrow);
     
-                        let solarMeanPowerTomorrow = computeSolarForecastProduction(infosWeatherTomorrow); // en kW
-                        let windTurbineMeanPowerTomorrow = computeWindTurbineForecastProduction(infosWeatherTomorrow); // en kW
-    
-                        app.handleMessage(plugin.id, 
-                            {
-                                updates: [
-                                    {
-                                        values: [
-                                            {
-                                                path: 'electrical.solar.solarPanel.prev.meanPower',
-                                                value: solarMeanPowerTomorrow
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        values: [
-                                            {
-                                                path: 'electrical.windTurbines.windTurbine.prev.meanPower',
-                                                value: windTurbineMeanPowerTomorrow
-                                            }
-                                        ]
-                                    }
-                                ]
-                            });
+                            let solarMeanPowerTomorrow = computeSolarForecastProduction(infosWeatherTomorrow); // en kWh/j
+                            let windTurbineMeanPowerTomorrow = computeWindTurbineForecastProduction(infosWeatherTomorrow); // en kWh/j
+
+                            console.log("Puissance moyenne journalière des éoliennes: " + Number(windTurbineMeanPowerTomorrow).toFixed(2) + " kWh/j");
+                            console.log("Puissance moyenne journalière des panneaux solaires: " + Number(solarMeanPowerTomorrow).toFixed(2) + " kWh/j");
+        
+                            app.handleMessage(plugin.id, 
+                                                        {
+                                                            updates: [
+                                                                {
+                                                                    values: [
+                                                                        {
+                                                                            path: 'electrical.solar.solarPanel.prev.meanPower',
+                                                                            value: Number(solarMeanPowerTomorrow).toFixed(2)
+                                                                        }
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    values: [
+                                                                        {
+                                                                            path: 'electrical.windTurbines.windTurbine.prev.meanPower',
+                                                                            value: Number(windTurbineMeanPowerTomorrow).toFixed(2)
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ]});
+
+                        })();
                     }
                 });
             }
@@ -104,8 +176,6 @@ module.exports = (app) => {
     plugin.stop = function () {
         // Here we put logic we need when the plugin stops
         subscriptions = [];
-        app.debug('Plugin stopped');
-        
     };
 
     plugin.registerWithRouter = function(router) {
@@ -124,7 +194,11 @@ module.exports = (app) => {
         return router;
     }
 
-    // ** process posted data **
+    ///////////////////////////
+    ///      Functions      ///
+    ///////////////////////////
+
+    // Process posted data
     const processUIPost = (data) => {
         if (!Array.isArray(data)) {
             server.debug("** ERROR: ** Invalid payload data!!");
@@ -141,47 +215,69 @@ module.exports = (app) => {
             });
     };
 
-    // ** get weather information **
-    const getWeather = (position) => {
-            var temperature_forecast; // K
-            var windSpeed_forecast; // m/s
-            var illuminance_forecast; // pourcentage d'ensoleillement
-
-            http.request(
-                {
-                    hostname: "api.openweathermap.org",
-                    path: "/data/2.5/onecall?lat="+ position.latitude +"&lon="+ position.longitude +"&appid=" + api_key
-                },
-                    res => {
-                        let data = ""
-
-                        res.on("data", d => {
-                            data += d
-                        })
-
-                        res.on("end", () => {
-                            var response = JSON.parse(data);
-
-                            //console.log(response);
-
-                            temperature_forecast = response.daily[0].temp.day;
-                            windSpeed_forecast = response.daily[0].wind_speed;
-                            illuminance_forecast = 100 - response.daily[0].clouds;
-                        })
-                    }
-            ).end()
-
-            return [temperature_forecast, windSpeed_forecast, illuminance_forecast];
-    };
-
     const computeSolarForecastProduction = (infosWeather) => {
-        //TODO
-        return 10; // en kW
+        let solarPanelSurface = config.solarPanel.solarPanelSurface;
+        let solarPanelEfficiency = config.solarPanel.solarPanelEfficiency/100;
+        let solarPanelLossCoeff = config.solarPanel.solarPanelLossCoeff/100;
+
+        let solarPanelEnergyByDay = solarPanelSurface * solarPanelEfficiency * infosWeather[2] * solarPanelLossCoeff; // kWh/j
+        return solarPanelEnergyByDay;
     }
 
     const computeWindTurbineForecastProduction = (infosWeather) => {
-        //TODO
-        return 25; // en kW
+        let betzLimit = 16/27;
+
+        let bladeDiameter = config.windTurbine.windTurbineBladeDiameter;
+        let windTurbineLoss = config.windTurbine.windTurbineLoss/100;
+        let windTurbineNumber = config.windTurbine.windTurbineNumber;
+
+        let volumicMass = 1.23;
+
+        let areaSwipped = 3.14 * (bladeDiameter/2) * (bladeDiameter/2);
+        let kineticPower = 0.5 * volumicMass * infosWeather[1] * infosWeather[1] * infosWeather[1] * areaSwipped * windTurbineNumber; // W
+
+        return (kineticPower * windTurbineLoss * betzLimit * 24)/1000; // en kWh par jour
+    }
+
+    // Get weather information
+    function getWeatherApiPromise(position) {
+        return new Promise((resolve, reject) => {
+            http.get('http://api.openweathermap.org/data/2.5/onecall?lat=' + position.latitude + '&lon=' + position.longitude + '&appid=' + api_key, (response) => {
+                let chunks_of_data = [];
+    
+                response.on('data', (fragments) => {
+                    chunks_of_data.push(fragments);
+                });
+    
+                response.on('end', () => {
+                    let response_body = Buffer.concat(chunks_of_data);
+                    resolve(JSON.parse(response_body.toString()));
+                });
+    
+                response.on('error', (error) => {
+                    reject(error);
+                });
+            });
+        });
+    }
+
+    async function makeSynchronousRequest(position) {
+        try {
+            let http_promise = getWeatherApiPromise(position);
+            let response = await http_promise;
+
+            let temperature_forecast = response.daily[0].temp.day;
+            let windSpeed_forecast = response.daily[0].wind_speed;
+            let illuminance_forecast = (100 - response.daily[0].clouds)/100*config.solarPanel.meanIlluminance + config.solarPanel.minIlluminance;
+    
+            // holds response from server that is passed when Promise is resolved
+            //console.log(response);
+            return [temperature_forecast, windSpeed_forecast, illuminance_forecast];
+        }
+        catch(error) {
+            // Promise rejected
+            console.log(error);
+        }
     }
     
     return plugin;

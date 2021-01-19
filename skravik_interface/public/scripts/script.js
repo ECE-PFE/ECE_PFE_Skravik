@@ -240,9 +240,11 @@ function get(data, path){
     pathArray.forEach(function(item){
       object = object[item];
     });
+    
     return object;
+
   } catch (error) {
-    console.warn("Not found : " + path);
+        console.warn("Not found : " + path);
     return "-";
   }
 }
