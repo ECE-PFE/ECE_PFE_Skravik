@@ -4,5 +4,5 @@
 	- Une liste de choix pour le type de producteurs (PS;EOL;GE;PH;HYDRO) et consommateurs (Equipements, moteurs)
 	- Le chemin SignalK pour l'information de production et de consommation est crée automatiquement en fonction du type et du nom
 - Améliorer le calcul de la prévision de production à J+1 pour les panneaux solaires en utilisant le calcul de PVGIS
-- L'interface doit adapter son affichafe aux producteurs et consommateurs que l'on récupère en fonction des chemins SignalK
+- L'interface doit adapter son affichage aux producteurs et consommateurs que l'on récupère en fonction des chemins SignalK
 - Les sommes de production/consommation doivent s'afficher même si la production/consommation d'un producteur/consommateur n'est pas disponible

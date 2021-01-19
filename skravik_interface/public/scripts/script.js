@@ -9,7 +9,6 @@ const endpoint = "signalk/v1/api/vessels/self/";
 /////////////////////////////////////////
 //////// Paramètres des settings ////////
 /////////////////////////////////////////
-
 const settings =[
   [0,  33,   33,   "Vitesse de vent max"],
   [75, 80,   80,   "Temperature max des panneaux solaires"],
@@ -240,7 +239,7 @@ function get(data, path){
     pathArray.forEach(function(item){
       object = object[item];
     });
-    
+
     return object;
 
   } catch (error) {
