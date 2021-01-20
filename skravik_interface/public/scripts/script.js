@@ -381,8 +381,8 @@ function solarPanelsPage(data){
 
     solarPanels = get(data, "electrical.solar");
 
-    let ligneDiv;
-    let k = 0;
+    let ligneDiv; // Stocke le bloc de la ligne actuelle
+    let k = 0; // Compteur de panneaux solaires disponibles
     for(solarPanel in solarPanels){
 
         let element = document.getElementById("panneauSolaire_" + solarPanel);
@@ -414,46 +414,82 @@ function solarPanelsPage(data){
                                 '<p>Temperature : <span id="PANTemperature' + solarPanel + '">' + get(data, "electrical.solar." + solarPanel + ".temperature.value") + '</span> %</p>';
             
             if(k%4 == 0) {
+                // Si le numero du panneau solaire est un multiple de 4, on crée une nouvelle ligne
                 let newLigneDiv = document.createElement("div");
                 newLigneDiv.classList.add("w3-col");
                 newLigneDiv.classList.add("ligne");
+
+                // La ligne actuelle devient la nouvelle ligne fraichement créée
                 ligneDiv = newLigneDiv;
             }
-            console.log(k);
+
             ligneDiv.appendChild(solarPanelDiv);
+
+            // On ajoute le nouveau bloc dans la ligne actuelle
+            pageDiv.appendChild(ligneDiv);
+        }
+
+        k = k + 1;
+    }
+}
+
+function windTurbinesPage(data){
+    pageDiv = document.getElementById("PageEoliennes");
+
+    windTurbines = get(data, "electrical.windTurbines");
+
+    let ligneDiv; // Stocke le bloc de la ligne actuelle
+    let k = 0; // Compteur de panneaux solaires disponibles
+    for(windTurbine in windTurbines){
+
+        let element = document.getElementById("eolienne_" + windTurbine);
+
+        //On vérifie si un bloc p avec l'id contenant le numéro de l'appareil existe ou non
+        if(typeof(element) != 'undefined' && element != null){
+            ligneDiv = element.parentNode;
+
+            element.innerHTML = 
+                            '<p>' + get(data, "electrical.windTurbines." + windTurbine + ".name.value") + '</p>' +
+                            '<img id="IMGeolienne' + windTurbine + '" class="icone" src="img/eolienne.png">' +
+                            '</br>' +
+                            '<p>Production : <span id="EOLProduction' + windTurbine + '">' + get(data, "electrical.windTurbines." + windTurbine + ".power.value") + '</span> W</p>' +
+                            '<p>Vitesse : <span id="EOLVitesse' + windTurbine + '">' + get(data, "electrical.windTurbines." + windTurbine + ".windTurbineSpeed.value") + '</span> tr/min</p>';
+        }else{
+            windTurbineDiv = document.createElement("div"); 
+            windTurbineDiv.setAttribute('id', 'eolienne_' + windTurbine);
+            windTurbineDiv.setAttribute('class', 'w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green case');
+
+            windTurbineDiv.innerHTML = 
+                            '<p>' + get(data, "electrical.windTurbines." + windTurbine + ".name.value") + '</p>' +
+                            '<img id="IMGeolienne' + windTurbine + '" class="icone" src="img/eolienne.png">' +
+                            '</br>' +
+                            '<p>Production : <span id="EOLProduction' + windTurbine + '">' + get(data, "electrical.windTurbines." + windTurbine + ".power.value") + '</span> W</p>' +
+                            '<p>Vitesse : <span id="EOLVitesse' + windTurbine + '">' + get(data, "electrical.windTurbines." + windTurbine + ".windTurbineSpeed.value") + '</span> tr/min</p>';
+            
+            if(k%4 == 0) {
+                // Si le numero du panneau solaire est un multiple de 4, on crée une nouvelle ligne
+                let newLigneDiv = document.createElement("div");
+                newLigneDiv.classList.add("w3-col");
+                newLigneDiv.classList.add("ligne");
+
+                // La ligne actuelle devient la nouvelle ligne fraichement créée
+                ligneDiv = newLigneDiv;
+            }
+
+            ligneDiv.appendChild(windTurbineDiv);
+
+            // On ajoute le nouveau bloc dans la ligne actuelle
             pageDiv.appendChild(ligneDiv);
         }
 
         k = k + 1;
     }
 
-    // document.getElementById("PANInclinaison1").innerHTML    = get(data, "electrical.solar.panneauSolaire1.tilt.value");
-    // document.getElementById("PANProduction1").innerHTML     = get(data, "electrical.solar.panneauSolaire1.power.value");
-    // document.getElementById("PANEnsoleillement1").innerHTML = get(data, "electrical.solar.panneauSolaire1.illuminance.value");
-    // document.getElementById("PANTemperature1").innerHTML    = get(data, "electrical.solar.panneauSolaire1.temperature.value");
-  
-    // document.getElementById("PANInclinaison2").innerHTML    = get(data, "electrical.solar.panneauSolaire2.tilt.value");
-    // document.getElementById("PANProduction2").innerHTML     = get(data, "electrical.solar.panneauSolaire2.power.value");
-    // document.getElementById("PANEnsoleillement2").innerHTML = get(data, "electrical.solar.panneauSolaire2.illuminance.value");
-    // document.getElementById("PANTemperature2").innerHTML    = get(data, "electrical.solar.panneauSolaire2.temperature.value");
-  
-    // document.getElementById("PANInclinaison3").innerHTML    = get(data, "electrical.solar.panneauSolaire3.tilt.value");
-    // document.getElementById("PANProduction3").innerHTML     = get(data, "electrical.solar.panneauSolaire3.power.value");
-    // document.getElementById("PANEnsoleillement3").innerHTML = get(data, "electrical.solar.panneauSolaire3.illuminance.value");
-    // document.getElementById("PANTemperature3").innerHTML    = get(data, "electrical.solar.panneauSolaire3.temperature.value");
-  
-    // document.getElementById("PANInclinaison4").innerHTML    = get(data, "electrical.solar.panneauSolaire4.tilt.value");
-    // document.getElementById("PANProduction4").innerHTML     = get(data, "electrical.solar.panneauSolaire4.power.value");
-    // document.getElementById("PANEnsoleillement4").innerHTML = get(data, "electrical.solar.panneauSolaire4.illuminance.value");
-    // document.getElementById("PANTemperature4").innerHTML    = get(data, "electrical.solar.panneauSolaire4.temperature.value");
-}
-
-function windTurbinesPage(data){
-    document.getElementById("EOLProduction1").innerHTML     = get(data, "electrical.windTurbine.windTurbine1.power.value");
-    document.getElementById("EOLVitesse1").innerHTML        = get(data, "electrical.windTurbine.windTurbine1.windTurbineSpeed.value");
+    // document.getElementById("EOLProduction1").innerHTML     = get(data, "electrical.windTurbine.windTurbine1.power.value");
+    // document.getElementById("EOLVitesse1").innerHTML        = get(data, "electrical.windTurbine.windTurbine1.windTurbineSpeed.value");
     
-    document.getElementById("EOLProduction2").innerHTML     = get(data, "electrical.windTurbine.windTurbine2.power.value");
-    document.getElementById("EOLVitesse2").innerHTML        = get(data, "electrical.windTurbine.windTurbine2.windTurbineSpeed.value");
+    // document.getElementById("EOLProduction2").innerHTML     = get(data, "electrical.windTurbine.windTurbine2.power.value");
+    // document.getElementById("EOLVitesse2").innerHTML        = get(data, "electrical.windTurbine.windTurbine2.windTurbineSpeed.value");
     
     document.getElementById("ANMVitesse").innerHTML         = get(data, "environment.wind.speedTrue.value");
 }
