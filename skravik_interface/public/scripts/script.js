@@ -466,8 +466,8 @@ function windTurbinesPage(data){
                             '<p>Production : <span id="EOLProduction' + windTurbine + '">' + get(data, "electrical.windTurbines." + windTurbine + ".power.value") + '</span> W</p>' +
                             '<p>Vitesse : <span id="EOLVitesse' + windTurbine + '">' + get(data, "electrical.windTurbines." + windTurbine + ".windTurbineSpeed.value") + '</span> tr/min</p>';
             
-            if(k%4 == 0) {
-                // Si le numero du panneau solaire est un multiple de 4, on crée une nouvelle ligne
+            if(k%3 == 0) {
+                // Si le numero de l'éolienne est un multiple de 3, on crée une nouvelle ligne
                 let newLigneDiv = document.createElement("div");
                 newLigneDiv.classList.add("w3-col");
                 newLigneDiv.classList.add("ligne");
@@ -484,22 +484,61 @@ function windTurbinesPage(data){
 
         k = k + 1;
     }
-
-    // document.getElementById("EOLProduction1").innerHTML     = get(data, "electrical.windTurbine.windTurbine1.power.value");
-    // document.getElementById("EOLVitesse1").innerHTML        = get(data, "electrical.windTurbine.windTurbine1.windTurbineSpeed.value");
-    
-    // document.getElementById("EOLProduction2").innerHTML     = get(data, "electrical.windTurbine.windTurbine2.power.value");
-    // document.getElementById("EOLVitesse2").innerHTML        = get(data, "electrical.windTurbine.windTurbine2.windTurbineSpeed.value");
     
     document.getElementById("ANMVitesse").innerHTML         = get(data, "environment.wind.speedTrue.value");
 }
 
 function waterTurbinesPage(data){
-    document.getElementById("HYDProduction1").innerHTML     = get(data, "electrical.waterTurbine.waterTurbine1.power.value");
-    document.getElementById("HYDVitesse1").innerHTML        = get(data, "electrical.waterTurbine.waterTurbine1.waterTurbineSpeed.value");
-    
-    document.getElementById("HYDProduction2").innerHTML     = get(data, "electrical.waterTurbine.waterTurbine2.power.value");
-    document.getElementById("HYDVitesse2").innerHTML        = get(data, "electrical.waterTurbine.waterTurbine2.waterTurbineSpeed.value");
+    pageDiv = document.getElementById("PageHydroliennes");
+
+    waterTurbines = get(data, "electrical.waterTurbines");
+
+    let ligneDiv; // Stocke le bloc de la ligne actuelle
+    let k = 0; // Compteur de panneaux solaires disponibles
+    for(waterTurbine in waterTurbines){
+
+        let element = document.getElementById("hydrolienne_" + waterTurbine);
+
+        //On vérifie si un bloc p avec l'id contenant le numéro de l'appareil existe ou non
+        if(typeof(element) != 'undefined' && element != null){
+            ligneDiv = element.parentNode;
+
+            element.innerHTML = 
+                            '<p>' + get(data, "electrical.waterTurbines." + waterTurbine + ".name.value") + '</p>' +
+                            '<img id="IMGhydrolienne' + waterTurbine + '" class="icone" src="img/hydrolienne.png">' +
+                            '</br>' +
+                            '<p>Production : <span id="HYDProduction' + waterTurbine + '">' + get(data, "electrical.waterTurbines." + waterTurbine + ".power.value") + '</span> W</p>' +
+                            '<p>Vitesse : <span id="HYDVitesse' + waterTurbine + '">' + get(data, "electrical.waterTurbines." + waterTurbine + ".waterTurbineSpeed.value") + '</span> tr/min</p>';
+        }else{
+            waterTurbineDiv = document.createElement("div"); 
+            waterTurbineDiv.setAttribute('id', 'hydrolienne_' + waterTurbine);
+            waterTurbineDiv.setAttribute('class', 'w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green case');
+
+            waterTurbineDiv.innerHTML = 
+                            '<p>' + get(data, "electrical.waterTurbines." + waterTurbine + ".name.value") + '</p>' +
+                            '<img id="IMGhydrolienne' + waterTurbine + '" class="icone" src="img/hydrolienne.png">' +
+                            '</br>' +
+                            '<p>Production : <span id="HYDProduction' + waterTurbine + '">' + get(data, "electrical.waterTurbines." + waterTurbine + ".power.value") + '</span> W</p>' +
+                            '<p>Vitesse : <span id="HYDVitesse' + waterTurbine + '">' + get(data, "electrical.waterTurbines." + waterTurbine + ".windTurbineSpeed.value") + '</span> tr/min</p>';
+            
+            if(k%3 == 0) {
+                // Si le numero de l'hydrolienne est un multiple de 3, on crée une nouvelle ligne
+                let newLigneDiv = document.createElement("div");
+                newLigneDiv.classList.add("w3-col");
+                newLigneDiv.classList.add("ligne");
+
+                // La ligne actuelle devient la nouvelle ligne fraichement créée
+                ligneDiv = newLigneDiv;
+            }
+
+            ligneDiv.appendChild(waterTurbineDiv);
+
+            // On ajoute le nouveau bloc dans la ligne actuelle
+            pageDiv.appendChild(ligneDiv);
+        }
+
+        k = k + 1;
+    }
 }
 
 function generatorsPage(data){
@@ -518,27 +557,27 @@ function fuelCellsPage(data){
 }
 
 function updateDisplay(event) {
-  const json = event.target.responseText;
+    const json = event.target.responseText;
 
-  const data = JSON.parse(json);
+    const data = JSON.parse(json);
 
-  updatePages(data);
-  console.log("Data updated successfully.");
+    updatePages(data);
+    console.log("Data updated successfully.");
 
-  checkWarnings(data);
-  console.log("Warnings checked.");
+    checkWarnings(data);
+    console.log("Warnings checked.");
 
-  warningHide("warningERR");//Si on reussi jusque la sans erreur c'est bon signe
+    warningHide("warningERR");//Si on reussi jusque la sans erreur c'est bon signe
 
-  setTimeout(fetchDataFromRestApi, 3000);
+    setTimeout(fetchDataFromRestApi, 3000);
 }
 
 function fetchDataFromRestApi()  {
-  console.log("Getting data...");
-  var oReq = new XMLHttpRequest();
-  oReq.addEventListener("load", updateDisplay);
-  oReq.open("GET", "http://" + host + ":" + port + "/" + endpoint);
-  oReq.send();
+    console.log("Getting data...");
+    var oReq = new XMLHttpRequest();
+    oReq.addEventListener("load", updateDisplay);
+    oReq.open("GET", "http://" + host + ":" + port + "/" + endpoint);
+    oReq.send();
 }
 
 //First call
