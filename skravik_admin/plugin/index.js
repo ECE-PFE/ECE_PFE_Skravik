@@ -8,6 +8,14 @@ module.exports = (app) => {
 
     let path_positionTomorrow = "position.tomorrow";
 
+    let consumerCategoryMap = {
+        "Appareil de bord classique": "classique",
+        "Appareil léger": "leger",
+        "Appareil lourd": "lourd",
+        "Générateur de chaleur": "generateur_chaleur",
+        "Moteur électrique": "moteur_electrique"
+    };
+
     // ******** REQUIRED PLUGIN DEFINITION *******
     let plugin = {};
   
@@ -137,7 +145,6 @@ module.exports = (app) => {
                 ] 
             });
 
-        //console.log(config.consumers);
         let i = 0;
         config.consumers.forEach(consumer => {
             app.handleMessage(plugin.id, 
@@ -146,11 +153,12 @@ module.exports = (app) => {
                         { 
                             values: [
                                 {
-                                    path: "electrical.consumers." + consumer.categorie + "." + i,
-                                    value: {
-                                        "name": consumer.name,
-                                        "power": 0
-                                    }
+                                    path: "electrical.consumers." + consumerCategoryMap[consumer.categorie] + "." + i + ".name",
+                                    value: consumer.name
+                                },
+                                {
+                                    path: "electrical.consumers." + consumerCategoryMap[consumer.categorie] + "." + i + ".power",
+                                    value: 0
                                 }
                             ]
                         }

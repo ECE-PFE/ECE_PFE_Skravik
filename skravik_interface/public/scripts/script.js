@@ -402,6 +402,10 @@ function updatePages(data) {
   //Page Pile à hydrogene
   document.getElementById("PHDProduction1").innerHTML     = get(data, "electrical.pileHydrogene.power.value");
   document.getElementById("PHDTemperature1").innerHTML    = get(data, "electrical.pileHydrogene.temperature.value");
+
+  //Page Equipements
+  equipementPage(data);
+
   }
 
 function updateDisplay(event) {
@@ -498,10 +502,6 @@ function pullSettings() {
 }
 
 ///////////////////// Page equipement /////////////////////
-
-
-
-
 json = {
   "equipement_lourd": {
     "equipement_lourd_1":"1",
@@ -523,47 +523,43 @@ json = {
   }
  }
 
-
-
-
-
-function appareilClassique()
+function appareilClassique(data)
 {
-  myObj = json.equipement_classique
+  myObj = get(data, "electrical.consumers.appareilClassique")
   for (x in myObj) {
-  var div = document.getElementById("classique");
-  console.log(div)
-  var p = document.createElement("p");
-  var span = document.createElement("span");
-  var node = document.createTextNode(x+" : ");
-  p.appendChild(node);
-  p.innerHTML += '<span id="'+x+'.span ">-</span> W'
-  p.setAttribute('id',x);
-  div.appendChild(p);
-}
+        var div = document.getElementById("classique");
+        console.log(div);
+        var p = document.createElement("p");
+        var span = document.createElement("span");
+        var node = document.createTextNode(x.name + " : ");
+        p.appendChild(node);
+        p.innerHTML += '<span id="'+x+'.span ">'+ x.power +'</span> W'
+        p.setAttribute('id',x);
+        div.appendChild(p);
+    }
 }
 
 
-function appareilLeger()
+function appareilLeger(data)
 {
-  myObj = json.equipement_leger
+  myObj = get(data, "electrical.consumers.appareilLeger")
   for (x in myObj) {
-  var div = document.getElementById("leger");
-  var p = document.createElement("p");
-  var span = document.createElement("span");
-  var node = document.createTextNode(x+" : ");
-  p.appendChild(node);
-  p.innerHTML += '<span id="'+x+'.span ">-</span> W'
-  p.setAttribute('id',x);
-  div.appendChild(p);
+        var div = document.getElementById("leger");
+        var p = document.createElement("p");
+        var span = document.createElement("span");
+        var node = document.createTextNode(x.name +" : ");
+        p.appendChild(node);
+        p.innerHTML += '<span id="'+x+'.span ">-</span> W'
+        p.setAttribute('id',x);
+        div.appendChild(p);
+
+    }
 
 }
 
-}
-
-function appareilLourd()
+function appareilLourd(data)
 {
-  myObj = json.equipement_lourd
+  myObj = get(data, "electrical.consumers.appareilLourd")
   for (x in myObj) {
   var div = document.getElementById("lourd");
   var p = document.createElement("p");
@@ -577,9 +573,9 @@ function appareilLourd()
 
 }
 
-function appareilGenerateur()
+function appareilGenerateur(data)
 {
-  myObj = json.equipement_generateur
+  myObj = get(data, "electrical.consumers.generateur")
   for (x in myObj) {
   var div = document.getElementById("generateur");
   var p = document.createElement("p");
@@ -594,13 +590,41 @@ function appareilGenerateur()
 }
 
 
-function equipementPage()
+function equipementPage(data)
 {
-  appareilGenerateur();
-  appareilLourd();
-  appareilLeger();
-  appareilClassique();
+
+    let consumers = get(data, "electrical.consumers");
+    
+    for(categorie in consumers){
+        // On récupère le div avec le id qui contient le nom de la catégorie
+        let div_categorie = document.getElementById(categorie);
+
+        for(appareil in consumers[categorie]){
+            
+            let element = document.getElementById("consumer_" + appareil);
+
+            //On vérifie si un bloc p avec l'id contenant le numéro de l'appareil existe ou non
+            if(typeof(element) != 'undefined' && element != null){
+                //Si elle existe on modifie son contenu
+                element.innerHTML = get(consumers, categorie + "." + appareil + ".name.value") + " : " + '<span id="consumer_'+ appareil +'.span">'+ get(consumers, categorie + "." + appareil + ".power.value") +'</span> W';
+            }else{
+                //Sinon on l'ajoute
+                let p = document.createElement("p");
+                p.setAttribute('id', "consumer_" + appareil);
+                let node = document.createTextNode(get(consumers, categorie + "." + appareil + ".name.value") + " : ");
+        
+                p.appendChild(node);
+                p.innerHTML += '<span id="consumer_'+ appareil +'.span">'+ get(consumers, categorie + "." + appareil + ".power.value") +'</span> W';
+                div_categorie.appendChild(p);
+            }
+        }
+    }
 }
+
+//   appareilGenerateur(data);
+//   appareilLourd(data);
+//   appareilLeger(data);
+//   appareilClassique(data);
 
 
 
