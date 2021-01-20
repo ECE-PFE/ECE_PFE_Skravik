@@ -2,10 +2,12 @@ const http = require("http")
 
 module.exports = (app) => {
     // ******************************************
-    let config; // ** applied configuration settings          
+    let config;          
     let subscriptions = [];
     let api_key;
+
     let path_positionTomorrow = "position.tomorrow";
+
     // ******** REQUIRED PLUGIN DEFINITION *******
     let plugin = {};
   
@@ -13,7 +15,7 @@ module.exports = (app) => {
     plugin.name = 'Skravik Admin';
     plugin.description = 'Configuration du catamaran Skravik';
     plugin.schema = {
-        "title": "Configuration pour prédiction de la production de demain",
+        "title" : "Configuration Skravik",
         "type": "object",
         "properties": {
             "api_key": {
@@ -22,25 +24,25 @@ module.exports = (app) => {
             },
             
             "solarPanel" : {
-                "title": "Panneaux solaires",
+                "title": "Paramètres panneaux solaires",
                 "type": "object",
                 "properties": {
 
                     "meanIlluminance": {
                         "type": "number",
-                        "title": "Ensoleillement moyen (kWh/m2/j)",
+                        "title": "Ensoleillement moyen (kWh/m²/j)",
                         "default": 5.73874
                     },
 
                     "minIlluminance": {
                         "type": "number",
-                        "title": "Ensoleillement minimum (kWh/m2/j)",
+                        "title": "Ensoleillement minimum (kWh/m²/j)",
                         "default": 4.98
                     },
 
                     "solarPanelSurface": {
                         "type": "number",
-                        "title": "Surface (m2)",
+                        "title": "Surface (m²)",
                         "default": 20
                     },
 
@@ -59,7 +61,7 @@ module.exports = (app) => {
             },
 
             "windTurbine": {
-                "title": "Eolienne",
+                "title": "Paramètre eoliens",
                 "type": "object",
                 "properties": {
                     "windTurbineNumber": {
@@ -70,7 +72,7 @@ module.exports = (app) => {
 
                     "windTurbineBladeDiameter": {
                         "type": "number",
-                        "title": "Diamètre (m)",
+                        "title": "Diamètre du rotor (m)",
                         "default": 1.15
                     },
 
@@ -78,6 +80,33 @@ module.exports = (app) => {
                         "type": "number",
                         "title": "Perte (%)",
                         "default": 50
+                    }
+                }
+            },
+
+            "consumers": {
+                "title": "Liste de consommateurs",
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "required": ["name", "categorie"],
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "title": "Nom",
+                            "default": "Consommateur"
+                        },
+                        "categorie": {
+                            "type": "string",
+                            "title": "Catégorie",
+                            "enum":[
+                                "Appareil de bord classique",
+                                "Appareil léger",
+                                "Appareil lourd",
+                                "Générateur de chaleur",
+                                "Moteur électrique"
+                            ]
+                        } 
                     }
                 }
             }
@@ -108,6 +137,30 @@ module.exports = (app) => {
                 ] 
             });
 
+        //console.log(config.consumers);
+        let i = 0;
+        config.consumers.forEach(consumer => {
+            app.handleMessage(plugin.id, 
+                { 
+                    updates: [
+                        { 
+                            values: [
+                                {
+                                    path: "electrical.consumers." + consumer.categorie + "." + i,
+                                    value: {
+                                        "name": consumer.name,
+                                        "power": 0
+                                    }
+                                }
+                            ]
+                        }
+                    ] 
+                });
+
+            i = i+1;
+        });
+        
+
         let localSubscription = {
             context: 'self', // Get data for all contexts
             subscribe: [
@@ -129,8 +182,8 @@ module.exports = (app) => {
 
                     let positionTomorrow = update.values[0].value;
 
-                    console.log("Position à J+1 : ");
-                    console.log(positionTomorrow);
+                    //console.log("Position à J+1 : ");
+                    //console.log(positionTomorrow);
 
                     if(Object.entries(positionTomorrow).length !== 0){
 
@@ -142,8 +195,8 @@ module.exports = (app) => {
                             let solarMeanPowerTomorrow = computeSolarForecastProduction(infosWeatherTomorrow); // en kWh/j
                             let windTurbineMeanPowerTomorrow = computeWindTurbineForecastProduction(infosWeatherTomorrow); // en kWh/j
 
-                            console.log("Puissance moyenne journalière des éoliennes: " + Number(windTurbineMeanPowerTomorrow).toFixed(2) + " kWh/j");
-                            console.log("Puissance moyenne journalière des panneaux solaires: " + Number(solarMeanPowerTomorrow).toFixed(2) + " kWh/j");
+                            //console.log("Puissance moyenne journalière des éoliennes: " + Number(windTurbineMeanPowerTomorrow).toFixed(2) + " kWh/j");
+                            //console.log("Puissance moyenne journalière des panneaux solaires: " + Number(solarMeanPowerTomorrow).toFixed(2) + " kWh/j");
         
                             app.handleMessage(plugin.id, 
                                                         {
@@ -172,7 +225,10 @@ module.exports = (app) => {
             }
         );
     };
-    
+
+    ///////////////////////////
+    ///   Arrêt du plugin   ///
+    ///////////////////////////
     plugin.stop = function () {
         // Here we put logic we need when the plugin stops
         subscriptions = [];
@@ -195,10 +251,9 @@ module.exports = (app) => {
     }
 
     ///////////////////////////
-    ///      Functions      ///
+    ///      Fonctions      ///
     ///////////////////////////
 
-    // Process posted data
     const processUIPost = (data) => {
         if (!Array.isArray(data)) {
             server.debug("** ERROR: ** Invalid payload data!!");
