@@ -431,7 +431,6 @@ function fetchDataFromRestApi()  {
 //First call
 fetchDataFromRestApi();
 
-
 //////////////////////////////////////////////////
 //////// Gestion de l'affichage des pages ////////
 //////////////////////////////////////////////////
@@ -497,6 +496,119 @@ function pullSettings() {
     console.log("settingsVal" + index + " : " + val + " (lecture)");
   });
 }
+
+///////////////////// Page equipement /////////////////////
+
+
+
+
+json = {
+  "equipement_lourd": {
+    "equipement_lourd_1":"1",
+    "equipement_lourd_2":"2",
+    "equipement_lourd_3":"3"
+  },
+  "equipement_leger": {
+    "equipement_leger_1":"1",
+    "equipement_leger_2":"2",
+    "equipement_leger_3":"3"
+  },"equipement_classique": {
+    "equipement_classique_1":"1",
+    "equipement_classique_2":"2",
+    "equipement_classique_3":"3"
+  },"equipement_generateur": {
+    "equipement_generateur_1":"1",
+    "equipement_generateur_2":"2",
+    "equipement_generateur_3":"3"
+  }
+ }
+
+
+
+
+
+function appareilClassique()
+{
+  myObj = json.equipement_classique
+  for (x in myObj) {
+  var div = document.getElementById("classique");
+  console.log(div)
+  var p = document.createElement("p");
+  var span = document.createElement("span");
+  var node = document.createTextNode(x+" : ");
+  p.appendChild(node);
+  p.innerHTML += '<span id="'+x+'.span ">-</span> W'
+  p.setAttribute('id',x);
+  div.appendChild(p);
+}
+}
+
+
+function appareilLeger()
+{
+  myObj = json.equipement_leger
+  for (x in myObj) {
+  var div = document.getElementById("leger");
+  var p = document.createElement("p");
+  var span = document.createElement("span");
+  var node = document.createTextNode(x+" : ");
+  p.appendChild(node);
+  p.innerHTML += '<span id="'+x+'.span ">-</span> W'
+  p.setAttribute('id',x);
+  div.appendChild(p);
+
+}
+
+}
+
+function appareilLourd()
+{
+  myObj = json.equipement_lourd
+  for (x in myObj) {
+  var div = document.getElementById("lourd");
+  var p = document.createElement("p");
+  var span = document.createElement("span");
+  var node = document.createTextNode(x+" : ");
+  p.appendChild(node);
+  p.innerHTML += '<span id="'+x+'.span ">-</span> W'
+  p.setAttribute('id',x);
+  div.appendChild(p);
+}
+
+}
+
+function appareilGenerateur()
+{
+  myObj = json.equipement_generateur
+  for (x in myObj) {
+  var div = document.getElementById("generateur");
+  var p = document.createElement("p");
+  var span = document.createElement("span");
+  var node = document.createTextNode(x+" : ");
+  p.appendChild(node);
+  p.innerHTML += '<span id="'+x+'.span ">-</span> W'
+  p.setAttribute('id',x);
+  div.appendChild(p);
+
+}
+}
+
+
+function equipementPage()
+{
+  appareilGenerateur();
+  appareilLourd();
+  appareilLeger();
+  appareilClassique();
+}
+
+
+
+
+
+
+
+
 
 
 ///////////////////////////////////

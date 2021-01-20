@@ -6,6 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="stylesheet" href="css/w3.css">
       <link rel="stylesheet" href="css/style.css">
+      <link rel="stylesheet" href="css/bootstrap.min.css">
       <script type="text/javascript" src="scripts/script.js"></script>
    </head>
    <body>
@@ -342,10 +343,51 @@
          <p>Moteur</p>
          <img src="img/moteur.png" onclick="show('PageMenu');">
       </div>
+
+
+      <!-- page a modifier -->
+
       <div id="PageEquipements" class="page" style="display:none">
-         <p>Equipements</p>
-         <img src="img/tablette.png" onclick="show('PageMenu');">
-      </div>
+         <script type="text/javascript"> window.onload = equipementPage;</script>
+         <h1>Equipements</h1>
+
+         <div class="container-fluid">
+      <div class="row">
+         <div class="col-sm-2" style="text-align: center">
+            
+         </div>
+         <div id="classique" class="col-sm-4 w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green case_equipement">
+           <h4> Appareils de bord classique</h4>
+               
+               
+         </div>
+
+         <div class="col-sm-4">
+            <div id="leger" class="col-sm-12 w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green case_equipement">
+            <h4 style="padding-bottom: 10px;"> Appareils léger </h4>
+               
+         </div>
+
+          <div id="generateur" class="col-sm-12 w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green case_equipement" style="margin-top: 27px;">
+            <h4 style="padding-bottom: 10px;" >Générateurs de chaleurs</h4>
+               
+               
+         </div>
+
+          <div id="lourd" class="col-sm-12 w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green case_equipement" style="margin-top: 27px;">
+            <h4 style="padding-bottom: 10px;">Appareils lourds de missions</h4>
+               
+         </div>
+
+         </div>
+          <div class="col-sm-2" style="text-align: center">
+            
+           
+         </div>
+
+         <div>
+
+
       <div id="PageWarnings" class="page" style="display:none">
          <div class="w3-col">
             <div class="w3-col w3-container headerImg">
