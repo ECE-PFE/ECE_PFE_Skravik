@@ -76,7 +76,7 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
 
   //Verification de chaque alerte possible
   if (vitesseVent > 2.5 && prodEOL1 == 0 && vitesseVent < ventMax)
-      {warningShow("pbProdEol1");warning=true;warningEOL=true;warningEOL1=true;}
+        {warningShow("pbProdEol1");warning=true;warningEOL=true;warningEOL1=true;}
   else warningHide("pbProdEol1");
 
   if (vitesseVent > 2.5 && prodEOL2 == 0 && vitesseVent < ventMax)
@@ -326,30 +326,33 @@ function updatePages(data) {
 
   if (sourcesVersConsos == 0)
     document.getElementById("IMGSourcesVersConsos").setAttribute("src", "img/grey_arrow_right.png");
-  else document.getElementById("IMGSourcesVersConsos").setAttribute("src", "img/green_arrow_right.png");
+  else 
+    document.getElementById("IMGSourcesVersConsos").setAttribute("src", "img/green_arrow_right.png");
 
   if (batteriesVersConsos == 0)
     document.getElementById("IMGBatteriesVersConsos").setAttribute("src", "img/grey_arrow_up.png");
-  else document.getElementById("IMGBatteriesVersConsos").setAttribute("src", "img/green_arrow_up.png");
+  else 
+    document.getElementById("IMGBatteriesVersConsos").setAttribute("src", "img/green_arrow_up.png");
 
   if (sourcesVersBatteries == 0)
     document.getElementById("IMGSourcesVersBatteries").setAttribute("src", "img/grey_arrow_right.png");
-  else document.getElementById("IMGSourcesVersBatteries").setAttribute("src", "img/green_arrow_right.png");
+  else 
+    document.getElementById("IMGSourcesVersBatteries").setAttribute("src", "img/green_arrow_right.png");
 
   //Page menu prevision
-  document.getElementById("panneauxsolairesPrev").innerHTML = get(data, "electrical.solar.solarPanel.prev.meanPower.value");
-  document.getElementById("eoliennesPrev").innerHTML        = get(data, "electrical.windTurbines.windTurbine.prev.meanPower.value");
-  document.getElementById("hydroliennesPrev").innerHTML     = get(data, "electrical.prev.solar.waterTurbine.power.value");
-  document.getElementById("groupeEletrogenePrev").innerHTML = get(data, "electrical.prev.solar.generators.power.value");
-  document.getElementById("alternateurPrev").innerHTML      = get(data, "electrical.prev.solar.alternators.power.value");
-  document.getElementById("pilehydrogenePrev").innerHTML    = get(data, "electrical.prev.solar.pileHydrogene.power.value");
+  document.getElementById("panneauxsolairesPrev").innerHTML = get(data, "electrical.prev.solar.meanPower.value");
+  document.getElementById("eoliennesPrev").innerHTML        = get(data, "electrical.prev.windTurbines.meanPower.value");
+  document.getElementById("hydroliennesPrev").innerHTML     = get(data, "electrical.prev.waterTurbines.power.value");
+  document.getElementById("groupeEletrogenePrev").innerHTML = get(data, "electrical.prev.generators.power.value");
+  document.getElementById("alternateurPrev").innerHTML      = get(data, "electrical.prev.alternators.power.value");
+  document.getElementById("pilehydrogenePrev").innerHTML    = get(data, "electrical.prev.fuelCells.power.value");
 
-  sommeSourcesPrev = get(data, "electrical.solar.solarPanel.prev.meanPower.value")
-                   + get(data, "electrical.windTurbines.windTurbine.prev.meanPower.value")
-                   + get(data, "electrical.prev.solar.waterTurbine.power.value")
-                   + get(data, "electrical.prev.solar.generators.power.value")
-                   + get(data, "electrical.prev.solar.alternators.power.value")
-                   + get(data, "electrical.prev.solar.pileHydrogene.power.value");
+  sommeSourcesPrev = get(data, "electrical.prev.solar.meanPower.value")
+                   + get(data, "electrical.prev.windTurbines.meanPower.value")
+                   + get(data, "electrical.prev.waterTurbine.power.value")
+                   + get(data, "electrical.prev.generators.power.value")
+                   + get(data, "electrical.prev.alternators.power.value")
+                   + get(data, "electrical.prev.fuelCells.power.value");
   if (isNaN(sommeSourcesPrev)) sommeSourcesPrev = "-";
   document.getElementById("sommeSourcesPrev").innerHTML   = sommeSourcesPrev;
 
