@@ -121,6 +121,16 @@ module.exports = (app) => {
         }
     };
 
+    function SetNameConsumer(updateValues){
+        let k = 0;
+        config.consumers.forEach(consumer => {
+            if(updateValues.consumers[consumerCategoryMap[consumer.categorie]].k){
+                updateValues.consumers[consumerCategoryMap[consumer.categorie]].k.name = consumer.name;
+            }
+            k = k + 1;
+        })
+    }
+
     ///////////////////////////
     /// Démarrage du plugin ///
     ///////////////////////////
@@ -145,6 +155,17 @@ module.exports = (app) => {
                 ] 
             });
 
+        // app.registerDeltaInputHandler((delta, next) => {
+        //     if (delta.updates) {
+        //         delta.updates.forEach(update => {
+        //             if (update.values) {
+        //                 SetNameConsumer(update.values);
+        //             }
+        //         })
+        //     }
+        //     next(delta)
+        // });
+
         let i = 0;
         config.consumers.forEach(consumer => {
             app.handleMessage(plugin.id, 
@@ -153,12 +174,12 @@ module.exports = (app) => {
                         { 
                             values: [
                                 {
-                                    path: "electrical.consumers." + consumerCategoryMap[consumer.categorie] + "." + i + ".name",
+                                    path: "electrical.consumers." + i + ".name",
                                     value: consumer.name
                                 },
                                 {
-                                    path: "electrical.consumers." + consumerCategoryMap[consumer.categorie] + "." + i + ".power",
-                                    value: 0
+                                    path: "electrical.consumers." + i + ".category",
+                                    value: consumerCategoryMap[consumer.categorie]
                                 }
                             ]
                         }

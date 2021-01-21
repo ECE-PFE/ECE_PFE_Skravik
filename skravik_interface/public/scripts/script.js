@@ -66,7 +66,8 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
 
     //Verification de chaque alerte possible
     for(elmt in EOL) {
-        if (vitesseVent > 2.5 && EOL[elmt].power.value == 0 && vitesseVent < ventMax)
+        EOL[elmt].warning = false;
+        if (vitesseVent > 2.5 && get(EOL[elmt],"power.value") == 0 && vitesseVent < ventMax)
         {
             warningShow("pbProdEol");
             warning = true;
@@ -90,7 +91,8 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
     }
 
     for(elmt in PS){
-        if (PS[elmt].temperature.value > tempMaxPS){
+        PS[elmt].warning = false;
+        if (get(PS[elmt],"temperature.value") > tempMaxPS){
             warningShow("chauffePS");
             warning=true;
             warningPS=true;
@@ -99,7 +101,7 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
             warningHide("chauffePS");
         }
 
-        if (PS[elmt].temperature.value > 85){
+        if (get(PS[elmt],"temperature.value") > 85){
             warningShow("surchauffePS");
             warning=true;
             warningPS=true;
@@ -108,7 +110,7 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
             warningHide("surchauffePS");
         }
 
-        if (PS[elmt].power.value < prodMinPS && PS[elmt].illuminance.value > 200){
+        if (get(PS[elmt],"power.value") < prodMinPS && get(PS[elmt],"illuminance.value") > 200){
             warningShow("pbProdPS");
             warning=true;
             warningPS=true;
@@ -682,29 +684,27 @@ function equipementPage(data)
 {
 
     let consumers = get(data, "electrical.consumers");
-    
-    for(categorie in consumers){
+
+    for(appareil in consumers){
+
         // On récupère le div avec le id qui contient le nom de la catégorie
-        let div_categorie = document.getElementById(categorie);
+        let div_categorie = document.getElementById(get(consumers[appareil], "category.value"));
 
-        for(appareil in consumers[categorie]){
-            
-            let element = document.getElementById("consumer_" + appareil);
+        let element = document.getElementById("consumer_" + appareil);
 
-            //On vérifie si un bloc p avec l'id contenant le numéro de l'appareil existe ou non
-            if(typeof(element) != 'undefined' && element != null){
-                //Si elle existe on modifie son contenu
-                element.innerHTML = get(consumers, categorie + "." + appareil + ".name.value") + " : " + '<span id="consumer_'+ appareil +'.span">'+ get(consumers, categorie + "." + appareil + ".power.value") +'</span> W';
-            }else{
-                //Sinon on l'ajoute
-                let p = document.createElement("p");
-                p.setAttribute('id', "consumer_" + appareil);
-                let node = document.createTextNode(get(consumers, categorie + "." + appareil + ".name.value") + " : ");
-        
-                p.appendChild(node);
-                p.innerHTML += '<span id="consumer_'+ appareil +'.span">'+ get(consumers, categorie + "." + appareil + ".power.value") +'</span> W';
-                div_categorie.appendChild(p);
-            }
+        //On vérifie si un bloc p avec l'id contenant le numéro de l'appareil existe ou non
+        if(typeof(element) != 'undefined' && element != null){
+            //Si elle existe on modifie son contenu
+            element.innerHTML = get(consumers, appareil + ".name.value") + " : " + '<span id="consumer_'+ appareil +'.span">'+ get(consumers, appareil + ".power.value") +'</span> W';
+        }else{
+            //Sinon on l'ajoute
+            let p = document.createElement("p");
+            p.setAttribute('id', "consumer_" + appareil);
+            let node = document.createTextNode(get(consumers, appareil + ".name.value") + " : ");
+    
+            p.appendChild(node);
+            p.innerHTML += '<span id="consumer_'+ appareil +'.span">'+ get(consumers, appareil + ".power.value") +'</span> W';
+            div_categorie.appendChild(p);
         }
     }
 }
