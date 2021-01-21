@@ -29,201 +29,178 @@ function warningHide(id){
 }
 
 function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, sourcesVersBatteries sont dispo par effet de bord
-  let vitesseVent = get(data,"environment.wind.speedTrue.value");
-  let ventMax = localStorage.getItem('settingsVal0');
-  let prodEOL1 = get(data,"electrical.windTurbine.windTurbine1.power.value");
-  let prodEOL2 = get(data,"electrical.windTurbine.windTurbine2.power.value");
-  let sourcesTotales = sommeSources;
-  let consosTotales = sommeConsos;
-  let prodVersBat = sourcesVersBatteries;
-  let chargeBat1 = get(data,"electrical.batteries.0.capacity.stateOfCharge.value");// a changer pour la charge totale ?
-  let tempPS1 = get(data, "electrical.solar.panneauSolaire1.temperature.value");
-  let tempPS2 = get(data, "electrical.solar.panneauSolaire2.temperature.value");
-  let tempPS3 = get(data, "electrical.solar.panneauSolaire3.temperature.value");
-  let tempPS4 = get(data, "electrical.solar.panneauSolaire4.temperature.value");
-  let tempMaxPS = localStorage.getItem('settingsVal1');
-  let prodPS1 = get(data,"electrical.solar.panneauSolaire1.power.value");
-  let prodPS2 = get(data,"electrical.solar.panneauSolaire2.power.value");
-  let prodPS3 = get(data,"electrical.solar.panneauSolaire3.power.value");
-  let prodPS4 = get(data,"electrical.solar.panneauSolaire4.power.value");
-  let prodMinPS = localStorage.getItem('settingsVal3');
-  let lum1 = get(data, "electrical.solar.panneauSolaire1.illuminance.value");;
-  let lum2 = get(data, "electrical.solar.panneauSolaire2.illuminance.value");;
-  let lum3 = get(data, "electrical.solar.panneauSolaire3.illuminance.value");;
-  let lum4 = get(data, "electrical.solar.panneauSolaire4.illuminance.value");;
-  let vitBateau = "-";
-  let hydroH240DansEau = "-";
-  let hydroPOD600DansEau = "-";
-  let tempPileHG = get(data,"electrical.pileHydrogene.power.value");
-  let tensionPileHG = "-";
-  let consoPileHG = "-";
-  let consoEquip = sommeEquipements;
-  let consoMaxEquip = localStorage.getItem('settingsVal2');
+    let PS = get(data, "electrical.solar");
+    let EOL = get(data, "electrical.windTurbines");
+    let HYD = get(data, "electrical.waterTurbines");
+    let PHG = get(data, "electrical.fuelCells");
+    let ALT = get(data, "electrical.alternators");
+    let GE = get(data, "electrical.generators");
 
-  let warning = false;
-  let warningEOL = false;
-  let warningEOL1 = false;
-  let warningEOL2 = false;
-  let warningPS = false;
-  let warningPS1 = false;
-  let warningPS2 = false;
-  let warningPS3 = false;
-  let warningPS4 = false;
-  let warningHYD = false;
-  let warningHYD1 = false;
-  let warningHYD2 = false;
-  let warningPHG = false;
+    let vitesseVent = get(data,"environment.wind.speedTrue.value");
+    let ventMax = localStorage.getItem('settingsVal0');
 
-  //Verification de chaque alerte possible
-  if (vitesseVent > 2.5 && prodEOL1 == 0 && vitesseVent < ventMax)
-        {warningShow("pbProdEol1");warning=true;warningEOL=true;warningEOL1=true;}
-  else warningHide("pbProdEol1");
+    let sourcesTotales = sommeSources;
+    let consosTotales = sommeConsos;
+    let prodVersBat = sourcesVersBatteries;
 
-  if (vitesseVent > 2.5 && prodEOL2 == 0 && vitesseVent < ventMax)
-      {warningShow("pbProdEol2");warning=true;warningEOL=true;warningEOL2=true;}
-  else warningHide("pbProdEol2");
+    let chargeBat1 = get(data,"electrical.batteries.0.capacity.stateOfCharge.value");// a changer pour la charge totale ?
 
-  if (vitesseVent > ventMax)
-      {warningShow("tropDeVent");warning=true;warningEOL=true;}
-  else warningHide("tropDeVent");
+    let tempMaxPS = localStorage.getItem('settingsVal1');
 
-  if (sourcesTotales > consosTotales && prodVersBat == 0 && chargeBat1 == 1)
-      {warningShow("pbChargeBat");warning=true;}
-  else warningHide("pbChargeBat");
-  
-  if (tempPS1 > tempMaxPS)
-     {warningShow("chauffePS1");warning=true;warningPS=true;warningPS1=true;}
-  else warningHide("chauffePS1");
+    let prodMinPS = localStorage.getItem('settingsVal3');
 
-  if (tempPS2 > tempMaxPS)
-      {warningShow("chauffePS2");warning=true;warningPS=true;warningPS2=true;}
-  else warningHide("chauffePS2");
+    let vitBateau = "-";
+    let hydroH240DansEau = "-";
+    let hydroPOD600DansEau = "-";
+    let tempPileHG = get(data,"electrical.pileHydrogene.power.value");
+    let tensionPileHG = "-";
+    let consoPileHG = "-";
+    let consoEquip = sommeEquipements;
+    let consoMaxEquip = localStorage.getItem('settingsVal2');
 
-  if (tempPS3 > tempMaxPS)
-      {warningShow("chauffePS3");warning=true;warningPS=true;warningPS3=true;}
-  else warningHide("chauffePS3");
+    let warning = false;
+    let warningEOL = false;
+    let warningPS = false;
+    let warningHYD = false;
+    let warningPHG = false;
 
-  if (tempPS4 > tempMaxPS)
-      {warningShow("chauffePS4");warning=true;warningPS=true;warningPS4=true;}
-  else warningHide("chauffePS4");
+    //Verification de chaque alerte possible
+    for(elmt in EOL) {
+        if (vitesseVent > 2.5 && EOL[elmt].power.value == 0 && vitesseVent < ventMax)
+        {
+            warningShow("pbProdEol");
+            warning = true;
+            warningEOL = true;
+            EOL[elmt].warning = true;
+        }
+        else{
+            warningHide("pbProdEol");
+        }
+    }
 
-  if (tempPS1 > 85)
-      {warningShow("surchauffePS1");warning=true;warningPS=true;warningPS1=true;}
-  else warningHide("surchauffePS1");
+    if (vitesseVent > ventMax)
+        {warningShow("tropDeVent");warning=true;warningEOL=true;}
+    else warningHide("tropDeVent");
 
-  if (tempPS2 > 85)
-      {warningShow("surchauffePS2");warning=true;warningPS=true;warningPS2=true;}
-  else warningHide("surchauffePS2");
+    if (sourcesTotales > consosTotales && prodVersBat == 0 && chargeBat1 == 1){
+        warningShow("pbChargeBat");
+        warning=true;
+    }else{
+        warningHide("pbChargeBat");
+    }
 
-  if (tempPS3 > 85)
-      {warningShow("surchauffePS3");warning=true;warningPS=true;warningPS3=true;}
-  else warningHide("surchauffePS3");
+    for(elmt in PS){
+        if (PS[elmt].temperature.value > tempMaxPS){
+            warningShow("chauffePS");
+            warning=true;
+            warningPS=true;
+            PS[elmt].warning = true;
+        }else{
+            warningHide("chauffePS");
+        }
 
-  if (tempPS4 > 85)
-      {warningShow("surchauffePS4");warning=true;warningPS=true;warningPS4=true;}
-  else warningHide("surchauffePS4");
+        if (PS[elmt].temperature.value > 85){
+            warningShow("surchauffePS");
+            warning=true;
+            warningPS=true;
+            PS[elmt].warning = true;
+        }else{ 
+            warningHide("surchauffePS");
+        }
 
-  if (prodPS1 < prodMinPS && lum1 > 200)
-      {warningShow("pbProdPS1");warning=true;warningPS=true;warningPS1=true;}
-  else warningHide("pbProdPS1");
+        if (PS[elmt].power.value < prodMinPS && PS[elmt].illuminance.value > 200){
+            warningShow("pbProdPS");
+            warning=true;
+            warningPS=true;
+            PS[elmt].warning = true;
+        }else{
+            warningHide("pbProdPS");
+        }
 
-  if (prodPS2 < prodMinPS && lum2 > 200)
-      {warningShow("pbProdPS2");warning=true;warningPS=true;warningPS2=true;}
-  else warningHide("pbProdPS2");
+    }
 
-  if (prodPS3 < prodMinPS && lum3 > 200)
-      {warningShow("pbProdPS3");warning=true;warningPS=true;warningPS3=true;}
-  else warningHide("pbProdPS3");
+    if (vitBateau > 10 && hydroH240DansEau)
+        {warningShow("pbVitHYD1");warning=true;warningHYD=true;warningHYD1=true;}
+    else warningHide("pbVitHYD1");
 
-  if (prodPS4 < prodMinPS && lum4 > 200)
-      {warningShow("pbProdPS4");warning=true;warningPS=true;warningPS4=true;}
-  else warningHide("pbProdPS4");
+    if (vitBateau > 12 && hydroPOD600DansEau)
+        {warningShow("pbVitHYD2");warning=true;warningHYD=true;warningHYD2=true;}
+    else warningHide("pbVitHYD2");
 
-  if (vitBateau > 10 && hydroH240DansEau)
-      {warningShow("pbVitHYD1");warning=true;warningHYD=true;warningHYD1=true;}
-  else warningHide("pbVitHYD1");
+    if (tempPileHG > 45)
+        {warningShow("surchauffePileHG");warning=true;warningPHG=true;}
+    else warningHide("surchauffePileHG");
 
-  if (vitBateau > 12 && hydroPOD600DansEau)
-      {warningShow("pbVitHYD2");warning=true;warningHYD=true;warningHYD2=true;}
-  else warningHide("pbVitHYD2");
+    if (tempPileHG < 5)
+        {warningShow("tropFroidPileHG");warning=true;warningPHG=true;}
+    else warningHide("tropFroidPileHG");
 
-  if (tempPileHG > 45)
-      {warningShow("surchauffePileHG");warning=true;warningPHG=true;}
-  else warningHide("surchauffePileHG");
+    if (tensionPileHG < 52 || tensionPileHG > 80)
+        {warningShow("pbProdPileHG");warning=true;warningPHG=true;}
+    else warningHide("pbProdPileHG");
 
-  if (tempPileHG < 5)
-      {warningShow("tropFroidPileHG");warning=true;warningPHG=true;}
-  else warningHide("tropFroidPileHG");
+    if (consoPileHG > 65)
+        {warningShow("pbConsoPileHG");warning=true;warningPHG=true;}
+    else warningHide("pbConsoPileHG");
 
-  if (tensionPileHG < 52 || tensionPileHG > 80)
-      {warningShow("pbProdPileHG");warning=true;warningPHG=true;}
-  else warningHide("pbProdPileHG");
+    if (consoEquip > consoMaxEquip)
+        {warningShow("pbConsosEquip");warning=true;}
+    else warningHide("pbConsosEquip");
 
-  if (consoPileHG > 65)
-      {warningShow("pbConsoPileHG");warning=true;warningPHG=true;}
-  else warningHide("pbConsoPileHG");
+    ////////////////////////////////
+    ///  Changement des icones   ///
+    ////////////////////////////////
 
-  if (consoEquip > consoMaxEquip)
-      {warningShow("pbConsosEquip");warning=true;}
-  else warningHide("pbConsosEquip");
+    if (warning || warningEOL || warningPS || warningHYD || warningPHG){
+        document.getElementById("warningImg").setAttribute("src", "img/warning.gif");
+        warningHide("warningOK");
+    }else {
+        document.getElementById("warningImg").setAttribute("src", "img/green_check.png");
+        warningShow("warningOK");
+    }
 
-  //Changement des icones
-  if (warning * warningEOL * warningPS * warningHYD * warningPHG){
-    document.getElementById("warningImg").setAttribute("src", "img/warning.gif");
-    warningHide("warningOK");
-  }
-  else {
-    document.getElementById("warningImg").setAttribute("src", "img/green_check.png");
-    warningShow("warningOK");
-  }
+    // Affichage warning EOL
+    if (warningEOL)
+        document.getElementById("IMGeolienne").setAttribute("src", "img/eolienne_alerte.gif");
+    else document.getElementById("IMGeolienne").setAttribute("src", "img/eolienne.png");
 
-  if (warningEOL)
-       document.getElementById("IMGeolienne").setAttribute("src", "img/eolienne_alerte.gif");
-  else document.getElementById("IMGeolienne").setAttribute("src", "img/eolienne.png");
+    for(elmt in EOL){
+        if(EOL[elmt].warning){
+            document.getElementById("IMGeolienne" + elmt).setAttribute("src", "img/eolienne_alerte.gif");
+        }else{
+            document.getElementById("IMGeolienne" + elmt).setAttribute("src", "img/eolienne.png");
+        }
+    }
 
-  if (warningEOL1)
-       document.getElementById("IMGeolienne1").setAttribute("src", "img/eolienne_alerte.gif");
-  else document.getElementById("IMGeolienne1").setAttribute("src", "img/eolienne.png");
+    // Affichage warning PS
+    if (warningPS)
+        document.getElementById("IMGpanneauxSolaires").setAttribute("src", "img/panneaux_solaire_alerte.gif");
+    else document.getElementById("IMGpanneauxSolaires").setAttribute("src", "img/panneaux_solaire.png");
 
-  if (warningEOL2)
-       document.getElementById("IMGeolienne2").setAttribute("src", "img/eolienne_alerte.gif");
-  else document.getElementById("IMGeolienne2").setAttribute("src", "img/eolienne.png");
+    for(elmt in PS){
+        if(PS[elmt].warning){
+            document.getElementById("IMGpanneauSolaire" + elmt).setAttribute("src", "img/panneaux_solaire_alerte.gif");
+        }else{
+            document.getElementById("IMGpanneauSolaire" + elmt).setAttribute("src", "img/panneaux_solaire.png");
+        }
+    }
+    
+    // Affichage warning HYD
+    if (warningHYD)
+        document.getElementById("IMGhydrolienne").setAttribute("src", "img/hydrolienne_alerte.gif");
+    else document.getElementById("IMGhydrolienne").setAttribute("src", "img/hydrolienne.png");
 
-  if (warningPS)
-       document.getElementById("IMGpanneauxSolaires").setAttribute("src", "img/panneaux_solaire_alerte.gif");
-  else document.getElementById("IMGpanneauxSolaires").setAttribute("src", "img/panneaux_solaire.png");
+    for(elmt in HYD){
+        if(HYD[elmt].warning){
+            document.getElementById("IMGhydrolienne" + elmt).setAttribute("src", "img/hydrolienne_alerte.gif");
+        }else{
+            document.getElementById("IMGhydrolienne" + elmt).setAttribute("src", "img/hydrolienne.png");
+        }
+    }
 
-  if (warningPS1)
-       document.getElementById("IMGpanneauSolaire1").setAttribute("src", "img/panneaux_solaire_alerte.gif");
-  else document.getElementById("IMGpanneauSolaire1").setAttribute("src", "img/panneaux_solaire.png");
-
-  if (warningPS2)
-       document.getElementById("IMGpanneauSolaire2").setAttribute("src", "img/panneaux_solaire_alerte.gif");
-  else document.getElementById("IMGpanneauSolaire2").setAttribute("src", "img/panneaux_solaire.png");
-
-  if (warningPS3)
-       document.getElementById("IMGpanneauSolaire3").setAttribute("src", "img/panneaux_solaire_alerte.gif");
-  else document.getElementById("IMGpanneauSolaire3").setAttribute("src", "img/panneaux_solaire.png");
-
-  if (warningPS4)
-       document.getElementById("IMGpanneauSolaire4").setAttribute("src", "img/panneaux_solaire_alerte.gif");
-  else document.getElementById("IMGpanneauSolaire4").setAttribute("src", "img/panneaux_solaire.png");
-
-  if (warningHYD)
-       document.getElementById("IMGhydrolienne").setAttribute("src", "img/hydrolienne_alerte.gif");
-  else document.getElementById("IMGhydrolienne").setAttribute("src", "img/hydrolienne.png");
-
-  if (warningHYD1)
-       document.getElementById("IMGhydrolienne1").setAttribute("src", "img/hydrolienne_alerte.gif");
-  else document.getElementById("IMGhydrolienne1").setAttribute("src", "img/hydrolienne.png");
-
-  if (warningHYD2)
-       document.getElementById("IMGhydrolienne2").setAttribute("src", "img/hydrolienne_alerte.gif");
-  else document.getElementById("IMGhydrolienne2").setAttribute("src", "img/hydrolienne.png");
-
-  if (warningPHG)
-       document.getElementById("IMGpileHydrogene").setAttribute("src", "img/pilehydrogene_alerte.gif");
-  else document.getElementById("IMGpileHydrogene").setAttribute("src", "img/pilehydrogene.png");
+    if (warningPHG)
+        document.getElementById("IMGpileHydrogene").setAttribute("src", "img/pilehydrogene_alerte.gif");
+    else document.getElementById("IMGpileHydrogene").setAttribute("src", "img/pilehydrogene.png");
 }
 
 
@@ -701,6 +678,37 @@ function fuelCellsPage(data){
     }
 }
 
+function equipementPage(data)
+{
+
+    let consumers = get(data, "electrical.consumers");
+    
+    for(categorie in consumers){
+        // On récupère le div avec le id qui contient le nom de la catégorie
+        let div_categorie = document.getElementById(categorie);
+
+        for(appareil in consumers[categorie]){
+            
+            let element = document.getElementById("consumer_" + appareil);
+
+            //On vérifie si un bloc p avec l'id contenant le numéro de l'appareil existe ou non
+            if(typeof(element) != 'undefined' && element != null){
+                //Si elle existe on modifie son contenu
+                element.innerHTML = get(consumers, categorie + "." + appareil + ".name.value") + " : " + '<span id="consumer_'+ appareil +'.span">'+ get(consumers, categorie + "." + appareil + ".power.value") +'</span> W';
+            }else{
+                //Sinon on l'ajoute
+                let p = document.createElement("p");
+                p.setAttribute('id', "consumer_" + appareil);
+                let node = document.createTextNode(get(consumers, categorie + "." + appareil + ".name.value") + " : ");
+        
+                p.appendChild(node);
+                p.innerHTML += '<span id="consumer_'+ appareil +'.span">'+ get(consumers, categorie + "." + appareil + ".power.value") +'</span> W';
+                div_categorie.appendChild(p);
+            }
+        }
+    }
+}
+
 function updateDisplay(event) {
     const json = event.target.responseText;
 
@@ -724,7 +732,6 @@ function fetchDataFromRestApi()  {
     oReq.open("GET", "http://" + host + ":" + port + "/" + endpoint);
     oReq.send();
 }
-
 //First call
 fetchDataFromRestApi();
 
@@ -749,7 +756,6 @@ function show(elementID) {
    // then show the requested page
    ele.style.display = 'block';
 }
-
 
 /////////////////////////////////////////
 //////// Gestion page paramètres ////////
@@ -792,38 +798,6 @@ function pullSettings() {
 
     console.log("settingsVal" + index + " : " + val + " (lecture)");
   });
-}
-
-///////////////////// Page equipement /////////////////////
-function equipementPage(data)
-{
-
-    let consumers = get(data, "electrical.consumers");
-    
-    for(categorie in consumers){
-        // On récupère le div avec le id qui contient le nom de la catégorie
-        let div_categorie = document.getElementById(categorie);
-
-        for(appareil in consumers[categorie]){
-            
-            let element = document.getElementById("consumer_" + appareil);
-
-            //On vérifie si un bloc p avec l'id contenant le numéro de l'appareil existe ou non
-            if(typeof(element) != 'undefined' && element != null){
-                //Si elle existe on modifie son contenu
-                element.innerHTML = get(consumers, categorie + "." + appareil + ".name.value") + " : " + '<span id="consumer_'+ appareil +'.span">'+ get(consumers, categorie + "." + appareil + ".power.value") +'</span> W';
-            }else{
-                //Sinon on l'ajoute
-                let p = document.createElement("p");
-                p.setAttribute('id', "consumer_" + appareil);
-                let node = document.createTextNode(get(consumers, categorie + "." + appareil + ".name.value") + " : ");
-        
-                p.appendChild(node);
-                p.innerHTML += '<span id="consumer_'+ appareil +'.span">'+ get(consumers, categorie + "." + appareil + ".power.value") +'</span> W';
-                div_categorie.appendChild(p);
-            }
-        }
-    }
 }
 
 ///////////////////////////////////
