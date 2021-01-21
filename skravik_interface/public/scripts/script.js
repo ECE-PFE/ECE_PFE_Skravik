@@ -545,18 +545,160 @@ function waterTurbinesPage(data){
 }
 
 function generatorsPage(data){
-    document.getElementById("GREProduction1").innerHTML     = get(data, "electrical.generators.generator1.power.value");
-    document.getElementById("GRETemperature1").innerHTML    = get(data, "electrical.generators.generator1.temperature.value");
+    pageDiv = document.getElementById("PageGroupeElectrogene");
+
+    generators = get(data, "electrical.generators");
+
+    let ligneDiv; // Stocke le bloc de la ligne actuelle
+    let k = 0; // Compteur de panneaux solaires disponibles
+    for(generator in generators){
+
+        let element = document.getElementById("groupeElectrogene_" + generator);
+
+        //On vérifie si un bloc p avec l'id contenant le numéro de l'appareil existe ou non
+        if(typeof(element) != 'undefined' && element != null){
+            ligneDiv = element.parentNode;
+
+            element.innerHTML = 
+                            '<p>' + get(data, "electrical.generators." + generator + ".name.value") + '</p>' +
+                            '<img id="IMGGroupeElectrogene' + generator + '" class="icone" src="img/groupe_electrogene.png">' +
+                            '</br>' +
+                            '<p>Production : <span id="GREProduction' + generator + '">' + get(data, "electrical.generators." + generator + ".power.value") + '</span> W</p>' +
+                            '<p>Temperature : <span id="GRETemperature' + generator + '">' + get(data, "electrical.generators." + generator + ".temperature.value") + '</span> °C</p>';
+        }else{
+            generatorDiv = document.createElement("div"); 
+            generatorDiv.setAttribute('id', 'groupeElectrogene_' + generator);
+            generatorDiv.setAttribute('class', 'w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green case');
+
+            generatorDiv.innerHTML = 
+                            '<p>' + get(data, "electrical.generators." + generator + ".name.value") + '</p>' +
+                            '<img id="IMGGroupeElectrogene' + generator + '" class="icone" src="img/groupe_electrogene.png">' +
+                            '</br>' +
+                            '<p>Production : <span id="GREProduction' + generator + '">' + get(data, "electrical.generators." + generator + ".power.value") + '</span> W</p>' +
+                            '<p>Temperature : <span id="GRETemperature' + generator + '">' + get(data, "electrical.generators." + generator + ".temperature.value") + '</span> °C</p>';
+            
+            if(k%3 == 0) {
+                // Si le numero de l'hydrolienne est un multiple de 3, on crée une nouvelle ligne
+                let newLigneDiv = document.createElement("div");
+                newLigneDiv.classList.add("w3-col");
+                newLigneDiv.classList.add("ligne");
+
+                // La ligne actuelle devient la nouvelle ligne fraichement créée
+                ligneDiv = newLigneDiv;
+            }
+
+            ligneDiv.appendChild(generatorDiv);
+
+            // On ajoute le nouveau bloc dans la ligne actuelle
+            pageDiv.appendChild(ligneDiv);
+        }
+
+        k = k + 1;
+    }
 }
 
 function alternatorsPage(data){
-    document.getElementById("ALTProduction1").innerHTML     = get(data, "electrical.alternators.alternator1.power.value");
-    document.getElementById("ALTProduction2").innerHTML     = get(data, "electrical.alternators.alternator2.power.value");
+    pageDiv = document.getElementById("PageAlternateur");
+
+    alternators = get(data, "electrical.alternators");
+
+    let ligneDiv; // Stocke le bloc de la ligne actuelle
+    let k = 0; // Compteur de panneaux solaires disponibles
+    for(alternator in alternators){
+
+        let element = document.getElementById("alternateur_" + alternator);
+
+        //On vérifie si un bloc p avec l'id contenant le numéro de l'appareil existe ou non
+        if(typeof(element) != 'undefined' && element != null){
+            ligneDiv = element.parentNode;
+
+            element.innerHTML = 
+                            '<p>' + get(data, "electrical.alternators." + alternator + ".name.value") + '</p>' +
+                            '<img id="IMGAlternateur' + alternator + '" class="icone" src="img/alternateur.png">' +
+                            '</br>' +
+                            '<p>Production : <span id="ALTProduction' + alternator + '">' + get(data, "electrical.alternators." + alternator + ".power.value") + '</span> W</p>';
+        }else{
+            alternatorDiv = document.createElement("div"); 
+            alternatorDiv.setAttribute('id', 'alternateur_' + alternator);
+            alternatorDiv.setAttribute('class', 'w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green case');
+
+            alternatorDiv.innerHTML = 
+                            '<p>' + get(data, "electrical.alternators." + alternator + ".name.value") + '</p>' +
+                            '<img id="IMGAlternateur' + alternator + '" class="icone" src="img/alternateur.png">' +
+                            '</br>' +
+                            '<p>Production : <span id="ALTProduction' + alternator + '">' + get(data, "electrical.alternators." + alternator + ".power.value") + '</span> W</p>';
+            
+            if(k%3 == 0) {
+                // Si le numero de l'hydrolienne est un multiple de 3, on crée une nouvelle ligne
+                let newLigneDiv = document.createElement("div");
+                newLigneDiv.classList.add("w3-col");
+                newLigneDiv.classList.add("ligne");
+
+                // La ligne actuelle devient la nouvelle ligne fraichement créée
+                ligneDiv = newLigneDiv;
+            }
+
+            ligneDiv.appendChild(alternatorDiv);
+
+            // On ajoute le nouveau bloc dans la ligne actuelle
+            pageDiv.appendChild(ligneDiv);
+        }
+
+        k = k + 1;
+    }
 }
 
 function fuelCellsPage(data){
-    document.getElementById("PHDProduction1").innerHTML     = get(data, "electrical.pileHydrogene.power.value");
-    document.getElementById("PHDTemperature1").innerHTML    = get(data, "electrical.pileHydrogene.temperature.value");
+    pageDiv = document.getElementById("PagePileHydrogene");
+
+    fuelCells = get(data, "electrical.fuelCells");
+
+    let ligneDiv; // Stocke le bloc de la ligne actuelle
+    let k = 0; // Compteur de panneaux solaires disponibles
+    for(fuelCell in fuelCells){
+
+        let element = document.getElementById("pileHydrogene_" + fuelCell);
+
+        //On vérifie si un bloc p avec l'id contenant le numéro de l'appareil existe ou non
+        if(typeof(element) != 'undefined' && element != null){
+            ligneDiv = element.parentNode;
+
+            element.innerHTML = 
+                            '<p>' + get(data, "electrical.fuelCells." + fuelCell + ".name.value") + '</p>' +
+                            '<img id="IMGPileHydrogene' + fuelCell + '" class="icone" src="img/pilehydrogene.png">' +
+                            '</br>' +
+                            '<p>Production : <span id="PHDProduction' + fuelCell + '">' + get(data, "electrical.fuelCells." + fuelCell + ".power.value") + '</span> W</p>' +
+                            '<p>Temperature : <span id="PHDTemperature' + fuelCell + '">' + get(data, "electrical.fuelCells." + fuelCell + ".temperature.value") + '</span> °C</p>';
+        }else{
+            fuelCellDiv = document.createElement("div"); 
+            fuelCellDiv.setAttribute('id', 'pileHydrogene_' + fuelCell);
+            fuelCellDiv.setAttribute('class', 'w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green case');
+
+            fuelCellDiv.innerHTML = 
+                            '<p>' + get(data, "electrical.fuelCells." + fuelCell + ".name.value") + '</p>' +
+                            '<img id="IMGPileHydrogene' + fuelCell + '" class="icone" src="img/pilehydrogene.png">' +
+                            '</br>' +
+                            '<p>Production : <span id="PHDProduction' + fuelCell + '">' + get(data, "electrical.fuelCells." + fuelCell + ".power.value") + '</span> W</p>' +
+                            '<p>Temperature : <span id="PHDTemperature' + fuelCell + '">' + get(data, "electrical.fuelCells." + fuelCell + ".temperature.value") + '</span> °C</p>';
+            
+            if(k%3 == 0) {
+                // Si le numero de l'hydrolienne est un multiple de 3, on crée une nouvelle ligne
+                let newLigneDiv = document.createElement("div");
+                newLigneDiv.classList.add("w3-col");
+                newLigneDiv.classList.add("ligne");
+
+                // La ligne actuelle devient la nouvelle ligne fraichement créée
+                ligneDiv = newLigneDiv;
+            }
+
+            ligneDiv.appendChild(fuelCellDiv);
+
+            // On ajoute le nouveau bloc dans la ligne actuelle
+            pageDiv.appendChild(ligneDiv);
+        }
+
+        k = k + 1;
+    }
 }
 
 function updateDisplay(event) {
