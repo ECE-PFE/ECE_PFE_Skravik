@@ -29,13 +29,6 @@ function warningHide(id){
 }
 
 function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, sourcesVersBatteries sont dispo par effet de bord
-    let PS = get(data, "electrical.solar");
-    let EOL = get(data, "electrical.windTurbines");
-    let HYD = get(data, "electrical.waterTurbines");
-    let PHG = get(data, "electrical.fuelCells");
-    let ALT = get(data, "electrical.alternators");
-    let GE = get(data, "electrical.generators");
-
     let vitesseVent = get(data,"environment.wind.speedTrue.value");
     let ventMax = localStorage.getItem('settingsVal0');
 
@@ -229,133 +222,167 @@ function get(data, path){
 
 function updatePages(data) {
 
-  console.log(data);
+    PS = get(data, "electrical.solar");
+    EOL = get(data, "electrical.windTurbines");
+    HYD = get(data, "electrical.waterTurbines");
+    PHG = get(data, "electrical.fuelCells");
+    ALT = get(data, "electrical.alternators");
+    GE = get(data, "electrical.generators");
+    EQP = get(data, "electrical.consumers");
+    //console.log(data);
 
-  sommePanneauxSolaires = get(data, "electrical.solar.panneauSolaire1.power.value")
-                        + get(data, "electrical.solar.panneauSolaire2.power.value")
-                        + get(data, "electrical.solar.panneauSolaire3.power.value")
-                        + get(data, "electrical.solar.panneauSolaire4.power.value");
-  if (isNaN(sommePanneauxSolaires)) sommePanneauxSolaires = "-";
-
-  sommeEoliennes = get(data, "electrical.windTurbine.windTurbine1.power.value")
-                 + get(data, "electrical.windTurbine.windTurbine2.power.value");
-  if (isNaN(sommeEoliennes)) sommeEoliennes = "-";
-
-  sommeHydroliennes = get(data, "electrical.waterTurbine.waterTurbine1.power.value")
-                    + get(data, "electrical.waterTurbine.waterTurbine2.power.value");
-  if (isNaN(sommeHydroliennes)) sommeHydroliennes = "-";
-
-  sommeGroupeElectrogene = get(data, "electrical.generators.generator1.power.value");
-  sommeAlternateur = get(data, "electrical.alternators.alternator1.power.value");
-  sommePileHydrogene = get(data, "electrical.pileHydrogene.power.value");
-
-  sommeMoteurs = get(data, "moteur.value");
-  sommeEquipements = get(data, "equipements.value");
-
-  sommeSources = sommePanneauxSolaires + sommeEoliennes + sommeHydroliennes + sommeGroupeElectrogene + sommeAlternateur + sommePileHydrogene;
-  if (isNaN(sommeSources)) sommeSources = "-";
-
-  sommeConsos = sommePanneauxSolaires + sommeEquipements;
-  if (isNaN(sommeConsos)) sommeConsos = "-";
-
-  if (isNaN(sommeSources + sommeConsos)){//si pas nombre valide
-    sourcesVersConsos    = "-";
-    batteriesVersConsos  = "-";
-    sourcesVersBatteries = "-";
-  }
-  else {
-    if (sommeSources == 0){
-      sourcesVersConsos    = 0.0;
-      batteriesVersConsos  = - sommeConsos;
-      sourcesVersBatteries = 0.0;
+    sommePanneauxSolaires = 0;
+    for(solar in PS){
+        sommePanneauxSolaires = sommePanneauxSolaires + get(PS[solar], "power.value");
     }
-    else if (sommeSources > - sommeConsos){
-      sourcesVersConsos    = - sommeConsos;
-      batteriesVersConsos  = 0.0;
-      sourcesVersBatteries = sommeSources + sommeConsos;
+    if (isNaN(sommePanneauxSolaires)) sommePanneauxSolaires = "-";
+
+    sommeEoliennes = 0;
+    for(windTurbine in EOL){
+        sommeEoliennes = sommeEoliennes + get(EOL[windTurbine], "power.value");
+    }
+    if (isNaN(sommeEoliennes)) sommeEoliennes = "-";
+
+    sommeHydroliennes = 0;
+    for(waterTurbine in HYD){
+        sommeHydroliennes = sommeHydroliennes + get(HYD[waterTurbine], "power.value");
+    }
+    if (isNaN(sommeHydroliennes)) sommeHydroliennes = "-";
+
+    sommeGroupeElectrogene = 0;
+    for(generator in GE){
+        sommeGroupeElectrogene = sommeGroupeElectrogene + get(GE[generator], "power.value");
+    }
+    if (isNaN(sommeGroupeElectrogene)) sommeGroupeElectrogene = "-";
+
+    sommeAlternateur = 0;
+    for(alternator in ALT){
+        sommeAlternateur = sommeAlternateur + get(ALT[alternator], "power.value");
+    }
+    if (isNaN(sommeAlternateur)) sommeAlternateur = "-";
+    
+    sommePileHydrogene = 0;
+    for(fuelCell in PHG){
+        sommePileHydrogene = sommePileHydrogene + get(PHG[fuelCell], "power.value");
+    }
+    if (isNaN(sommePileHydrogene)) sommePileHydrogene = "-";
+
+    sommeMoteurs = get(data, "moteur.value");
+
+    sommeEquipements = 0;
+    for(appareil in EQP){
+        sommeEquipements = sommeEquipements + get(EQP[appareil], "power.value");
+    }
+    if (isNaN(sommeEquipements)) sommeEquipements = "-";
+
+    sommeSources = sommePanneauxSolaires + sommeEoliennes + sommeHydroliennes + sommeGroupeElectrogene + sommeAlternateur + sommePileHydrogene;
+    if (isNaN(sommeSources)) sommeSources = "-";
+
+    sommeConsos = sommeMoteurs + sommeEquipements;
+    if (isNaN(sommeConsos)) sommeConsos = "-";
+
+    if (isNaN(sommeSources + sommeConsos)){//si pas nombre valide
+        sourcesVersConsos    = "-";
+        batteriesVersConsos  = "-";
+        sourcesVersBatteries = "-";
     }
     else {
-      sourcesVersConsos    = sommeSources;
-      batteriesVersConsos  = - sommeConsos - sommeSources;
-      sourcesVersBatteries = 0.0;
+        if (sommeSources == 0){
+            sourcesVersConsos    = 0.0;
+            batteriesVersConsos  = - sommeConsos;
+            sourcesVersBatteries = 0.0;
+        }
+        else if (sommeSources > - sommeConsos){
+            sourcesVersConsos    = - sommeConsos;
+            batteriesVersConsos  = 0.0;
+            sourcesVersBatteries = sommeSources + sommeConsos;
+        }
+        else {
+            sourcesVersConsos    = sommeSources;
+            batteriesVersConsos  = - sommeConsos - sommeSources;
+            sourcesVersBatteries = 0.0;
+        }
     }
-  }
 
-  //Page menu
-  document.getElementById("panneauxsolaires").innerHTML = sommePanneauxSolaires;
-  document.getElementById("eoliennes").innerHTML        = sommeEoliennes;
-  document.getElementById("hydroliennes").innerHTML     = sommeHydroliennes;
-  document.getElementById("groupeEletrogene").innerHTML = sommeGroupeElectrogene;
-  document.getElementById("alternateur").innerHTML      = sommeAlternateur;
-  document.getElementById("pilehydrogene").innerHTML    = sommePileHydrogene;
+    //Page menu
+    document.getElementById("panneauxsolaires").innerHTML = sommePanneauxSolaires;
+    document.getElementById("eoliennes").innerHTML        = sommeEoliennes;
+    document.getElementById("hydroliennes").innerHTML     = sommeHydroliennes;
+    document.getElementById("groupeEletrogene").innerHTML = sommeGroupeElectrogene;
+    document.getElementById("alternateur").innerHTML      = sommeAlternateur;
+    document.getElementById("pilehydrogene").innerHTML    = sommePileHydrogene;
 
-  document.getElementById("sommeSources").innerHTML     = sommeSources;
-  document.getElementById("sommeConsos").innerHTML      = sommeConsos;
+    document.getElementById("sommeSources").innerHTML     = sommeSources;
+    document.getElementById("sommeConsos").innerHTML      = sommeConsos;
 
-  document.getElementById("moteur").innerHTML           = sommeMoteurs;
-  document.getElementById("equipements").innerHTML      = sommeEquipements;
+    document.getElementById("moteur").innerHTML           = sommeMoteurs;
+    document.getElementById("equipements").innerHTML      = sommeEquipements;
 
-  document.getElementById("sourcesVersConsos").innerHTML    = sourcesVersConsos;
-  document.getElementById("batteriesVersConsos").innerHTML  = batteriesVersConsos;
-  document.getElementById("sourcesVersBatteries").innerHTML = sourcesVersBatteries;
+    document.getElementById("sourcesVersConsos").innerHTML    = sourcesVersConsos;
+    document.getElementById("batteriesVersConsos").innerHTML  = batteriesVersConsos;
+    document.getElementById("sourcesVersBatteries").innerHTML = sourcesVersBatteries;
 
-  document.getElementById("batterie1").innerHTML        = get(data, "electrical.batteries.0.capacity.stateOfCharge.value");
-  document.getElementById("batterie2").innerHTML        = get(data, "electrical.batteries.1.capacity.stateOfCharge.value");
-  document.getElementById("batterie3").innerHTML        = get(data, "electrical.batteries.2.capacity.stateOfCharge.value");
+    document.getElementById("batterie1").innerHTML        = get(data, "electrical.batteries.0.capacity.stateOfCharge.value");
+    document.getElementById("batterie2").innerHTML        = get(data, "electrical.batteries.1.capacity.stateOfCharge.value");
+    document.getElementById("batterie3").innerHTML        = get(data, "electrical.batteries.2.capacity.stateOfCharge.value");
 
-  if (sourcesVersConsos == 0)
-    document.getElementById("IMGSourcesVersConsos").setAttribute("src", "img/grey_arrow_right.png");
-  else 
-    document.getElementById("IMGSourcesVersConsos").setAttribute("src", "img/green_arrow_right.png");
+    if (sourcesVersConsos == 0)
+        document.getElementById("IMGSourcesVersConsos").setAttribute("src", "img/grey_arrow_right.png");
+    else 
+        document.getElementById("IMGSourcesVersConsos").setAttribute("src", "img/green_arrow_right.png");
 
-  if (batteriesVersConsos == 0)
-    document.getElementById("IMGBatteriesVersConsos").setAttribute("src", "img/grey_arrow_up.png");
-  else 
-    document.getElementById("IMGBatteriesVersConsos").setAttribute("src", "img/green_arrow_up.png");
+    if (batteriesVersConsos == 0)
+        document.getElementById("IMGBatteriesVersConsos").setAttribute("src", "img/grey_arrow_up.png");
+    else 
+        document.getElementById("IMGBatteriesVersConsos").setAttribute("src", "img/green_arrow_up.png");
 
-  if (sourcesVersBatteries == 0)
-    document.getElementById("IMGSourcesVersBatteries").setAttribute("src", "img/grey_arrow_right.png");
-  else 
-    document.getElementById("IMGSourcesVersBatteries").setAttribute("src", "img/green_arrow_right.png");
+    if (sourcesVersBatteries == 0)
+        document.getElementById("IMGSourcesVersBatteries").setAttribute("src", "img/grey_arrow_right.png");
+    else 
+        document.getElementById("IMGSourcesVersBatteries").setAttribute("src", "img/green_arrow_right.png");
 
-  //Page menu prevision
-  document.getElementById("panneauxsolairesPrev").innerHTML = get(data, "electrical.prev.solar.meanPower.value");
-  document.getElementById("eoliennesPrev").innerHTML        = get(data, "electrical.prev.windTurbines.meanPower.value");
-  document.getElementById("hydroliennesPrev").innerHTML     = get(data, "electrical.prev.waterTurbines.power.value");
-  document.getElementById("groupeEletrogenePrev").innerHTML = get(data, "electrical.prev.generators.power.value");
-  document.getElementById("alternateurPrev").innerHTML      = get(data, "electrical.prev.alternators.power.value");
-  document.getElementById("pilehydrogenePrev").innerHTML    = get(data, "electrical.prev.fuelCells.power.value");
+    //Page menu prevision
+    forecastPage(data);
 
-  sommeSourcesPrev = get(data, "electrical.prev.solar.meanPower.value")
-                   + get(data, "electrical.prev.windTurbines.meanPower.value")
-                   + get(data, "electrical.prev.waterTurbine.power.value")
-                   + get(data, "electrical.prev.generators.power.value")
-                   + get(data, "electrical.prev.alternators.power.value")
-                   + get(data, "electrical.prev.fuelCells.power.value");
-  if (isNaN(sommeSourcesPrev)) sommeSourcesPrev = "-";
-  document.getElementById("sommeSourcesPrev").innerHTML   = sommeSourcesPrev;
+    //Page panneaux solaires
+    solarPanelsPage(data);
 
-  //Page panneaux solaires
-  solarPanelsPage(data);
+    //Page Eoliennes
+    windTurbinesPage(data);
 
-  //Page Eoliennes
-  windTurbinesPage(data);
+    //Page Hydroliennes
+    waterTurbinesPage(data);
 
-  //Page Hydroliennes
-  waterTurbinesPage(data);
+    //Page Groupe electrogene
+    generatorsPage(data);
 
-  //Page Groupe electrogene
-  generatorsPage(data);
+    //Page Alternateur
+    alternatorsPage(data);
 
-  //Page Alternateur
-  alternatorsPage(data);
-  
-  //Page Pile à hydrogene
-  fuelCellsPage(data);
+    //Page Pile à hydrogene
+    fuelCellsPage(data);
 
-  //Page Equipements
-  equipementPage(data);
+    //Page Equipements
+    equipementPage(data);
 
+}
+
+function forecastPage(data){
+    document.getElementById("panneauxsolairesPrev").innerHTML = get(data, "electrical.prev.solar.meanPower.value");
+    document.getElementById("eoliennesPrev").innerHTML        = get(data, "electrical.prev.windTurbines.meanPower.value");
+    document.getElementById("hydroliennesPrev").innerHTML     = get(data, "electrical.prev.waterTurbines.power.value");
+    document.getElementById("groupeEletrogenePrev").innerHTML = get(data, "electrical.prev.generators.power.value");
+    document.getElementById("alternateurPrev").innerHTML      = get(data, "electrical.prev.alternators.power.value");
+    document.getElementById("pilehydrogenePrev").innerHTML    = get(data, "electrical.prev.fuelCells.power.value");
+
+    sommeSourcesPrev = get(data, "electrical.prev.solar.meanPower.value")
+                    + get(data, "electrical.prev.windTurbines.meanPower.value")
+                    + get(data, "electrical.prev.waterTurbine.power.value")
+                    + get(data, "electrical.prev.generators.power.value")
+                    + get(data, "electrical.prev.alternators.power.value")
+                    + get(data, "electrical.prev.fuelCells.power.value");
+    if (isNaN(sommeSourcesPrev)) sommeSourcesPrev = "-";
+    document.getElementById("sommeSourcesPrev").innerHTML   = sommeSourcesPrev;
 }
 
 function solarPanelsPage(data){
