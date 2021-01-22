@@ -17,7 +17,7 @@ Démarrage du serveur :
 - Dans le dossier `%SignalK%\signalkhome\.signalk\`, lancez `npm link skravik_sim`. Vous pouvez fermer la console ensuite.
 - Aller sur `http://localhost:3000` dans le navigateur internet.
 	- Si la page ne répond pas (et donc que le serveur signalK ne tourne pas déjà) : 
-		- Dans le dossier `%SignalK%\tools`, lancez le racourci `SignalK-CLI`, puis executez dans la fenetre qui s'ouvre : `signalk-server.cmd`. Si tout se passe bien il devrait y avoir de nombreuses lignes commencant par GET.
+		- Dans le dossier `%SignalK%\tools`, lancez le racourci `SignalK-CLI.lnk`, puis executez dans la fenetre qui s'ouvre : `signalk-server.cmd`. Si tout se passe bien il devrait y avoir de nombreuses lignes commencant par GET.
 		- Actualisez la page.
 	- Si la page répond et que vous arrivez sur une interface de SignalK, l'installation est terminée.
 
