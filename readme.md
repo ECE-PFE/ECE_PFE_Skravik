@@ -11,7 +11,7 @@ Note :
 - On notera `%git%` le dossier contenant ce repo
 
 Démarrage du serveur :
-- Dans `%git%\signalk_interface`, executez `npm link` dans un terminal de commande. Vous pouvez fermer la console ensuite.
+- Dans `%git%\skravik_interface`, executez `npm link` dans un terminal de commande. Vous pouvez fermer la console ensuite.
 - Dans le dossier `%SignalK%\signalkhome\.signalk\`, lancez `npm link skravik`. Gardez la console ouverte (une commande similaire sera à executer au même endroit plus tard).
 - Dans `%git%\signalk_sim`, lancer `npm link`. Vous pouvez fermer la console ensuite.
 - Dans le dossier `%SignalK%\signalkhome\.signalk\`, lancez `npm link skravik_sim`. Vous pouvez fermer la console ensuite.
