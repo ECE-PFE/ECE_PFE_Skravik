@@ -16,6 +16,12 @@ module.exports = (app) => {
         "Moteur électrique": "moteur_electrique"
     };
 
+    let solarPanelTechMap = {
+        "Crystalline silicon": "cSi",
+        "CIGS": "cis",
+        "Cadmium Telluride": "cdTe"
+    };
+
     // ******** REQUIRED PLUGIN DEFINITION *******
     let plugin = {};
   
@@ -97,7 +103,7 @@ module.exports = (app) => {
                 "type": "array",
                 "items": {
                     "type": "object",
-                    "required": ["name", "categorie"],
+                    "required": ["name", "category"],
                     "properties": {
                         "name": {
                             "type": "string",
