@@ -228,49 +228,65 @@ function updatePages(data) {
     PHG = get(data, "electrical.fuelCells");
     ALT = get(data, "electrical.alternators");
     GE = get(data, "electrical.generators");
-    EQP = get(data, "electrical.consumers");
-    //console.log(data);
+
+    EQP = JSON.parse(JSON.stringify(get(data, "electrical.consumers"))); // Astuce pour obtenir une copie de l'objet au lieu de récupérer sa référence
+    for(let eqp in EQP){
+        if(get(EQP[eqp], "category.value") == "moteur_electrique"){
+            delete EQP[eqp];
+        }
+    }
+
+    MOT = JSON.parse(JSON.stringify(get(data, "electrical.consumers"))); // Astuce pour obtenir une copie de l'objet au lieu de récupérer sa référence
+    for(let mot in MOT){
+        if(get(MOT[mot], "category.value") != "moteur_electrique"){
+            delete MOT[mot];
+        }
+    }
 
     sommePanneauxSolaires = 0;
-    for(solar in PS){
+    for(let solar in PS){
         sommePanneauxSolaires = sommePanneauxSolaires + get(PS[solar], "power.value");
     }
     if (isNaN(sommePanneauxSolaires)) sommePanneauxSolaires = "-";
 
     sommeEoliennes = 0;
-    for(windTurbine in EOL){
+    for(let windTurbine in EOL){
         sommeEoliennes = sommeEoliennes + get(EOL[windTurbine], "power.value");
     }
     if (isNaN(sommeEoliennes)) sommeEoliennes = "-";
 
     sommeHydroliennes = 0;
-    for(waterTurbine in HYD){
+    for(let waterTurbine in HYD){
         sommeHydroliennes = sommeHydroliennes + get(HYD[waterTurbine], "power.value");
     }
     if (isNaN(sommeHydroliennes)) sommeHydroliennes = "-";
 
     sommeGroupeElectrogene = 0;
-    for(generator in GE){
+    for(let generator in GE){
         sommeGroupeElectrogene = sommeGroupeElectrogene + get(GE[generator], "power.value");
     }
     if (isNaN(sommeGroupeElectrogene)) sommeGroupeElectrogene = "-";
 
     sommeAlternateur = 0;
-    for(alternator in ALT){
+    for(let alternator in ALT){
         sommeAlternateur = sommeAlternateur + get(ALT[alternator], "power.value");
     }
     if (isNaN(sommeAlternateur)) sommeAlternateur = "-";
     
     sommePileHydrogene = 0;
-    for(fuelCell in PHG){
+    for(let fuelCell in PHG){
         sommePileHydrogene = sommePileHydrogene + get(PHG[fuelCell], "power.value");
     }
     if (isNaN(sommePileHydrogene)) sommePileHydrogene = "-";
 
-    sommeMoteurs = get(data, "moteur.value");
+    sommeMoteurs = 0;
+    for(let motor in MOT){
+        sommeMoteurs = sommeMoteurs - get(MOT[motor], "power.value");
+    }
+    if (isNaN(sommeMoteurs)) sommeMoteurs = "-";
 
     sommeEquipements = 0;
-    for(appareil in EQP){
+    for(let appareil in EQP){
         sommeEquipements = sommeEquipements - get(EQP[appareil], "power.value");
     }
     if (isNaN(sommeEquipements)) sommeEquipements = "-";
