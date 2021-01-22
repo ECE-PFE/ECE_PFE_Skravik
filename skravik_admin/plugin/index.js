@@ -18,7 +18,7 @@ module.exports = (app) => {
 
     // ******** REQUIRED PLUGIN DEFINITION *******
     let plugin = {};
-  
+
     plugin.id = 'skravik-admin-plugin';
     plugin.name = 'Skravik Admin';
     plugin.description = 'Configuration du catamaran Skravik';
@@ -29,6 +29,11 @@ module.exports = (app) => {
             "api_key": {
                 "type": "string",
                 "title": "API Key OpenWeatherMap"
+            },
+
+            "api_key_2": {
+                "type": "string",
+                "title": "API Key NREL.gov"
             },
             
             "solarPanelParams" : {

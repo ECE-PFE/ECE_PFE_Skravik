@@ -336,10 +336,6 @@ function updatePages(data) {
     document.getElementById("batteriesVersConsos").innerHTML  = batteriesVersConsos;
     document.getElementById("sourcesVersBatteries").innerHTML = sourcesVersBatteries;
 
-    // document.getElementById("batterie1").innerHTML        = get(data, "electrical.batteries.0.capacity.stateOfCharge.value");
-    // document.getElementById("batterie2").innerHTML        = get(data, "electrical.batteries.1.capacity.stateOfCharge.value");
-    // document.getElementById("batterie3").innerHTML        = get(data, "electrical.batteries.2.capacity.stateOfCharge.value");
-
     if (sourcesVersConsos == 0)
         document.getElementById("IMGSourcesVersConsos").setAttribute("src", "img/grey_arrow_right.png");
     else 
@@ -389,18 +385,11 @@ function updatePages(data) {
 function forecastPage(data){
     document.getElementById("panneauxsolairesPrev").innerHTML = get(data, "electrical.prev.solar.meanPower.value");
     document.getElementById("eoliennesPrev").innerHTML        = get(data, "electrical.prev.windTurbines.meanPower.value");
-    document.getElementById("hydroliennesPrev").innerHTML     = get(data, "electrical.prev.waterTurbines.power.value");
-    document.getElementById("groupeEletrogenePrev").innerHTML = get(data, "electrical.prev.generators.power.value");
-    document.getElementById("alternateurPrev").innerHTML      = get(data, "electrical.prev.alternators.power.value");
-    document.getElementById("pilehydrogenePrev").innerHTML    = get(data, "electrical.prev.fuelCells.power.value");
 
     sommeSourcesPrev = get(data, "electrical.prev.solar.meanPower.value")
-                    + get(data, "electrical.prev.windTurbines.meanPower.value")
-                    + get(data, "electrical.prev.waterTurbine.power.value")
-                    + get(data, "electrical.prev.generators.power.value")
-                    + get(data, "electrical.prev.alternators.power.value")
-                    + get(data, "electrical.prev.fuelCells.power.value");
+                    + get(data, "electrical.prev.windTurbines.meanPower.value");
     if (isNaN(sommeSourcesPrev)) sommeSourcesPrev = "-";
+    
     document.getElementById("sommeSourcesPrev").innerHTML   = sommeSourcesPrev;
 }
 
