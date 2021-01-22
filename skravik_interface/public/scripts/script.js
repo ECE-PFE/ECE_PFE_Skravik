@@ -336,9 +336,9 @@ function updatePages(data) {
     document.getElementById("batteriesVersConsos").innerHTML  = batteriesVersConsos;
     document.getElementById("sourcesVersBatteries").innerHTML = sourcesVersBatteries;
 
-    document.getElementById("batterie1").innerHTML        = get(data, "electrical.batteries.0.capacity.stateOfCharge.value");
-    document.getElementById("batterie2").innerHTML        = get(data, "electrical.batteries.1.capacity.stateOfCharge.value");
-    document.getElementById("batterie3").innerHTML        = get(data, "electrical.batteries.2.capacity.stateOfCharge.value");
+    // document.getElementById("batterie1").innerHTML        = get(data, "electrical.batteries.0.capacity.stateOfCharge.value");
+    // document.getElementById("batterie2").innerHTML        = get(data, "electrical.batteries.1.capacity.stateOfCharge.value");
+    // document.getElementById("batterie3").innerHTML        = get(data, "electrical.batteries.2.capacity.stateOfCharge.value");
 
     if (sourcesVersConsos == 0)
         document.getElementById("IMGSourcesVersConsos").setAttribute("src", "img/grey_arrow_right.png");
@@ -381,6 +381,9 @@ function updatePages(data) {
 
     //Page Moteurs
     moteursPage(data);
+
+    //Panneau Batteries
+    batteriesPanel(data);
 }
 
 function forecastPage(data){
@@ -812,6 +815,54 @@ function equipementsPage(data)
             p.innerHTML += '<span id="consumer_'+ appareil +'.span">'+ get(consumers, appareil + ".power.value") +'</span> W';
             div_categorie.appendChild(p);
         }
+    }
+}
+
+function batteriesPanel(data){
+    let panelDiv = document.getElementById("batteriesPanel");
+
+    let batteries = get(data, "electrical.batteries");
+
+    let ligneDiv; // Stocke le bloc de la ligne actuelle
+    let k = 0; // Compteur de panneaux solaires disponibles
+    for(let battery in batteries){
+
+        let element = document.getElementById("divBatterie" + battery);
+
+        //On vérifie si un bloc p avec l'id contenant le numéro de l'appareil existe ou non
+        if(typeof(element) != 'undefined' && element != null){
+            ligneDiv = element.parentNode;
+
+            element.innerHTML = 
+                        '<p><strong>' + get(data, "electrical.batteries." + battery + ".name.value") + '</strong></p>' +
+                        '<img class="icone" src="img/batterie.png">' +
+                        '<p><span id="batterie' + battery + '">' + get(data, "electrical.batteries." + battery + ".charge.value") + '</span> %</p>';
+        }else{
+            let batterieDiv = document.createElement("div"); 
+            batterieDiv.setAttribute('id', 'divBatterie' + battery);
+            batterieDiv.setAttribute('class', 'w3-third w3-container');
+
+            batterieDiv.innerHTML = 
+                '<p><strong>' + get(data, "electrical.batteries." + battery + ".name.value") + '</strong></p>' +
+                '<img class="icone" src="img/batterie.png">' +
+                '<p><span id="batterie' + battery + '">' + get(data, "electrical.batteries." + battery + ".charge.value") + '</span> %</p>';
+            
+            if(k%3 == 0) {
+                // Si le numero de l'hydrolienne est un multiple de 3, on crée une nouvelle ligne
+                let newLigneDiv = document.createElement("div");
+                newLigneDiv.classList.add("w3-col");
+
+                // La ligne actuelle devient la nouvelle ligne fraichement créée
+                ligneDiv = newLigneDiv;
+            }
+
+            ligneDiv.appendChild(batterieDiv);
+
+            // On ajoute le nouveau bloc dans la ligne actuelle
+            panelDiv.appendChild(batterieDiv);
+        }
+
+        k = k + 1;
     }
 }
 

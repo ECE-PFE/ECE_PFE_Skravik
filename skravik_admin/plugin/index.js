@@ -194,7 +194,7 @@ module.exports = (app) => {
             },
 
             "fuelCells": {
-                "title": "Liste des pile à combustible",
+                "title": "Liste des piles à combustible",
                 "type": "array",
                 "items": {
                     "type": "object",
@@ -204,6 +204,22 @@ module.exports = (app) => {
                             "type": "string",
                             "title": "Nom",
                             "default": "Pile à combustible"
+                        }
+                    }
+                }
+            },
+
+            "batteries": {
+                "title": "Liste des batteries",
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "required": ["name"],
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "title": "Nom",
+                            "default": "Parc de batterie"
                         }
                     }
                 }
@@ -358,6 +374,24 @@ module.exports = (app) => {
                                     {
                                         path: "electrical.fuelCells." + i + ".name",
                                         value: fuelCell.name
+                                    }
+                                ]
+                            }
+                        ] 
+                    });
+            });
+        }
+
+        if(config.batteries){
+            config.batteries.forEach((battery, i) => {
+                app.handleMessage(plugin.id, 
+                    { 
+                        updates: [
+                            { 
+                                values: [
+                                    {
+                                        path: "electrical.batteries." + i + ".name",
+                                        value: battery.name
                                     }
                                 ]
                             }
