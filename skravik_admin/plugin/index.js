@@ -31,7 +31,7 @@ module.exports = (app) => {
                 "title": "API Key OpenWeatherMap"
             },
             
-            "solarPanel" : {
+            "solarPanelParams" : {
                 "title": "Paramètres panneaux solaires",
                 "type": "object",
                 "properties": {
@@ -68,7 +68,7 @@ module.exports = (app) => {
                 }
             },
 
-            "windTurbine": {
+            "windTurbineParams": {
                 "title": "Paramètre eoliens",
                 "type": "object",
                 "properties": {
@@ -104,7 +104,7 @@ module.exports = (app) => {
                             "title": "Nom",
                             "default": "Consommateur"
                         },
-                        "categorie": {
+                        "category": {
                             "type": "string",
                             "title": "Catégorie",
                             "enum":[
@@ -117,19 +117,114 @@ module.exports = (app) => {
                         } 
                     }
                 }
+            },
+
+            "solarPanels": {
+                "title": "Liste des panneaux solaires",
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "required": ["name", "technology"],
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "title": "Nom",
+                            "default": "Panneau solaire"
+                        },
+                        "technology": {
+                            "type": "string",
+                            "title": "Technologie",
+                            "enum":[
+                                "Crystalline silicon",
+                                "CIGS",
+                                "Cadmium Telluride"
+                            ]
+                        } 
+                    }
+                }
+            },
+
+            "windTurbines": {
+                "title": "Liste des éoliennes",
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "required": ["name"],
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "title": "Nom",
+                            "default": "Eolien"
+                        }
+                    }
+                }
+            },
+
+            "waterTurbines": {
+                "title": "Liste des hydroliennes",
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "required": ["name"],
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "title": "Nom",
+                            "default": "Hydrolienne"
+                        }
+                    }
+                }
+            },
+
+            "alternators": {
+                "title": "Liste des alternateurs",
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "required": ["name"],
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "title": "Nom",
+                            "default": "Alternateur"
+                        }
+                    }
+                }
+            },
+
+            "generators": {
+                "title": "Liste des générateurs",
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "required": ["name"],
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "title": "Nom",
+                            "default": "Générateur"
+                        }
+                    }
+                }
+            },
+
+            "fuelCells": {
+                "title": "Liste des pile à combustible",
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "required": ["name"],
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "title": "Nom",
+                            "default": "Pile à combustible"
+                        }
+                    }
+                }
             }
         }
     };
-
-    function SetNameConsumer(updateValues){
-        let k = 0;
-        config.consumers.forEach(consumer => {
-            if(updateValues.consumers[consumerCategoryMap[consumer.categorie]].k){
-                updateValues.consumers[consumerCategoryMap[consumer.categorie]].k.name = consumer.name;
-            }
-            k = k + 1;
-        })
-    }
 
     ///////////////////////////
     /// Démarrage du plugin ///
@@ -155,39 +250,140 @@ module.exports = (app) => {
                 ] 
             });
 
-        // app.registerDeltaInputHandler((delta, next) => {
-        //     if (delta.updates) {
-        //         delta.updates.forEach(update => {
-        //             if (update.values) {
-        //                 SetNameConsumer(update.values);
-        //             }
-        //         })
-        //     }
-        //     next(delta)
-        // });
+        
+        if(config.consumers){
+            config.consumers.forEach((consumer, i) => {
+                app.handleMessage(plugin.id, 
+                    { 
+                        updates: [
+                            { 
+                                values: [
+                                    {
+                                        path: "electrical.consumers." + i + ".name",
+                                        value: consumer.name
+                                    },
+                                    {
+                                        path: "electrical.consumers." + i + ".category",
+                                        value: consumerCategoryMap[consumer.category]
+                                    }
+                                ]
+                            }
+                        ] 
+                    });
+            });
+        }
 
-        let i = 0;
-        config.consumers.forEach(consumer => {
-            app.handleMessage(plugin.id, 
-                { 
-                    updates: [
-                        { 
-                            values: [
-                                {
-                                    path: "electrical.consumers." + i + ".name",
-                                    value: consumer.name
-                                },
-                                {
-                                    path: "electrical.consumers." + i + ".category",
-                                    value: consumerCategoryMap[consumer.categorie]
-                                }
-                            ]
-                        }
-                    ] 
-                });
+        if(config.solarPanels){
+            config.solarPanels.forEach((solarPanel, i) => {
+                app.handleMessage(plugin.id, 
+                    { 
+                        updates: [
+                            { 
+                                values: [
+                                    {
+                                        path: "electrical.solarPanels." + i + ".name",
+                                        value: solarPanel.name
+                                    },
+                                    {
+                                        path: "electrical.solarPanels." + i + ".technology",
+                                        value: solarPanelTechMap[solarPanel.technology]
+                                    }
+                                ]
+                            }
+                        ] 
+                    });
+            });
+        }
 
-            i = i+1;
-        });
+        if(config.windTurbines){
+            config.windTurbines.forEach((windTurbine, i) => {
+                app.handleMessage(plugin.id, 
+                    { 
+                        updates: [
+                            { 
+                                values: [
+                                    {
+                                        path: "electrical.windTurbines." + i + ".name",
+                                        value: windTurbine.name
+                                    }
+                                ]
+                            }
+                        ] 
+                    });
+            });
+        }
+
+        if(config.waterTurbines){
+            config.waterTurbines.forEach((waterTurbine, i) => {
+                app.handleMessage(plugin.id, 
+                    { 
+                        updates: [
+                            { 
+                                values: [
+                                    {
+                                        path: "electrical.waterTurbines." + i + ".name",
+                                        value: waterTurbine.name
+                                    }
+                                ]
+                            }
+                        ] 
+                    });
+            });
+        }
+
+        if(config.alternators){
+            config.alternators.forEach((alternator, i) => {
+                app.handleMessage(plugin.id, 
+                    { 
+                        updates: [
+                            { 
+                                values: [
+                                    {
+                                        path: "electrical.alternators." + i + ".name",
+                                        value: alternator.name
+                                    }
+                                ]
+                            }
+                        ] 
+                    });
+            });
+        }
+
+        if(config.generators){
+            config.generators.forEach((generator, i) => {
+                app.handleMessage(plugin.id, 
+                    { 
+                        updates: [
+                            { 
+                                values: [
+                                    {
+                                        path: "electrical.generators." + i + ".name",
+                                        value: generator.name
+                                    }
+                                ]
+                            }
+                        ] 
+                    });
+            });
+        }
+
+        if(config.fuelCells){
+            config.fuelCells.forEach((fuelCell, i) => {
+                app.handleMessage(plugin.id, 
+                    { 
+                        updates: [
+                            { 
+                                values: [
+                                    {
+                                        path: "electrical.fuelCells." + i + ".name",
+                                        value: fuelCell.name
+                                    }
+                                ]
+                            }
+                        ] 
+                    });
+            });
+        }
         
 
         let localSubscription = {
@@ -300,9 +496,9 @@ module.exports = (app) => {
     };
 
     const computeSolarForecastProduction = (infosWeather) => {
-        let solarPanelSurface = config.solarPanel.solarPanelSurface;
-        let solarPanelEfficiency = config.solarPanel.solarPanelEfficiency/100;
-        let solarPanelLossCoeff = config.solarPanel.solarPanelLossCoeff/100;
+        let solarPanelSurface = config.solarPanelParams.solarPanelSurface;
+        let solarPanelEfficiency = config.solarPanelParams.solarPanelEfficiency/100;
+        let solarPanelLossCoeff = config.solarPanelParams.solarPanelLossCoeff/100;
 
         let solarPanelEnergyByDay = solarPanelSurface * solarPanelEfficiency * infosWeather[2] * solarPanelLossCoeff; // kWh/j
         return solarPanelEnergyByDay;
@@ -311,9 +507,9 @@ module.exports = (app) => {
     const computeWindTurbineForecastProduction = (infosWeather) => {
         let betzLimit = 16/27;
 
-        let bladeDiameter = config.windTurbine.windTurbineBladeDiameter;
-        let windTurbineLoss = config.windTurbine.windTurbineLoss/100;
-        let windTurbineNumber = config.windTurbine.windTurbineNumber;
+        let bladeDiameter = config.windTurbineParams.windTurbineBladeDiameter;
+        let windTurbineLoss = config.windTurbineParams.windTurbineLoss/100;
+        let windTurbineNumber = config.windTurbineParams.windTurbineNumber;
 
         let volumicMass = 1.23;
 
