@@ -16,12 +16,6 @@ module.exports = (app) => {
         "Moteur électrique": "moteur_electrique"
     };
 
-    let solarPanelTechMap = {
-        "Crystalline silicon": "cSi",
-        "CIGS": "cis",
-        "Cadmium Telluride": "cdTe"
-    };
-
     // ******** REQUIRED PLUGIN DEFINITION *******
     let plugin = {};
   
@@ -78,12 +72,6 @@ module.exports = (app) => {
                 "title": "Paramètre eoliens",
                 "type": "object",
                 "properties": {
-                    "windTurbineNumber": {
-                        "type": "number",
-                        "title": "Nombre d'éoliens",
-                        "default": 2
-                    },
-
                     "windTurbineBladeDiameter": {
                         "type": "number",
                         "title": "Diamètre du rotor (m)",
@@ -130,22 +118,13 @@ module.exports = (app) => {
                 "type": "array",
                 "items": {
                     "type": "object",
-                    "required": ["name", "technology"],
+                    "required": ["name"],
                     "properties": {
                         "name": {
                             "type": "string",
                             "title": "Nom",
                             "default": "Panneau solaire"
-                        },
-                        "technology": {
-                            "type": "string",
-                            "title": "Technologie",
-                            "enum":[
-                                "Crystalline silicon",
-                                "CIGS",
-                                "Cadmium Telluride"
-                            ]
-                        } 
+                        }
                     }
                 }
             },
@@ -287,12 +266,8 @@ module.exports = (app) => {
                             { 
                                 values: [
                                     {
-                                        path: "electrical.solarPanels." + i + ".name",
+                                        path: "electrical.solar." + i + ".name",
                                         value: solarPanel.name
-                                    },
-                                    {
-                                        path: "electrical.solarPanels." + i + ".technology",
-                                        value: solarPanelTechMap[solarPanel.technology]
                                     }
                                 ]
                             }
@@ -515,7 +490,10 @@ module.exports = (app) => {
 
         let bladeDiameter = config.windTurbineParams.windTurbineBladeDiameter;
         let windTurbineLoss = config.windTurbineParams.windTurbineLoss/100;
-        let windTurbineNumber = config.windTurbineParams.windTurbineNumber;
+        let windTurbineNumber = 0;
+
+        if(config.windTurbines)
+            windTurbineNumber = config.windTurbines.length;
 
         let volumicMass = 1.23;
 
