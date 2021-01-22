@@ -13,8 +13,10 @@ Note :
 Démarrage du serveur :
 - Dans `%git%\skravik_interface`, executez `npm link` dans un terminal de commande. Vous pouvez fermer la console ensuite.
 - Dans le dossier `%SignalK%\signalkhome\.signalk\`, lancez `npm link skravik`. Gardez la console ouverte (une commande similaire sera à executer au même endroit plus tard).
-- Dans `%git%\signalk_sim`, lancer `npm link`. Vous pouvez fermer la console ensuite.
+- Dans `%git%\skravik_sim`, lancer `npm link`. Vous pouvez fermer la console ensuite.
 - Dans le dossier `%SignalK%\signalkhome\.signalk\`, lancez `npm link skravik_sim`. Vous pouvez fermer la console ensuite.
+- Dans `%git%\skravik_admin`, lancer `npm link`. Vous pouvez fermer la console ensuite.
+- Dans le dossier `%SignalK%\signalkhome\.signalk\`, lancez `npm link skravik_admin`. Vous pouvez fermer la console ensuite.
 - Aller sur `http://localhost:3000` dans le navigateur internet.
 	- Si la page ne répond pas (et donc que le serveur signalK ne tourne pas déjà) : 
 		- Dans le dossier `%SignalK%\tools`, lancez le racourci `SignalK-CLI.lnk`, puis executez dans la fenetre qui s'ouvre : `signalk-server.cmd`. Si tout se passe bien il devrait y avoir de nombreuses lignes commencant par GET.
