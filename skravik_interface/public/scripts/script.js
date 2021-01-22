@@ -30,7 +30,6 @@ function warningHide(id){
 
 function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, sourcesVersBatteries sont dispo par effet de bord
     let vitesseVent = get(data,"environment.wind.speedTrue.value");
-    let ventMax = localStorage.getItem('settingsVal0');
 
     let sourcesTotales = sommeSources;
     let consosTotales = sommeConsos;
@@ -38,8 +37,9 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
 
     let chargeBat1 = get(data,"electrical.batteries.0.capacity.stateOfCharge.value");// a changer pour la charge totale ?
 
+    let ventMax = localStorage.getItem('settingsVal0');
     let tempMaxPS = localStorage.getItem('settingsVal1');
-
+    let consoMaxEquip = localStorage.getItem('settingsVal2');
     let prodMinPS = localStorage.getItem('settingsVal3');
 
     let vitBateau = "-";
@@ -49,7 +49,6 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
     let tensionPileHG = "-";
     let consoPileHG = "-";
     let consoEquip = sommeEquipements;
-    let consoMaxEquip = localStorage.getItem('settingsVal2');
 
     let warning = false;
     let warningEOL = false;
@@ -58,7 +57,8 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
     let warningPHG = false;
 
     //Verification de chaque alerte possible
-    for(elmt in EOL) {
+    warningHide("pbProdEol");
+    for(let elmt in EOL) {
         EOL[elmt].warning = false;
         if (vitesseVent > 2.5 && get(EOL[elmt],"power.value") == 0 && vitesseVent < ventMax)
         {
@@ -68,7 +68,6 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
             EOL[elmt].warning = true;
         }
         else{
-            warningHide("pbProdEol");
         }
     }
 
@@ -83,7 +82,7 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
         warningHide("pbChargeBat");
     }
 
-    for(elmt in PS){
+    for(let elmt in PS){
         PS[elmt].warning = false;
         if (get(PS[elmt],"temperature.value") > tempMaxPS){
             warningShow("chauffePS");
@@ -145,7 +144,6 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
     ////////////////////////////////
     ///  Changement des icones   ///
     ////////////////////////////////
-
     if (warning || warningEOL || warningPS || warningHYD || warningPHG){
         document.getElementById("warningImg").setAttribute("src", "img/warning.gif");
         warningHide("warningOK");
@@ -159,7 +157,7 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
         document.getElementById("IMGeolienne").setAttribute("src", "img/eolienne_alerte.gif");
     else document.getElementById("IMGeolienne").setAttribute("src", "img/eolienne.png");
 
-    for(elmt in EOL){
+    for(let elmt in EOL){
         if(EOL[elmt].warning){
             document.getElementById("IMGeolienne" + elmt).setAttribute("src", "img/eolienne_alerte.gif");
         }else{
@@ -172,7 +170,7 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
         document.getElementById("IMGpanneauxSolaires").setAttribute("src", "img/panneaux_solaire_alerte.gif");
     else document.getElementById("IMGpanneauxSolaires").setAttribute("src", "img/panneaux_solaire.png");
 
-    for(elmt in PS){
+    for(let elmt in PS){
         if(PS[elmt].warning){
             document.getElementById("IMGpanneauSolaire" + elmt).setAttribute("src", "img/panneaux_solaire_alerte.gif");
         }else{
@@ -185,7 +183,7 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
         document.getElementById("IMGhydrolienne").setAttribute("src", "img/hydrolienne_alerte.gif");
     else document.getElementById("IMGhydrolienne").setAttribute("src", "img/hydrolienne.png");
 
-    for(elmt in HYD){
+    for(let elmt in HYD){
         if(HYD[elmt].warning){
             document.getElementById("IMGhydrolienne" + elmt).setAttribute("src", "img/hydrolienne_alerte.gif");
         }else{
@@ -794,6 +792,9 @@ function equipementsPage(data)
 
         // On récupère le div avec le id qui contient le nom de la catégorie
         let div_categorie = document.getElementById(get(consumers[appareil], "category.value"));
+        if(div_categorie === null){
+            continue;
+        }
 
         let element = document.getElementById("consumer_" + appareil);
 
