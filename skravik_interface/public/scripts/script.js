@@ -271,7 +271,7 @@ function updatePages(data) {
 
     sommeEquipements = 0;
     for(appareil in EQP){
-        sommeEquipements = sommeEquipements + get(EQP[appareil], "power.value");
+        sommeEquipements = sommeEquipements - get(EQP[appareil], "power.value");
     }
     if (isNaN(sommeEquipements)) sommeEquipements = "-";
 
@@ -363,8 +363,10 @@ function updatePages(data) {
     fuelCellsPage(data);
 
     //Page Equipements
-    equipementPage(data);
+    equipementsPage(data);
 
+    //Page Moteurs
+    moteursPage(data);
 }
 
 function forecastPage(data){
@@ -707,12 +709,73 @@ function fuelCellsPage(data){
     }
 }
 
-function equipementPage(data)
+function moteursPage(data){
+    pageDiv = document.getElementById("PageMoteurs");
+
+    let motors = get(data, "electrical.consumers");
+
+    let ligneDiv; // Stocke le bloc de la ligne actuelle
+    let k = 0; // Compteur de panneaux solaires disponibles
+    for(motor in motors){
+
+        // On ignore les équipements
+        if(get(motors[motor], "category.value") != "moteur_electrique"){
+            continue;
+        }
+
+        let element = document.getElementById("moteur_electrique" + motor);
+
+        //On vérifie si un bloc p avec l'id contenant le numéro de l'appareil existe ou non
+        if(typeof(element) != 'undefined' && element != null){
+            ligneDiv = element.parentNode;
+
+            element.innerHTML = 
+                            '<p>' + get(data, "electrical.consumers." + motor + ".name.value") + '</p>' +
+                            '<img id="IMGMoteur' + motor + '" class="icone" src="img/moteur.png">' +
+                            '</br>' +
+                            '<p>Consommation : <span id="MOTConsommation' + motor + '">' + get(data, "electrical.consumers." + motor + ".power.value") + '</span> W</p>';
+        }else{
+            let motorDiv = document.createElement("div"); 
+            motorDiv.setAttribute('id', 'moteur_electrique' + motor);
+            motorDiv.setAttribute('class', 'w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green case');
+
+            motorDiv.innerHTML = 
+                            '<p>' + get(data, "electrical.consumers." + motor + ".name.value") + '</p>' +
+                            '<img id="IMGMoteur' + motor + '" class="icone" src="img/moteur.png">' +
+                            '</br>' +
+                            '<p>Consommation : <span id="MOTConsommation' + motor + '">' + get(data, "electrical.consumers." + motor + ".power.value") + '</span> W</p>';
+            
+            if(k%3 == 0) {
+                // Si le numero de l'hydrolienne est un multiple de 3, on crée une nouvelle ligne
+                let newLigneDiv = document.createElement("div");
+                newLigneDiv.classList.add("w3-col");
+                newLigneDiv.classList.add("ligne");
+
+                // La ligne actuelle devient la nouvelle ligne fraichement créée
+                ligneDiv = newLigneDiv;
+            }
+
+            ligneDiv.appendChild(motorDiv);
+
+            // On ajoute le nouveau bloc dans la ligne actuelle
+            pageDiv.appendChild(ligneDiv);
+        }
+
+        k = k + 1;
+    }
+}
+
+function equipementsPage(data)
 {
 
     let consumers = get(data, "electrical.consumers");
 
     for(appareil in consumers){
+
+        // On ignore les moteurs
+        if(get(consumers[appareil], "category.value") == "moteur_electrique"){
+            continue;
+        }
 
         // On récupère le div avec le id qui contient le nom de la catégorie
         let div_categorie = document.getElementById(get(consumers[appareil], "category.value"));
