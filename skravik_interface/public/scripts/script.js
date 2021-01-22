@@ -388,13 +388,13 @@ function forecastPage(data){
 }
 
 function solarPanelsPage(data){
-    pageDiv = document.getElementById("PagePanneauxSolaires");
+    let pageDiv = document.getElementById("PagePanneauxSolaires");
 
-    solarPanels = get(data, "electrical.solar");
+    let solarPanels = get(data, "electrical.solar");
 
     let ligneDiv; // Stocke le bloc de la ligne actuelle
     let k = 0; // Compteur de panneaux solaires disponibles
-    for(solarPanel in solarPanels){
+    for(let solarPanel in solarPanels){
 
         let element = document.getElementById("panneauSolaire_" + solarPanel);
 
@@ -411,7 +411,7 @@ function solarPanelsPage(data){
                             '<p>Ensoleillement : <span id="PANEnsoleillement' + solarPanel + '">' + get(data, "electrical.solar." + solarPanel + ".illuminance.value") + '</span> %</p>' +
                             '<p>Temperature : <span id="PANTemperature' + solarPanel + '">' + get(data, "electrical.solar." + solarPanel + ".temperature.value") + '</span> %</p>';
         }else{
-            solarPanelDiv = document.createElement("div"); 
+            let solarPanelDiv = document.createElement("div"); 
             solarPanelDiv.setAttribute('id', 'panneauSolaire_' + solarPanel);
             solarPanelDiv.setAttribute('class', 'w3-quarter w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green case');
 
@@ -445,13 +445,13 @@ function solarPanelsPage(data){
 }
 
 function windTurbinesPage(data){
-    pageDiv = document.getElementById("PageEoliennes");
+    let pageDiv = document.getElementById("PageEoliennes");
 
-    windTurbines = get(data, "electrical.windTurbines");
+    let windTurbines = get(data, "electrical.windTurbines");
 
     let ligneDiv; // Stocke le bloc de la ligne actuelle
     let k = 0; // Compteur de panneaux solaires disponibles
-    for(windTurbine in windTurbines){
+    for(let windTurbine in windTurbines){
 
         let element = document.getElementById("eolienne_" + windTurbine);
 
@@ -466,7 +466,7 @@ function windTurbinesPage(data){
                             '<p>Production : <span id="EOLProduction' + windTurbine + '">' + get(data, "electrical.windTurbines." + windTurbine + ".power.value") + '</span> W</p>' +
                             '<p>Vitesse : <span id="EOLVitesse' + windTurbine + '">' + get(data, "electrical.windTurbines." + windTurbine + ".windTurbineSpeed.value") + '</span> tr/min</p>';
         }else{
-            windTurbineDiv = document.createElement("div"); 
+            let windTurbineDiv = document.createElement("div"); 
             windTurbineDiv.setAttribute('id', 'eolienne_' + windTurbine);
             windTurbineDiv.setAttribute('class', 'w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green case');
 
@@ -500,13 +500,13 @@ function windTurbinesPage(data){
 }
 
 function waterTurbinesPage(data){
-    pageDiv = document.getElementById("PageHydroliennes");
+    let pageDiv = document.getElementById("PageHydroliennes");
 
-    waterTurbines = get(data, "electrical.waterTurbines");
+    let waterTurbines = get(data, "electrical.waterTurbines");
 
     let ligneDiv; // Stocke le bloc de la ligne actuelle
     let k = 0; // Compteur de panneaux solaires disponibles
-    for(waterTurbine in waterTurbines){
+    for(let waterTurbine in waterTurbines){
 
         let element = document.getElementById("hydrolienne_" + waterTurbine);
 
@@ -521,7 +521,7 @@ function waterTurbinesPage(data){
                             '<p>Production : <span id="HYDProduction' + waterTurbine + '">' + get(data, "electrical.waterTurbines." + waterTurbine + ".power.value") + '</span> W</p>' +
                             '<p>Vitesse : <span id="HYDVitesse' + waterTurbine + '">' + get(data, "electrical.waterTurbines." + waterTurbine + ".waterTurbineSpeed.value") + '</span> tr/min</p>';
         }else{
-            waterTurbineDiv = document.createElement("div"); 
+            let waterTurbineDiv = document.createElement("div"); 
             waterTurbineDiv.setAttribute('id', 'hydrolienne_' + waterTurbine);
             waterTurbineDiv.setAttribute('class', 'w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green case');
 
@@ -553,13 +553,13 @@ function waterTurbinesPage(data){
 }
 
 function generatorsPage(data){
-    pageDiv = document.getElementById("PageGroupeElectrogene");
+    let pageDiv = document.getElementById("PageGroupeElectrogene");
 
-    generators = get(data, "electrical.generators");
+    let generators = get(data, "electrical.generators");
 
     let ligneDiv; // Stocke le bloc de la ligne actuelle
     let k = 0; // Compteur de panneaux solaires disponibles
-    for(generator in generators){
+    for(let generator in generators){
 
         let element = document.getElementById("groupeElectrogene_" + generator);
 
@@ -574,7 +574,7 @@ function generatorsPage(data){
                             '<p>Production : <span id="GREProduction' + generator + '">' + get(data, "electrical.generators." + generator + ".power.value") + '</span> W</p>' +
                             '<p>Temperature : <span id="GRETemperature' + generator + '">' + get(data, "electrical.generators." + generator + ".temperature.value") + '</span> °C</p>';
         }else{
-            generatorDiv = document.createElement("div"); 
+            let generatorDiv = document.createElement("div"); 
             generatorDiv.setAttribute('id', 'groupeElectrogene_' + generator);
             generatorDiv.setAttribute('class', 'w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green case');
 
@@ -606,13 +606,13 @@ function generatorsPage(data){
 }
 
 function alternatorsPage(data){
-    pageDiv = document.getElementById("PageAlternateur");
+    let pageDiv = document.getElementById("PageAlternateur");
 
-    alternators = get(data, "electrical.alternators");
+    let alternators = get(data, "electrical.alternators");
 
     let ligneDiv; // Stocke le bloc de la ligne actuelle
     let k = 0; // Compteur de panneaux solaires disponibles
-    for(alternator in alternators){
+    for(let alternator in alternators){
 
         let element = document.getElementById("alternateur_" + alternator);
 
@@ -626,7 +626,7 @@ function alternatorsPage(data){
                             '</br>' +
                             '<p>Production : <span id="ALTProduction' + alternator + '">' + get(data, "electrical.alternators." + alternator + ".power.value") + '</span> W</p>';
         }else{
-            alternatorDiv = document.createElement("div"); 
+            let alternatorDiv = document.createElement("div"); 
             alternatorDiv.setAttribute('id', 'alternateur_' + alternator);
             alternatorDiv.setAttribute('class', 'w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green case');
 
@@ -657,13 +657,13 @@ function alternatorsPage(data){
 }
 
 function fuelCellsPage(data){
-    pageDiv = document.getElementById("PagePileHydrogene");
+    let pageDiv = document.getElementById("PagePileHydrogene");
 
-    fuelCells = get(data, "electrical.fuelCells");
+    let fuelCells = get(data, "electrical.fuelCells");
 
     let ligneDiv; // Stocke le bloc de la ligne actuelle
     let k = 0; // Compteur de panneaux solaires disponibles
-    for(fuelCell in fuelCells){
+    for(let fuelCell in fuelCells){
 
         let element = document.getElementById("pileHydrogene_" + fuelCell);
 
@@ -678,7 +678,7 @@ function fuelCellsPage(data){
                             '<p>Production : <span id="PHDProduction' + fuelCell + '">' + get(data, "electrical.fuelCells." + fuelCell + ".power.value") + '</span> W</p>' +
                             '<p>Temperature : <span id="PHDTemperature' + fuelCell + '">' + get(data, "electrical.fuelCells." + fuelCell + ".temperature.value") + '</span> °C</p>';
         }else{
-            fuelCellDiv = document.createElement("div"); 
+            let fuelCellDiv = document.createElement("div"); 
             fuelCellDiv.setAttribute('id', 'pileHydrogene_' + fuelCell);
             fuelCellDiv.setAttribute('class', 'w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green case');
 
@@ -710,13 +710,13 @@ function fuelCellsPage(data){
 }
 
 function moteursPage(data){
-    pageDiv = document.getElementById("PageMoteurs");
+    let pageDiv = document.getElementById("PageMoteurs");
 
     let motors = get(data, "electrical.consumers");
 
     let ligneDiv; // Stocke le bloc de la ligne actuelle
     let k = 0; // Compteur de panneaux solaires disponibles
-    for(motor in motors){
+    for(let motor in motors){
 
         // On ignore les équipements
         if(get(motors[motor], "category.value") != "moteur_electrique"){
@@ -767,10 +767,9 @@ function moteursPage(data){
 
 function equipementsPage(data)
 {
-
     let consumers = get(data, "electrical.consumers");
 
-    for(appareil in consumers){
+    for(let appareil in consumers){
 
         // On ignore les moteurs
         if(get(consumers[appareil], "category.value") == "moteur_electrique"){
