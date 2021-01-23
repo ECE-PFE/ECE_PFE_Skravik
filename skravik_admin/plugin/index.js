@@ -8,7 +8,6 @@ module.exports = (app) => {
     let api_key_2;
 
     let current_month;
-    let path_positionTomorrow = "position.tomorrow";
 
     let consumerCategoryMap = {
         "Appareil de bord classique": "classique",
@@ -245,21 +244,6 @@ module.exports = (app) => {
         current_month = new Date().getMonth();
 
         console.log(config);
-
-        app.handleMessage(plugin.id, 
-            { 
-                updates: [
-                    { 
-                        values: [
-                            {
-                                path: path_positionTomorrow,
-                                value: {}
-                            }
-                        ]
-                    }
-                ] 
-            });
-
         
         if(config.consumers){
             config.consumers.forEach((consumer, i) => {
@@ -408,67 +392,74 @@ module.exports = (app) => {
                     });
             });
         }
-        
 
-        let localSubscription = {
-            context: 'self', // Get data for all contexts
+        let localSubscriptions = {
+            context: 'self',
             subscribe: [
                 {
-                    path: path_positionTomorrow,
+                    path: "navigation.tomorrow.position",
+                    period: 1000
+                },
+
+                {
+                    path: "navigation.position.*",
                     period: 1000
                 }
             ]
         };
         
         app.subscriptionmanager.subscribe(
-            localSubscription,
+            localSubscriptions,
             subscriptions,
             subscriptionError => {
               app.error('Error:' + subscriptionError);
             },
             delta => {
+                console.log(JSON.stringify(delta));
                 delta.updates.forEach(update => {
 
-                    let positionTomorrow = update.values[0].value;
+                    if(update.values[0].path == "navigation.tomorrow.position"){
+                        let positionTomorrow = update.values[0].value;
 
-                    //console.log("Position à J+1 : ");
-                    //console.log(positionTomorrow);
+                        // console.log("Position à J+1 : ");
+                        // console.log(positionTomorrow);
 
-                    if(Object.entries(positionTomorrow).length !== 0){
+                        if(Object.entries(positionTomorrow).length !== 0){
 
-                        // anonymous async function to execute some code synchronously after http request
-                        (async function () {
-                            // wait to http request to finish
-                            let infosWeatherTomorrow = await makeSynchronousWeatherRequest(positionTomorrow);
-    
-                            let solarProduceTomorrowHourly = computeSolarForecastProductionHourly(infosWeatherTomorrow); // en kWh
-                            let windTurbineProduceTomorrowHourly = computeWindTurbineForecastProductionHourly(infosWeatherTomorrow); // en kWh
-
-                            console.log("Production horaire J+1 des éoliennes: " + windTurbineProduceTomorrowHourly + " kWh");
-                            console.log("Production horaire J+1 des panneaux solaires: " + solarProduceTomorrowHourly + " kWh");
+                            // anonymous async function to execute some code synchronously after http request
+                            (async function () {
+                                // wait to http request to finish
+                                let infosWeatherTomorrow = await makeSynchronousWeatherRequest(positionTomorrow);
         
-                            app.handleMessage(plugin.id, 
-                                {
-                                    updates: [
-                                        {
-                                            values: [
-                                                {
-                                                    path: 'electrical.prev.solar.produceTomorrow.hourly',
-                                                    value: solarProduceTomorrowHourly.map(solarProduceTomorrow => Number(solarProduceTomorrow).toFixed(2))
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            values: [
-                                                {
-                                                    path: 'electrical.prev.windTurbines.produceTomorrow.hourly',
-                                                    value: windTurbineProduceTomorrowHourly.map(windTurbineProduceTomorrow => Number(windTurbineProduceTomorrow).toFixed(2))
-                                                }
-                                            ]
-                                        }
-                                    ]});
+                                let solarProduceTomorrowHourly = computeSolarForecastProductionHourly(infosWeatherTomorrow); // en kWh
+                                let windTurbineProduceTomorrowHourly = computeWindTurbineForecastProductionHourly(infosWeatherTomorrow); // en kWh
 
-                        })();
+                                console.log("Production horaire J+1 des éoliennes: " + windTurbineProduceTomorrowHourly + " kWh");
+                                console.log("Production horaire J+1 des panneaux solaires: " + solarProduceTomorrowHourly + " kWh");
+            
+                                app.handleMessage(plugin.id, 
+                                    {
+                                        updates: [
+                                            {
+                                                values: [
+                                                    {
+                                                        path: 'electrical.prev.solar.produceTomorrow.hourly',
+                                                        value: solarProduceTomorrowHourly.map(solarProduceTomorrow => Number(solarProduceTomorrow).toFixed(2))
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                values: [
+                                                    {
+                                                        path: 'electrical.prev.windTurbines.produceTomorrow.hourly',
+                                                        value: windTurbineProduceTomorrowHourly.map(windTurbineProduceTomorrow => Number(windTurbineProduceTomorrow).toFixed(2))
+                                                    }
+                                                ]
+                                            }
+                                        ]});
+
+                            })();
+                        }
                     }
                 });
             }

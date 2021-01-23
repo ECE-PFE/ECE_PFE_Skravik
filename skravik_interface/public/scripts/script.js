@@ -878,8 +878,6 @@ function fetchDataFromRestApi()  {
     oReq.open("GET", "http://" + host + ":" + port + "/" + endpoint);
     oReq.send();
 }
-//First call
-fetchDataFromRestApi();
 
 //////////////////////////////////////////////////
 //////// Gestion de l'affichage des pages ////////
@@ -975,3 +973,107 @@ function togglePrev(){
     prev = true; 
   }
 }
+
+function initMap(){
+    // Créer l'objet "map" et l'insèrer dans l'élément HTML qui a l'ID "map"
+    map = L.map('map').setView([46.76761686478674, 2.7685546875000004], 5);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png", { 
+        attribution: 'données © OpenStreetMap/ODbL - rendu OSM France',
+        minZoom: 1,
+        maxZoom: 20
+    }).addTo(map);
+
+    let theMarker = {};
+
+    map.on('click',function(e){
+        lat = e.latlng.lat;
+        lon = e.latlng.lng;
+
+        console.log("You clicked the map at LAT: "+ lat +" and LONG: "+ lon );
+
+        //Clear existing marker, 
+        if (theMarker != undefined) {
+                map.removeLayer(theMarker);
+        };
+
+        //Add a marker to show where you clicked.
+        theMarker = L.marker([lat,lon]).addTo(map);  
+    });
+}
+
+$(document).ready(function(){
+    initMap();
+    fetchDataFromRestApi();
+
+    var ctx1 = document.getElementById('windTurbineChart').getContext('2d');
+    var myChart = new Chart(ctx1, {
+        type: 'bar',
+        data: {
+            labels: [...Array(24).keys()].map(k => k+1),
+            datasets: [{
+                label: 'Production horaire',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: "Energie produite (kWh)"
+                    },
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }],
+
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: "Temps (h)"
+                    }
+                }]
+            }
+        }
+    });
+
+    var ctx2 = document.getElementById('solarPanelChart').getContext('2d');
+    var myChart = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: [...Array(24).keys()].map(k => k+1),
+            datasets: [{
+                label: 'Production horaire',
+                data: [],
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: "Energie produite (kWh)"
+                    },
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }],
+
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: "Temps (h)"
+                    }
+                }]
+            }
+        }
+    });
+
+});

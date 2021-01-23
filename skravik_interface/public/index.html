@@ -7,6 +7,10 @@
       <link rel="stylesheet" href="css/w3.css">
       <link rel="stylesheet" href="css/style.css">
       <link rel="stylesheet" href="css/bootstrap.min.css">
+      <link rel="stylesheet" href="css/leaflet.css" />
+      <script type='text/javascript' src="scripts/leaflet.js"></script>
+      <script type='text/javascript' src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
+      <script type="text/javascript" src="scripts/Chart.min.js"></script>
       <script type="text/javascript" src="scripts/script.js"></script>
    </head>
    <body>
@@ -123,8 +127,11 @@
             </div>
             <div class="w3-col w3-container marge"></div>
          </div>
-         <prevBtn>
+         <prevJ1Btn>
             <img class="bouton" src="img/prevision.png" onclick="togglePrev();">
+         </prevJ1Btn>
+         <prevBtn>
+            <img class="bouton" src="img/prevision.png" onclick="show('PagePrevision');map.invalidateSize();">
          </prevBtn>
          <settings>
             <img class="bouton" src="img/settings.png" onclick="show('PageSettings');pullSettings();">
@@ -381,6 +388,37 @@
                         <p><span id="sliderTxt3">-</span> W</p>
                         <input id="slider3" type="range" class="slider" onchange="updateSlider(this)">
                     </div>
+                </div>
+            </div>
+        </div>
+        <div id="PagePrevision" class="page" style="display:none">
+            <div class="w3-col">
+                <div class="w3-col w3-container headerImg">
+                    <img class="retour" src="img/return.png" onclick="show('PageMenu');">
+                </div>
+                <div class="w3-col w3-container headerTitle">
+                    <h1>Prévisions</h1>
+                </div>
+                <div class="w3-col w3-container headerImg">
+                    <img class="logo" src="img/skravik_logo.png">
+                </div>
+            </div>
+            </br>
+            <div class="w3-col ligne">
+                <div class="w3-col w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green" style="width:60%">
+                    <div id="map">
+                        <!-- Ici s'affichera la carte -->
+                    </div>
+                </div>
+            </div>
+            <div class="w3-col ligne">
+                <div class="w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green case_chart">
+                    <p>Production éolien</p>
+                    <canvas id="windTurbineChart"></canvas>
+                </div>
+                <div class="w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green case_chart">
+                    <p>Production photovoltaïque</p>
+                    <canvas id="solarPanelChart"></canvas>
                 </div>
             </div>
         </div>

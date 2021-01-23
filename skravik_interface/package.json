@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/ECE-PFE/ECE_PFE_Skravik#readme",
   "dependencies": {
-    "@signalk/client": "^2.1.6"
+    "@signalk/client": "^2.1.6",
+    "chart.js": "^2.9.4"
   }
 }
