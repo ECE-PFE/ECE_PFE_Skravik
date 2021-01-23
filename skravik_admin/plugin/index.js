@@ -1,11 +1,13 @@
-const http = require("http")
+const http = require("http");
 
 module.exports = (app) => {
     // ******************************************
     let config;          
     let subscriptions = [];
     let api_key;
+    let api_key_2;
 
+    let current_month;
     let path_positionTomorrow = "position.tomorrow";
 
     let consumerCategoryMap = {
@@ -43,13 +45,13 @@ module.exports = (app) => {
 
                     "meanIlluminance": {
                         "type": "number",
-                        "title": "Ensoleillement moyen (kWh/m²/j)",
+                        "title": "Ensoleillement moyen journalier(kWh/m²/j)",
                         "default": 5.73874
                     },
 
                     "minIlluminance": {
                         "type": "number",
-                        "title": "Ensoleillement minimum (kWh/m²/j)",
+                        "title": "Ensoleillement minimum journalier(kWh/m²/j)",
                         "default": 4.98
                     },
 
@@ -239,6 +241,8 @@ module.exports = (app) => {
 
         config = options;
         api_key = config.api_key;
+        api_key_2 = config.api_key_2;
+        current_month = new Date().getMonth();
 
         console.log(config);
 
@@ -435,34 +439,34 @@ module.exports = (app) => {
                         // anonymous async function to execute some code synchronously after http request
                         (async function () {
                             // wait to http request to finish
-                            let infosWeatherTomorrow = await makeSynchronousRequest(positionTomorrow);
+                            let infosWeatherTomorrow = await makeSynchronousWeatherRequest(positionTomorrow);
     
-                            let solarMeanPowerTomorrow = computeSolarForecastProduction(infosWeatherTomorrow); // en kWh/j
-                            let windTurbineMeanPowerTomorrow = computeWindTurbineForecastProduction(infosWeatherTomorrow); // en kWh/j
+                            let solarProduceTomorrowHourly = computeSolarForecastProductionHourly(infosWeatherTomorrow); // en kWh
+                            let windTurbineProduceTomorrowHourly = computeWindTurbineForecastProductionHourly(infosWeatherTomorrow); // en kWh
 
-                            //console.log("Puissance moyenne journalière des éoliennes: " + Number(windTurbineMeanPowerTomorrow).toFixed(2) + " kWh/j");
-                            //console.log("Puissance moyenne journalière des panneaux solaires: " + Number(solarMeanPowerTomorrow).toFixed(2) + " kWh/j");
+                            console.log("Production horaire J+1 des éoliennes: " + windTurbineProduceTomorrowHourly + " kWh");
+                            console.log("Production horaire J+1 des panneaux solaires: " + solarProduceTomorrowHourly + " kWh");
         
                             app.handleMessage(plugin.id, 
-                                                        {
-                                                            updates: [
-                                                                {
-                                                                    values: [
-                                                                        {
-                                                                            path: 'electrical.solar.solarPanel.prev.meanPower',
-                                                                            value: Number(solarMeanPowerTomorrow).toFixed(2)
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    values: [
-                                                                        {
-                                                                            path: 'electrical.windTurbines.windTurbine.prev.meanPower',
-                                                                            value: Number(windTurbineMeanPowerTomorrow).toFixed(2)
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            ]});
+                                {
+                                    updates: [
+                                        {
+                                            values: [
+                                                {
+                                                    path: 'electrical.prev.solar.produceTomorrow.hourly',
+                                                    value: solarProduceTomorrowHourly.map(solarProduceTomorrow => Number(solarProduceTomorrow).toFixed(2))
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            values: [
+                                                {
+                                                    path: 'electrical.prev.windTurbines.produceTomorrow.hourly',
+                                                    value: windTurbineProduceTomorrowHourly.map(windTurbineProduceTomorrow => Number(windTurbineProduceTomorrow).toFixed(2))
+                                                }
+                                            ]
+                                        }
+                                    ]});
 
                         })();
                     }
@@ -515,16 +519,69 @@ module.exports = (app) => {
             });
     };
 
-    const computeSolarForecastProduction = (infosWeather) => {
+    const computeSolarForecastProductionDaily = (infosWeather) => {
         let solarPanelSurface = config.solarPanelParams.solarPanelSurface;
         let solarPanelEfficiency = config.solarPanelParams.solarPanelEfficiency/100;
-        let solarPanelLossCoeff = config.solarPanelParams.solarPanelLossCoeff/100;
 
-        let solarPanelEnergyByDay = solarPanelSurface * solarPanelEfficiency * infosWeather[2] * solarPanelLossCoeff; // kWh/j
-        return solarPanelEnergyByDay;
+        let windSpeed = infosWeather.daily[0].wind_speed; // m/s
+        let temp_ambiant = infosWeather.daily[0].temp.day - 273.15; // °C
+        let G = ((100 - infosWeather.daily[0].clouds)/100*config.solarPanelParams.meanIlluminance + config.solarPanelParams.minIlluminance) * 1000; // Wh/m²/jour ou W/m²
+
+        let U0 = 30.02;
+        let U1 = 6.28;
+
+        let T = temp_ambiant + G/(U0 + U1*windSpeed);
+
+        let T_ = T - 25;
+        let G_ = G/1000;
+
+        let k = [-0.017237, -0.040465, -0.004702, 0.000149, 0.000170, 0.000005];
+
+        let solarPanelLossCoeff = 1 + k[0]*Math.log(G_) + k[1]*Math.log(G_)*Math.log(G_) + k[2]*T_ + k[3]*T_*Math.log(G_) + k[4]*T_*Math.log(G_)*Math.log(G_) + k[5]*T_*T_;
+
+        let P = solarPanelSurface * solarPanelEfficiency * G_ * solarPanelLossCoeff; // kWh/jour ou kW journalier
+        return P;
     }
 
-    const computeWindTurbineForecastProduction = (infosWeather) => {
+    const computeSolarForecastProductionHourly = (infosWeather) => {
+        let solarPanelSurface = config.solarPanelParams.solarPanelSurface;
+        let solarPanelEfficiency = config.solarPanelParams.solarPanelEfficiency/100;
+
+        let windSpeedHourly = ((infosWeather.hourly).slice(24,48)).map(x => x.wind_speed); // m/s
+        let T_ambiantHourly = ((infosWeather.hourly).slice(24,48)).map(x => x.temp - 273.15); // °C
+        let G_Hourly = ((infosWeather.hourly).slice(24,48)).map(x => ((100-x.clouds)/100 * config.solarPanelParams.meanIlluminance + config.solarPanelParams.minIlluminance)*1000); // Wh/m²/jour ou W/m²
+
+        let U0 = 30.02;
+        let U1 = 6.28;
+
+        let T_Hourly = [];
+        for(let i=0; i<24; i++){
+            T_Hourly.push(T_ambiantHourly[i] + G_Hourly[i]/(U0 + U1*windSpeedHourly[i]));
+        }
+
+        let T_Hourly_ = T_Hourly.map(t => t - 25);
+        let G_Hourly_ = G_Hourly.map(g => g/1000);
+
+        let k = [-0.017237, -0.040465, -0.004702, 0.000149, 0.000170, 0.000005];
+
+        let solarPanelLossCoeff_Hourly = [];
+        for(let i=0; i<24; i++){
+            solarPanelLossCoeff_Hourly.push(1 + k[0]*Math.log(G_Hourly_[i]) + 
+                                            k[1]*Math.log(G_Hourly_[i])*Math.log(G_Hourly_[i]) + 
+                                            k[2]*T_Hourly_[i] + k[3]*T_Hourly_[i]*Math.log(G_Hourly_[i]) + 
+                                            k[4]*T_Hourly_[i]*Math.log(G_Hourly_[i])*Math.log(G_Hourly_[i]) + 
+                                            k[5]*T_Hourly_[i]*T_Hourly_[i]);
+        }
+
+        let P_Hourly = [];
+        for(let i=0; i<24; i++){
+            P_Hourly.push(solarPanelSurface * solarPanelEfficiency * G_Hourly_[i] * solarPanelLossCoeff_Hourly[i]); // kWh/jour ou kW journalier
+        }
+
+        return P_Hourly;
+    }
+
+    const computeWindTurbineForecastProductionDaily = (infosWeather) => {
         let betzLimit = 16/27;
 
         let bladeDiameter = config.windTurbineParams.windTurbineBladeDiameter;
@@ -536,10 +593,32 @@ module.exports = (app) => {
 
         let volumicMass = 1.23;
 
-        let areaSwipped = 3.14 * (bladeDiameter/2) * (bladeDiameter/2);
-        let kineticPower = 0.5 * volumicMass * infosWeather[1] * infosWeather[1] * infosWeather[1] * areaSwipped * windTurbineNumber; // W
+        let windSpeed = infosWeather.daily[0].wind_speed; // m/s
 
-        return (kineticPower * windTurbineLoss * betzLimit * 24)/1000; // en kWh par jour
+        let areaSwipped = 3.14 * (bladeDiameter/2) * (bladeDiameter/2);
+        let kineticPower = 0.5 * volumicMass * windSpeed * windSpeed * windSpeed * areaSwipped * windTurbineNumber; // W
+
+        return (kineticPower * windTurbineLoss * betzLimit * 24)/1000; // kWh/jour ou kW journalier
+    }
+
+    const computeWindTurbineForecastProductionHourly = (infosWeather) => {
+        let betzLimit = 16/27;
+
+        let bladeDiameter = config.windTurbineParams.windTurbineBladeDiameter;
+        let windTurbineLoss = config.windTurbineParams.windTurbineLoss/100;
+        let windTurbineNumber = 0;
+
+        if(config.windTurbines)
+            windTurbineNumber = config.windTurbines.length;
+
+        let volumicMass = 1.23;
+
+        let windSpeedHourly = ((infosWeather.hourly).slice(24,48)).map(x => x.wind_speed);
+
+        let areaSwipped = 3.14 * (bladeDiameter/2) * (bladeDiameter/2);
+        let kineticPowerHourly = windSpeedHourly.map(windSpeed => 0.5 * volumicMass * windSpeed * windSpeed * windSpeed * areaSwipped * windTurbineNumber); // W
+
+        return kineticPowerHourly.map(kineticPower => (kineticPower * windTurbineLoss * betzLimit)/1000); // kWh
     }
 
     // Get weather information
@@ -564,18 +643,14 @@ module.exports = (app) => {
         });
     }
 
-    async function makeSynchronousRequest(position) {
+    async function makeSynchronousWeatherRequest(position) {
         try {
             let http_promise = getWeatherApiPromise(position);
             let response = await http_promise;
-
-            let temperature_forecast = response.daily[0].temp.day;
-            let windSpeed_forecast = response.daily[0].wind_speed;
-            let illuminance_forecast = (100 - response.daily[0].clouds)/100*config.solarPanel.meanIlluminance + config.solarPanel.minIlluminance;
+;
+            //let irradiance_forecast = (100 - response.daily[0].clouds)/100*config.solarPanel.meanIlluminance + config.solarPanel.minIlluminance;
     
-            // holds response from server that is passed when Promise is resolved
-            //console.log(response);
-            return [temperature_forecast, windSpeed_forecast, illuminance_forecast];
+            return response;
         }
         catch(error) {
             // Promise rejected

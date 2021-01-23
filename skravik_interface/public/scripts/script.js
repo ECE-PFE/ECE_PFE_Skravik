@@ -273,7 +273,7 @@ function updatePages(data) {
     
     sommePileHydrogene = 0;
     for(let fuelCell in PHG){
-        sommePileHydrogene = sommePileHydrogene + get(PHG[fuelCell], "power.value");
+        sommePileHydrogene = sommePileHydrogene + (get(PHG[fuelCell], "power.value") == "-")?0:get(PHG[fuelCell], "power.value");
     }
     if (isNaN(sommePileHydrogene)) sommePileHydrogene = "-";
 
@@ -389,7 +389,7 @@ function forecastPage(data){
     sommeSourcesPrev = get(data, "electrical.prev.solar.meanPower.value")
                     + get(data, "electrical.prev.windTurbines.meanPower.value");
     if (isNaN(sommeSourcesPrev)) sommeSourcesPrev = "-";
-    
+
     document.getElementById("sommeSourcesPrev").innerHTML   = sommeSourcesPrev;
 }
 
