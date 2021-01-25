@@ -1034,7 +1034,7 @@ $(document).ready(function(){
     initMap();
     fetchDataFromRestApi();
 
-    var ctx1 = document.getElementById('windTurbineChart').getContext('2d');
+    var ctx1 = document.getElementById('previsionChart').getContext('2d');
     prodChart = new Chart(ctx1, {
         type: 'bar',
         data: {
