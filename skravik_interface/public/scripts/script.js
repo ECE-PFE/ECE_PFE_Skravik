@@ -1044,6 +1044,7 @@ function initMap(){
 
     let buttonSubmit = document.getElementById('inlineFormSubmitButton');
     buttonSubmit.onclick = function() {
+        showMsgMap();
         let lat = document.getElementById('inlineFormLatitude').value;
         let lon = document.getElementById('inlineFormLongitude').value;
 
