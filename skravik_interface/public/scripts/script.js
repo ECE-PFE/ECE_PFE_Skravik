@@ -925,6 +925,7 @@ function updateSlider(slider) {
   localStorage.setItem(IDname, val);
 
   console.log(IDname + " <- " + val + " (ecriture)");
+  showSaved();
 }
 
 function pullSettings() {
@@ -942,6 +943,15 @@ function pullSettings() {
 
     console.log("settingsVal" + index + " : " + val + " (lecture)");
   });
+}
+
+function showSaved() {
+    $("#saved").show();
+    setTimeout(fade_out, 1000);
+}
+
+function fade_out() {
+  $("#saved").fadeOut();
 }
 
 ///////////////////////////////////
