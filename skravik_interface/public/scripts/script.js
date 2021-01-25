@@ -1022,12 +1022,49 @@ function initMap(){
             }
         ];
 
+        document.getElementById('inlineFormLatitude').value = lat
+        document.getElementById('inlineFormLongitude').value = lon;
+
 
         let oReq = new XMLHttpRequest();
         oReq.open("POST", "/skServer/plugins/skravik-admin-plugin/api");
         oReq.setRequestHeader("Content-Type", "application/json");
         oReq.send(JSON.stringify(msg));
     });
+
+    let buttonSubmit = document.getElementById('inlineFormSubmitButton');
+    buttonSubmit.onclick = function() {
+        let lat = document.getElementById('inlineFormLatitude').value;
+        let lon = document.getElementById('inlineFormLongitude').value;
+
+        //Vérification latitude et longitude correctes
+        if(lat < -90 || lat > 90 || lon < -180 || lon > 180)
+            return;
+
+        //Clear existing marker, 
+        if (theMarker != undefined) {
+                map.removeLayer(theMarker);
+        };
+
+        //Add a marker to show where you clicked.
+        theMarker = L.marker([lat,lon]).addTo(map);
+
+        let msg = [
+            {
+                "path" : "navigation.tomorrow.position",
+                "value": {
+                    "latitude" : lat,
+                    "longitude" : lon
+                }
+            }
+        ];
+
+
+        let oReq = new XMLHttpRequest();
+        oReq.open("POST", "/skServer/plugins/skravik-admin-plugin/api");
+        oReq.setRequestHeader("Content-Type", "application/json");
+        oReq.send(JSON.stringify(msg));
+    }
 }
 
 $(document).ready(function(){
