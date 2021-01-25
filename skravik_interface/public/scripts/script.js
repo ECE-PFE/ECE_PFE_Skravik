@@ -951,11 +951,11 @@ function pullSettings() {
 
 function showSaved() {
     $("#saved").show();
-    setTimeout(fade_out, 1000);
+    setTimeout(hideSaved, 1000);
 }
 
-function fade_out() {
-  $("#saved").fadeOut();
+function hideSaved() {
+    $("#saved").fadeOut();
 }
 
 ///////////////////////////////////
@@ -988,6 +988,15 @@ function togglePrev(){
   }
 }
 
+function showMsgMap() {
+    $("#msgMap").show();
+    setTimeout(hideMsgMap, 3000);
+}
+
+function hideMsgMap() {
+    $("#msgMap").fadeOut();
+}
+
 function initMap(){
     // Créer l'objet "map" et l'insèrer dans l'élément HTML qui a l'ID "map"
     map = L.map('map').setView([46.76761686478674, 2.7685546875000004], 5);
@@ -1001,6 +1010,7 @@ function initMap(){
     let theMarker = {};
 
     map.on('click',function(e){
+        showMsgMap();
         let lat = e.latlng.lat;
         let lon = e.latlng.lng;
 
