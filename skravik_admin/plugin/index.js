@@ -31,26 +31,21 @@ module.exports = (app) => {
                 "type": "string",
                 "title": "API Key OpenWeatherMap"
             },
-
-            "api_key_2": {
-                "type": "string",
-                "title": "API Key NREL.gov"
-            },
             
             "solarPanelParams" : {
                 "title": "Paramètres panneaux solaires",
                 "type": "object",
                 "properties": {
 
-                    "meanIlluminance": {
+                    "maxIrradiance": {
                         "type": "number",
-                        "title": "Ensoleillement moyen journalier(kWh/m²/j)",
+                        "title": "Ensoleillement maximum par jour (kWh/m²/jour)",
                         "default": 5.73874
                     },
 
-                    "minIlluminance": {
+                    "minIrradiance": {
                         "type": "number",
-                        "title": "Ensoleillement minimum journalier(kWh/m²/j)",
+                        "title": "Ensoleillement minimum par jour (kWh/m²/jour)",
                         "default": 4.98
                     },
 
@@ -510,37 +505,39 @@ module.exports = (app) => {
             });
     };
 
-    const computeSolarForecastProductionDaily = (infosWeather) => {
-        let solarPanelSurface = config.solarPanelParams.solarPanelSurface;
-        let solarPanelEfficiency = config.solarPanelParams.solarPanelEfficiency/100;
-
-        let windSpeed = infosWeather.daily[0].wind_speed; // m/s
-        let temp_ambiant = infosWeather.daily[0].temp.day - 273.15; // °C
-        let G = ((100 - infosWeather.daily[0].clouds)/100*config.solarPanelParams.meanIlluminance + config.solarPanelParams.minIlluminance) * 1000; // Wh/m²/jour ou W/m²
-
-        let U0 = 30.02;
-        let U1 = 6.28;
-
-        let T = temp_ambiant + G/(U0 + U1*windSpeed);
-
-        let T_ = T - 25;
-        let G_ = G/1000;
-
-        let k = [-0.017237, -0.040465, -0.004702, 0.000149, 0.000170, 0.000005];
-
-        let solarPanelLossCoeff = 1 + k[0]*Math.log(G_) + k[1]*Math.log(G_)*Math.log(G_) + k[2]*T_ + k[3]*T_*Math.log(G_) + k[4]*T_*Math.log(G_)*Math.log(G_) + k[5]*T_*T_;
-
-        let P = solarPanelSurface * solarPanelEfficiency * G_ * solarPanelLossCoeff; // kWh/jour ou kW journalier
-        return P;
-    }
-
     const computeSolarForecastProductionHourly = (infosWeather) => {
+
+        //Variables de la configuration
         let solarPanelSurface = config.solarPanelParams.solarPanelSurface;
         let solarPanelEfficiency = config.solarPanelParams.solarPanelEfficiency/100;
+        let Gmax = config.solarPanelParams.maxIrradiance; // kWh/m²/jours
+        let Gmin = config.solarPanelParams.minIrradiance; // kWh/m²/jours
 
+        // Amplitude max de l'ensoleillement en fonction de la couverture du ciel
+        let G_amplitude = (infosWeather.hourly).map(x => ((100 - x.clouds)/100*(Gmax-Gmin) + Gmin) * 1000); // Wh/m²/jour
+        console.log(Gmax);
+        console.log(Gmin);
+
+        // Heure où l'ensoleillement est maximal
+        let maxIrradianceHours = new Date(((infosWeather.current.sunset + infosWeather.current.sunrise)/2)*1000).getUTCHours();
+        console.log(maxIrradianceHours);
+
+        // Durée d'ensoleillement en heures
+        let sunDurationHours = new Date((infosWeather.current.sunset - infosWeather.current.sunrise)*1000).getUTCHours();
+        console.log(sunDurationHours);
+
+        // Informations météo prévisionnelle horaire
         let windSpeedHourly = (infosWeather.hourly).map(x => x.wind_speed); // m/s
         let T_ambiantHourly = (infosWeather.hourly).map(x => x.temp - 273.15); // °C
-        let G_Hourly = (infosWeather.hourly).map(x => ((100-x.clouds)/100 * config.solarPanelParams.meanIlluminance/24 + config.solarPanelParams.minIlluminance/24)*1000); // Wh/m² horaire
+
+        let G_Hourly = [];
+        for(let i=0; i<(infosWeather.hourly).length; i++){
+            let t = new Date(infosWeather.hourly[i].dt * 1000).getUTCHours();
+
+            G_Hourly.push(G_amplitude[i] * Math.exp(-1/2*(t-maxIrradianceHours)*(t-maxIrradianceHours)/sunDurationHours));  // Wh/m²
+        }
+
+        console.log(G_Hourly);
 
         let U0 = 30.02;
         let U1 = 6.28;
@@ -570,26 +567,6 @@ module.exports = (app) => {
         }
 
         return P_Hourly;
-    }
-
-    const computeWindTurbineForecastProductionDaily = (infosWeather) => {
-        let betzLimit = 16/27;
-
-        let bladeDiameter = config.windTurbineParams.windTurbineBladeDiameter;
-        let windTurbineLoss = config.windTurbineParams.windTurbineLoss/100;
-        let windTurbineNumber = 0;
-
-        if(config.windTurbines)
-            windTurbineNumber = config.windTurbines.length;
-
-        let volumicMass = 1.23;
-
-        let windSpeed = infosWeather.daily[0].wind_speed; // m/s
-
-        let areaSwipped = 3.14 * (bladeDiameter/2) * (bladeDiameter/2);
-        let kineticPower = 0.5 * volumicMass * windSpeed * windSpeed * windSpeed * areaSwipped * windTurbineNumber; // W
-
-        return (kineticPower * windTurbineLoss * betzLimit * 24)/1000; // kWh/jour ou kW journalier
     }
 
     const computeWindTurbineForecastProductionHourly = (infosWeather) => {
