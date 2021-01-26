@@ -13,7 +13,8 @@ const settings =[
   [0,  33,   33,   "Vitesse de vent max"],
   [75, 80,   80,   "Temperature max des panneaux solaires"],
   [0,  2935, 2935, "Conso max des équipements"],
-  [0,  200, 200,   "Prod panneau solaire minimale"]
+  [0,  200, 200,   "Prod panneau solaire minimale"],
+  [0,  100, 100,   "Seuil batterie faible"]
 ]//min, max, default, text
 
 
@@ -41,6 +42,7 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
     let tempMaxPS = localStorage.getItem('settingsVal1');
     let consoMaxEquip = localStorage.getItem('settingsVal2');
     let prodMinPS = localStorage.getItem('settingsVal3');
+    let seuilMinBatteries = localStorage.getItem('settingsVal4');
 
     let vitBateau = "-";
     let hydroH240DansEau = "-";
@@ -145,6 +147,10 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
         {warningShow("pbConsosEquip");warning=true;}
     else warningHide("pbConsosEquip");
 
+    if (minBatteries(data) < seuilMinBatteries)
+        {warningShow("pbBattFaible");warning=true;}
+    else warningHide("pbBattFaible");
+
     ////////////////////////////////
     ///  Changement des icones   ///
     ////////////////////////////////
@@ -198,6 +204,18 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
     if (warningPHG)
         document.getElementById("IMGpileHydrogene").setAttribute("src", "img/pilehydrogene_alerte.gif");
     else document.getElementById("IMGpileHydrogene").setAttribute("src", "img/pilehydrogene.png");
+}
+
+function minBatteries(data){
+    let batteries = get(data, "electrical.batteries");
+    let min=100;
+
+    for(let battery in batteries){
+        let val = get(data, "electrical.batteries." + battery + ".charge.value");
+        if (val<min) min=val;
+    }
+
+    return min;
 }
 
 

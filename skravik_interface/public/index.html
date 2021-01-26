@@ -309,6 +309,9 @@
             </br>
             <div class="w3-col ligne">
                 <div style="width:40%;flex-wrap: wrap;  flex-direction: column;">
+                    <div class="w3-col w3-container alerte" id="pbBattFaible">
+                        <p>Une des batteries est sous le seuil selectionné.</p>
+                    </div>
                     <div class="w3-col w3-container alerte" id="pbConsoVSProd">
                         <p>La consommation actuelle dépasse la production, les batteries sont donc actuellement utilisées. Veuillez vérifier que :</br>- Tous les appareils non utilisés sont bien débranchés</br>- Toutes les sources d'energie fonctionnent correctement</p>
                     </div>
@@ -390,6 +393,10 @@
                     <div>
                         <p><span id="sliderTxt3">-</span> W</p>
                         <input id="slider3" type="range" class="slider" onchange="updateSlider(this)">
+                    </div>
+                    <div>
+                        <p><span id="sliderTxt4">-</span> %</p>
+                        <input id="slider4" type="range" class="slider" onchange="updateSlider(this)">
                     </div>
                 </div>
             </div>
