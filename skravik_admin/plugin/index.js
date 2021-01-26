@@ -63,7 +63,7 @@ module.exports = (app) => {
 
                     "solarPanelLossCoeff": {
                         "type": "number",
-                        "title": "Perte (%)",
+                        "title": "Coefficient de perte (%)",
                         "default": 80
                     }
                 }
@@ -81,7 +81,7 @@ module.exports = (app) => {
 
                     "windTurbineLoss": {
                         "type": "number",
-                        "title": "Perte (%)",
+                        "title": "Coefficient de perte (%)",
                         "default": 50
                     }
                 }
@@ -515,16 +515,12 @@ module.exports = (app) => {
 
         // Amplitude max de l'ensoleillement en fonction de la couverture du ciel
         let G_amplitude = (infosWeather.hourly).map(x => ((100 - x.clouds)/100*(Gmax-Gmin) + Gmin) * 1000); // Wh/m²/jour
-        console.log(Gmax);
-        console.log(Gmin);
 
         // Heure où l'ensoleillement est maximal
         let maxIrradianceHours = new Date(((infosWeather.current.sunset + infosWeather.current.sunrise)/2)*1000).getUTCHours();
-        console.log(maxIrradianceHours);
 
         // Durée d'ensoleillement en heures
         let sunDurationHours = new Date((infosWeather.current.sunset - infosWeather.current.sunrise)*1000).getUTCHours();
-        console.log(sunDurationHours);
 
         // Informations météo prévisionnelle horaire
         let windSpeedHourly = (infosWeather.hourly).map(x => x.wind_speed); // m/s
@@ -536,8 +532,6 @@ module.exports = (app) => {
 
             G_Hourly.push(G_amplitude[i] * Math.exp(-1/2*(t-maxIrradianceHours)*(t-maxIrradianceHours)/sunDurationHours));  // Wh/m²
         }
-
-        console.log(G_Hourly);
 
         let U0 = 30.02;
         let U1 = 6.28;

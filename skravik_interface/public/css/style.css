@@ -118,5 +118,5 @@ prevJ1Btn {
 }
 
 #map{ /* la carte DOIT avoir une hauteur sinon elle n'apparaît pas */
-    height: 400px;
+    height: 200px;
 }
