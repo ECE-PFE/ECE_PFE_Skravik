@@ -71,6 +71,10 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
         }
     }
 
+    if (sourcesTotales < - consosTotales)
+        {warningShow("pbConsoVSProd");warning=true;}
+    else warningHide("pbConsoVSProd");
+
     if (vitesseVent > ventMax)
         {warningShow("tropDeVent");warning=true;warningEOL=true;}
     else warningHide("tropDeVent");
