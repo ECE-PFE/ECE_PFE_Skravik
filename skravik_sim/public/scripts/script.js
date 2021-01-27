@@ -38,11 +38,21 @@ function post(){
     for(var k=0; k<datas.length; k++){
         if(datas[k].hasAttribute("path_sk")){
             if(datas[k].path_sk != ""){
-                msg.push(
-                {
-                        "path" : datas[k].getAttribute("path_sk"),
-                        "value": parseFloat(datas[k].value)
-                });
+                if (datas[k].type == "number"){
+                    msg.push(
+                    {
+                            "path" : datas[k].getAttribute("path_sk"),
+                            "value": parseFloat(datas[k].value)
+                    });
+                }
+
+                if(datas[k].type == "checkbox"){
+                    msg.push(
+                        {
+                                "path" : datas[k].getAttribute("path_sk"),
+                                "value": datas[k].checked
+                        });
+                }
             }
         }
     }

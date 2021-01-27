@@ -165,6 +165,10 @@
                         <input id="VitHYD1" path_sk="electrical.waterTurbines.0.speed" type="number" value="10" style="width: 50px"> 
                         tr/min
                     </span>
+                    <span>
+                        <input id="IsUnderWaterHYD1" path_sk="electrical.waterTurbines.0.IsUnderWater" type="checkbox" checked>
+                        <label for="IsUnderWaterHYD1">Est sous l'eau ?</label>
+                    </span>
                 </div>
             </div>
             <div class="col-sm-2" style="text-align: center;">
@@ -179,6 +183,10 @@
                     <span>
                     <input id="VitHYD2" path_sk="electrical.waterTurbines.1.speed" type="number" value="10" style="width: 50px"> 
                     tr/min
+                    </span>
+                    <span>
+                        <input id="IsUnderWaterHYD2" path_sk="electrical.waterTurbines.1.IsUnderWater" type="checkbox" checked>
+                        <label for="IsUnderWaterHYD2">Est sous l'eau ?</label>
                     </span>
                 </div>
             </div>
@@ -218,6 +226,13 @@
                         <input id="TempPC1" path_sk="electrical.fuelCells.0.temperature" type="number" value="10" style="width: 50px"> 
                         °C
                     </span>
+                    <br/>
+                    <button onclick="moinsmoins(pilehydrogene)" class="btn btn-danger"> -- </button>
+                    <button onclick="moins(pilehydrogene)" class="btn btn-danger"> - </button>
+                    <span>o</span>
+                    <button onclick="plus(pilehydrogene)" class="btn btn-success">+</button>
+                    <button onclick="plusplus(pilehydrogene)" class="btn btn-success"> ++ </button>
+                    <span><input id="FuelConsumptionPC1" path_sk="electrical.fuelCells.0.fuelConsumption" type="number" value="10" style="width: 50px"> g/h</span>
                 </div>
             </div>
             <div class="col-sm-5"></div>
@@ -350,9 +365,7 @@
             <span>o</span>
             <button onclick="plus(pilehydrogene)" class="btn btn-success">+</button>
             <button onclick="plusplus(pilehydrogene)" class="btn btn-success"> ++ </button>
-            <span>
-            <input id="pilehydrogene" path_sk="electrical.fuelCells.0.power" type="number" value="10" style="width: 50px"> W
-            </span>
+            <span><input id="pilehydrogene" path_sk="electrical.fuelCells.0.power" type="number" value="10" style="width: 50px"> W</span>
          </div>
    </div>
 <hr style="height:1px;border-width:0;color:gray;background-color:black">

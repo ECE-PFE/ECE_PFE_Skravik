@@ -130,7 +130,8 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
     //Verification alertes PHG
     warningHide("surchauffePileHG");
     warningHide("tropFroidPileHG");
-    warningHide("pbConsoPileHG")
+    warningHide("pbConsoPileHG");
+    warningHide("pbProdPileHG");
     for(let elmt in PHG){
         if (get(PHG[elmt], "temperature.value") > 45){
             warningShow("surchauffePileHG");
