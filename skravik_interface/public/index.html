@@ -19,14 +19,14 @@
          <div class="w3-col">
             <div class="w3-col w3-container marge"></div>
             <div class="w3-col w3-container w3-border w3-round-xlarge w3-pale-green w3-border-green colonne" style="width:30%">
-               <h3>Production totale : <span id="sommeSources">-</span> W <span class="prev">(Prev: <span id="sommeSourcesPrev">-</span> kWh)</span></h3>
+               <h3>Production totale : <span id="sommeSources">-</span> W <span class="prev">(Moy. Production J+1: <span id="sommeSourcesPrev">-</span> W)</span></h3>
                <div class="w3-col lien" onclick="show('PagePanneauxSolaires');">
                   <p><strong>Panneaux Solaires</strong></p>
                   <div class="w3-half">
                      <img id="IMGpanneauxSolaires" class="icone" src="img/panneaux_solaire.png">
                   </div>
                   <div class="w3-half w3-container">
-                     <p><span id="panneauxsolaires">-</span> W <span class="prev">(Moy. Production J+1 : <span id="panneauxsolairesPrev">-</span> kWh)</span></p>
+                     <p><span id="panneauxsolaires">-</span> W <span class="prev">(Moy. Production J+1 : <span id="panneauxsolairesPrev">-</span> W)</span></p>
                   </div>
                </div>
                <div class="w3-col lien" onclick="show('PageEoliennes');">
@@ -35,7 +35,7 @@
                      <img id="IMGeolienne" class="icone" src="img/eolienne.png">
                   </div>
                   <div class="w3-half w3-container">
-                     <p><span id="eoliennes">-</span> W <span class="prev">(Moy. Production J+1 : <span id="eoliennesPrev">-</span> kWh)</span></p>
+                     <p><span id="eoliennes">-</span> W <span class="prev">(Moy. Production J+1 : <span id="eoliennesPrev">-</span> W)</span></p>
                   </div>
                </div>
                <div class="w3-col lien" onclick="show('PageHydroliennes');">
@@ -333,23 +333,20 @@
                     <div class="w3-col w3-container alerte" id="pbProdPS">
                         <p>Un panneau solaire produit trop peu d’énergie, veuillez vérifier que rien ne le couvre.</p>
                     </div>
-                    <div class="w3-col w3-container alerte" id="pbVitHYD1">
-                        <p>Le bateau va trop vite pour l'éolienne H240, veuillez la sortir de l’eau.</p>
-                    </div>
-                    <div class="w3-col w3-container alerte" id="pbVitHYD2">
-                        <p>Le bateau va trop vite pour l'éolienne POD600, veuillez la sortir de l’eau.</p>
+                    <div class="w3-col w3-container alerte" id="pbVitHYD">
+                        <p>Le bateau va trop vite pour un hydrogénérateur, veuillez la sortir de l’eau.</p>
                     </div>
                     <div class="w3-col w3-container alerte" id="surchauffePileHG">
-                        <p>La pile à hydrogène surchauffe, veuillez l’éteindre.</p>
+                        <p>Une pile à hydrogène surchauffe, veuillez l’éteindre.</p>
                     </div>
                     <div class="w3-col w3-container alerte" id="tropFroidPileHG">
-                        <p>La pile à hydrogène ne peut pas fonctionner correctement en dessous de 5°C, veuillez l’éteindre.</p>
+                        <p>Une pile à hydrogène ne peut pas fonctionner correctement en dessous de 5°C, veuillez l’éteindre.</p>
                     </div>
                     <div class="w3-col w3-container alerte" id="pbProdPileHG">
-                        <p>La tension de sortie de la pile à hydrogène est anormale, veuillez vérifier qu’elle fonctionne correctement</p>
+                        <p>La tension de sortie d'une pile à hydrogène est anormale, veuillez vérifier qu’elle fonctionne correctement</p>
                     </div>
                     <div class="w3-col w3-container alerte" id="pbConsoPileHG">
-                        <p>La consommation de la pile à hydrogène est anormalement élevée, veuillez vérifier qu’elle fonctionne correctement</p>
+                        <p>La consommation d'une pile à hydrogène est anormalement élevée, veuillez vérifier qu’elle fonctionne correctement</p>
                     </div>
                     <div class="w3-col w3-container alerte" id="pbConsosEquip">
                         <p>La consommation des équipements est anormalement élevée, veuillez vérifier que tous les appareils branchés sont réellement en cours d’utilisation.</p>

@@ -431,6 +431,27 @@ module.exports = (app) => {
 
                                 console.log("Production horaire J+1 des éoliennes: " + windTurbineProduceTomorrowHourly + " kWh");
                                 console.log("Production horaire J+1 des panneaux solaires: " + solarProduceTomorrowHourly + " kWh");
+
+                                let solarProdMeanTommorow = 0;
+                                let windTurbineProdMeanTommorow = 0;
+
+                                let k = 24 - new Date(infosWeatherTomorrow.hourly[0].dt * 1000).getUTCHours() - 1;
+
+                                //Calcul de la production moyenne des panneaux solaires
+                                for(let i=k; i<solarProduceTomorrowHourly.length; i++){
+                                    solarProdMeanTommorow = solarProdMeanTommorow + solarProduceTomorrowHourly[i];
+                                }
+
+                                if(solarProduceTomorrowHourly.length - k != 0)
+                                    solarProdMeanTommorow = solarProdMeanTommorow/(solarProduceTomorrowHourly.length - k);
+                                
+                                //Calcul de la production moyenne des éoliennes
+                                for(let i=k; i<windTurbineProduceTomorrowHourly.length; i++){
+                                    windTurbineProdMeanTommorow = windTurbineProdMeanTommorow + windTurbineProduceTomorrowHourly[i];
+                                }
+
+                                if(windTurbineProduceTomorrowHourly.length - k != 0)
+                                    windTurbineProdMeanTommorow = windTurbineProdMeanTommorow/(windTurbineProduceTomorrowHourly.length - k);
             
                                 app.handleMessage(plugin.id, 
                                     {
@@ -439,7 +460,7 @@ module.exports = (app) => {
                                                 values: [
                                                     {
                                                         path: 'electrical.prev.solar.produceTomorrow.hourly',
-                                                        value: solarProduceTomorrowHourly.map(solarProduceTomorrow => Number(solarProduceTomorrow).toFixed(6))
+                                                        value: solarProduceTomorrowHourly.map(solarProduceTomorrow => parseFloat(Number(solarProduceTomorrow).toFixed(6)))
                                                     }
                                                 ]
                                             },
@@ -447,7 +468,23 @@ module.exports = (app) => {
                                                 values: [
                                                     {
                                                         path: 'electrical.prev.windTurbines.produceTomorrow.hourly',
-                                                        value: windTurbineProduceTomorrowHourly.map(windTurbineProduceTomorrow => Number(windTurbineProduceTomorrow).toFixed(6))
+                                                        value: windTurbineProduceTomorrowHourly.map(windTurbineProduceTomorrow => parseFloat(Number(windTurbineProduceTomorrow).toFixed(6)))
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                values: [
+                                                    {
+                                                        path: 'electrical.prev.solar.meanPowerTomorrow',
+                                                        value: parseFloat(Number(solarProdMeanTommorow).toFixed(3))*1000
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                values: [
+                                                    {
+                                                        path: 'electrical.prev.windTurbines.meanPowerTomorrow',
+                                                        value: parseFloat(Number(windTurbineProdMeanTommorow).toFixed(3))*1000
                                                     }
                                                 ]
                                             }

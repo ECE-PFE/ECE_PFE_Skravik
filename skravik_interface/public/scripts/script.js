@@ -45,11 +45,6 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
     let seuilMinBatteries = localStorage.getItem('settingsVal4');
 
     let vitBateau = get(data, "navigation.speedThroughWater.value");
-    let hydroH240DansEau = "-";
-    let hydroPOD600DansEau = "-";
-    let tempPileHG = get(data,"electrical.pileHydrogene.power.value");
-    let tensionPileHG = "-";
-    let consoPileHG = "-";
     let consoEquip = sommeEquipements;
 
     let warning = false;
@@ -120,38 +115,67 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
     }
 
     //Verification alertes HYD
-    if (vitBateau > 10 && hydroH240DansEau)
-        {warningShow("pbVitHYD1");warning=true;warningHYD=true;warningHYD1=true;}
-    else warningHide("pbVitHYD1");
-
-    if (vitBateau > 12 && hydroPOD600DansEau)
-        {warningShow("pbVitHYD2");warning=true;warningHYD=true;warningHYD2=true;}
-    else warningHide("pbVitHYD2");
+    warningHide("pbVitHYD");
+    for(let elmt in HYD){
+        if (vitBateau > 10 && get(HYD[elmt], "isUnderWater.value"))
+        {
+            warningShow("pbVitHYD");
+            warning=true;
+            warningHYD=true;
+            HYD[elmt].warning = true;
+        }
+            
+    }
 
     //Verification alertes PHG
-    if (tempPileHG > 45)
-        {warningShow("surchauffePileHG");warning=true;warningPHG=true;}
-    else warningHide("surchauffePileHG");
+    warningHide("surchauffePileHG");
+    warningHide("tropFroidPileHG");
+    warningHide("pbConsoPileHG")
+    for(let elmt in PHG){
+        if (get(PHG[elmt], "temperature.value") > 45){
+            warningShow("surchauffePileHG");
+            warning=true;
+            warningPHG=true;
+            PHG[elmt].warning = true;
+        }
 
-    if (tempPileHG < 5)
-        {warningShow("tropFroidPileHG");warning=true;warningPHG=true;}
-    else warningHide("tropFroidPileHG");
+        if (get(PHG[elmt], "temperature.value") < 5){
+            warningShow("tropFroidPileHG");
+            warning=true;
+            warningPHG=true;
+            PHG[elmt].warning = true;
+        }
 
-    if (tensionPileHG < 52 || tensionPileHG > 80)
-        {warningShow("pbProdPileHG");warning=true;warningPHG=true;}
-    else warningHide("pbProdPileHG");
+        /*if (tensionPileHG < 52 || tensionPileHG > 80){
+            warningShow("pbProdPileHG");
+            warning=true;
+            warningPHG=true;
+            PHG[elmt].warning = true;
+        }
+        else warningHide("pbProdPileHG");*/
 
-    if (consoPileHG > 65)
-        {warningShow("pbConsoPileHG");warning=true;warningPHG=true;}
-    else warningHide("pbConsoPileHG");
+        if (get(PHG[elmt], "fuelConsumption.value") > 65){
+            warningShow("pbConsoPileHG");
+            warning=true;
+            warningPHG=true;
+            PHG[elmt].warning = true;
+        }
+    }
 
-    if (consoEquip > consoMaxEquip)
-        {warningShow("pbConsosEquip");warning=true;}
-    else warningHide("pbConsosEquip");
+    if (consoEquip > consoMaxEquip){
+        warningShow("pbConsosEquip");
+        warning=true;
+    }else 
+        warningHide("pbConsosEquip");
 
-    if (minBatteries(data) < seuilMinBatteries)
-        {warningShow("pbBattFaible");warning=true;}
-    else warningHide("pbBattFaible");
+    warningHide("pbBattFaible");
+    for(let elmt in BATTERY){
+        if (get(BATTERY[elmt], "charge.value") < seuilMinBatteries){
+            warningShow("pbBattFaible");
+            warning=true;
+            BATTERY[elmt].warning=true;
+        }
+    }
 
     ////////////////////////////////
     ///  Changement des icones   ///
@@ -162,6 +186,15 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
     }else {
         document.getElementById("warningImg").setAttribute("src", "img/green_check.png");
         warningShow("warningOK");
+    }
+
+    // Affichage warning batteries
+    for(let elmt in BATTERY){
+        if(BATTERY[elmt].warning){
+            document.getElementById("IMGbatterie" + elmt).setAttribute("src", "img/batterie_alerte.gif");
+        }else{
+            document.getElementById("IMGbatterie" + elmt).setAttribute("src", "img/batterie.png");
+        }
     }
 
     // Affichage warning EOL
@@ -243,12 +276,11 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
     }
 }
 
-function minBatteries(data){
-    let batteries = get(data, "electrical.batteries");
+function minBatteries(){
     let min=100;
 
-    for(let battery in batteries){
-        let val = get(data, "electrical.batteries." + battery + ".charge.value");
+    for(let battery in BATTERY){
+        let val = get(BATTERY[battery], "electrical.batteries." + battery + ".charge.value");
         if (val<min) min=val;
     }
 
@@ -285,6 +317,7 @@ function updatePages(data) {
     PHG = get(data, "electrical.fuelCells");
     ALT = get(data, "electrical.alternators");
     GE = get(data, "electrical.generators");
+    BATTERY = get(data, "electrical.batteries");
 
     EQP = JSON.parse(JSON.stringify(get(data, "electrical.consumers"))); // Astuce pour obtenir une copie de l'objet au lieu de récupérer sa référence
     for(let eqp in EQP){
@@ -449,11 +482,12 @@ function forecastPage(data){
     document.getElementById("panneauxsolairesPrev").innerHTML = get(data, "electrical.prev.solar.meanPowerTomorrow.value");
     document.getElementById("eoliennesPrev").innerHTML        = get(data, "electrical.prev.windTurbines.meanPowerTomorrow.value");
 
-    sommeSourcesPrev = get(data, "electrical.prev.solar.meanPowerTomorrow.value")
-                    + get(data, "electrical.prev.windTurbines.meanPowerTomorrow.value");
+    sommeSourcesPrev = 0;
+    sommeSourcesPrev = get(data, "electrical.prev.solar.meanPowerTomorrow.value") + 
+                        get(data, "electrical.prev.windTurbines.meanPowerTomorrow.value");
     if (isNaN(sommeSourcesPrev)) sommeSourcesPrev = "-";
 
-    document.getElementById("sommeSourcesPrev").innerHTML   = sommeSourcesPrev;
+    document.getElementById("sommeSourcesPrev").innerHTML = sommeSourcesPrev;
 }
 
 function solarPanelsPage(data){
@@ -885,7 +919,7 @@ function batteriesPanel(data){
 
             element.innerHTML = 
                         '<p><strong>' + get(data, "electrical.batteries." + battery + ".name.value") + '</strong></p>' +
-                        '<img class="icone" src="img/batterie.png">' +
+                        '<img id="IMGbatterie' + battery + '" class="icone" src="img/batterie.png">' +
                         '<p><span id="batterie' + battery + '">' + get(data, "electrical.batteries." + battery + ".charge.value") + '</span> %</p>';
         }else{
             let batterieDiv = document.createElement("div"); 
@@ -894,7 +928,7 @@ function batteriesPanel(data){
 
             batterieDiv.innerHTML = 
                 '<p><strong>' + get(data, "electrical.batteries." + battery + ".name.value") + '</strong></p>' +
-                '<img class="icone" src="img/batterie.png">' +
+                '<img id="IMGbatterie' + battery + '" class="icone" src="img/batterie.png">' +
                 '<p><span id="batterie' + battery + '">' + get(data, "electrical.batteries." + battery + ".charge.value") + '</span> %</p>';
             
             if(k%3 == 0) {
