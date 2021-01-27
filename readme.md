@@ -26,9 +26,10 @@ Démarrage du serveur :
 	- Si la page répond et que vous arrivez sur une interface de SignalK, l'installation est terminée.
 
 ## Utilisation de la simulation
-- Après avoir démarré SignalK, dans l'interface allez dans `Webapps`, ouvrez dans deux nouveaux onglets `Skravik_sim` et `Skravik`.
-	- L'onglet Skravik_sim permet de controler les données générées pour la simulation.
-	- L'onglet Skravik contient l'interface fonctionelle.
+- Après avoir démarré SignalK, ouvrez ces 2 pages :
+	- La page de controle des données générées pour la simulation : [http://localhost:3000/skravik_sim/](http://localhost:3000/skravik_sim/)
+	- La page de l'interface : [http://localhost:3000/skravik/](http://localhost:3000/skravik/)
+
 
 ## Sources
 - [Github de SignalK](https://github.com/SignalK/signalk-server-windows)
