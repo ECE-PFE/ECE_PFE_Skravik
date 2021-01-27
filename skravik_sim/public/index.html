@@ -6,11 +6,225 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-   <h1 style="text-align: center"> <u><b>SIMULATION </b></u></h1>
-   <hr style="height:1px;border-width:0;color:gray;background-color:black">
-   <hr style="height:1px;border-width:0;color:gray;background-color:black">
-   <h1 style="text-align: center"> Production </h1>
-   <hr style="height:1px;border-width:0;color:gray;background-color:black">
+    <h1 style="text-align: center"> <u><b>SIMULATION </b></u></h1>
+    <hr style="height:1px;border-width:0;color:gray;background-color:black">
+    <hr style="height:1px;border-width:0;color:gray;background-color:black">
+    <h1 style="text-align: center"> Contraintes </h1>
+    <hr style="height:1px;border-width:0;color:gray;background-color:black">
+    <div class="container-fluid">
+        <div class="row" style="margin-bottom:2em;">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-2" style="text-align: center;">
+                <h3>Panneaux solaire 1</h3>
+                <br> 
+                <div style="text-align: justify;">
+                    <button onclick="moinsmoins(TempPAN1)" class="btn btn-danger"> -- </button>
+                    <button onclick="moins(TempPAN1)" class="btn btn-danger"> - </button>
+                    <span>o</span>
+                    <button onclick="plus(TempPAN1)" class="btn btn-success">+</button>
+                    <button onclick="plusplus(TempPAN1)" class="btn btn-success"> ++ </button>
+                    <span>
+                        <input id="TempPAN1" path_sk="electrical.solar.0.temperature" type="number" value="10" style="width: 50px"> 
+                        °C
+                    </span>
+                    <br>
+                    <button onclick="moinsmoins(IrradiancePAN1)" class="btn btn-danger"> -- </button>
+                    <button onclick="moins(IrradiancePAN1)" class="btn btn-danger"> - </button>
+                    <span>o</span>
+                    <button onclick="plus(IrradiancePAN1)" class="btn btn-success">+</button>
+                    <button onclick="plusplus(IrradiancePAN1)" class="btn btn-success"> ++ </button>
+                    <span>
+                        <input id="IrradiancePAN1" path_sk="electrical.solar.0.irradiance" type="number" value="10" style="width: 50px"> 
+                        W/m²
+                    </span>
+                </div>
+            </div>
+            <div class="col-sm-2" style="text-align: center;">
+                <h3>Panneaux solaire 2</h3>
+                <br>
+                <div style="text-align: justify;">
+                    <button onclick="moinsmoins(TempPAN2)" class="btn btn-danger"> -- </button>
+                    <button onclick="moins(TempPAN2)" class="btn btn-danger"> - </button>
+                    <span>o</span>
+                    <button onclick="plus(TempPAN2)" class="btn btn-success">+</button>
+                    <button onclick="plusplus(TempPAN2)" class="btn btn-success"> ++ </button>
+                    <span>
+                    <input id="TempPAN2" path_sk="electrical.solar.1.temperature" type="number" value="10" style="width: 50px"> 
+                    °C
+                    </span>
+                    <br>
+                    <button onclick="moinsmoins(IrradiancePAN2)" class="btn btn-danger"> -- </button>
+                    <button onclick="moins(IrradiancePAN2)" class="btn btn-danger"> - </button>
+                    <span>o</span>
+                    <button onclick="plus(IrradiancePAN2)" class="btn btn-success">+</button>
+                    <button onclick="plusplus(IrradiancePAN2)" class="btn btn-success"> ++ </button>
+                    <span>
+                    <input id="IrradiancePAN2" path_sk="electrical.solar.1.irradiance" type="number" value="10" style="width: 50px"> 
+                    W/m²
+                    </span>
+                </div>
+            </div>
+            <div class="col-sm-2" style="text-align: center;">
+                <h3>Panneaux solaire 3</h3>
+                <br> 
+                <div style="text-align: justify;">
+                    <button onclick="moinsmoins(TempPAN3)" class="btn btn-danger"> -- </button>
+                    <button onclick="moins(TempPAN3)" class="btn btn-danger"> - </button>
+                    <span>o</span>
+                    <button onclick="plus(TempPAN3)" class="btn btn-success">+</button>
+                    <button onclick="plusplus(TempPAN3)" class="btn btn-success"> ++ </button>
+                    <span>
+                    <input id="TempPAN3" path_sk="electrical.solar.2.temperature" type="number" value="10" style="width: 50px"> 
+                    °C
+                    </span>
+                    <br>
+                    <button onclick="moinsmoins(IrradiancePAN3)" class="btn btn-danger"> -- </button>
+                    <button onclick="moins(IrradiancePAN3)" class="btn btn-danger"> - </button>
+                    <span>o</span>
+                    <button onclick="plus(IrradiancePAN3)" class="btn btn-success">+</button>
+                    <button onclick="plusplus(IrradiancePAN3)" class="btn btn-success"> ++ </button>
+                    <span>
+                    <input id="IrradiancePAN3" path_sk="electrical.solar.2.irradiance" type="number" value="10" style="width: 50px"> 
+                    W/m²
+                    </span>
+                </div>
+            </div>
+            <div class="col-sm-2" style="text-align: center;">
+                <h3>Panneaux solaire 4</h3>
+                <br>
+                <div style="text-align: justify;">
+                    <button onclick="moinsmoins(TempPAN4)" class="btn btn-danger"> -- </button>
+                    <button onclick="moins(TempPAN4)" class="btn btn-danger"> - </button>
+                    <span>o</span>
+                    <button onclick="plus(TempPAN4)" class="btn btn-success">+</button>
+                    <button onclick="plusplus(TempPAN4)" class="btn btn-success"> ++ </button>
+                    <span>
+                    <input id="TempPAN4" path_sk="electrical.solar.3.temperature" type="number" value="10" style="width: 50px"> 
+                    °C
+                    </span>
+                    <br>
+                    <button onclick="moinsmoins(IrradiancePAN4)" class="btn btn-danger"> -- </button>
+                    <button onclick="moins(IrradiancePAN4)" class="btn btn-danger"> - </button>
+                    <span>o</span>
+                    <button onclick="plus(IrradiancePAN4)" class="btn btn-success">+</button>
+                    <button onclick="plusplus(IrradiancePAN4)" class="btn btn-success"> ++ </button>
+                    <span>
+                    <input id="IrradiancePAN4" path_sk="electrical.solar.3.irradiance" type="number" value="10" style="width: 50px"> 
+                    W/m²
+                    </span>
+                </div>
+            </div>
+            <div class="col-sm-2"></div>
+        </div>
+        <div class="row" style="margin-bottom:2em;">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-2" style="text-align: center;">
+                <h3>Eolienne 1</h3>
+                <br> 
+                <div style="text-align: justify;">
+                    <button onclick="moinsmoins(VitEOL1)" class="btn btn-danger"> -- </button>
+                    <button onclick="moins(VitEOL1)" class="btn btn-danger"> - </button>
+                    <span>o</span>
+                    <button onclick="plus(VitEOL1)" class="btn btn-success">+</button>
+                    <button onclick="plusplus(VitEOL1)" class="btn btn-success"> ++ </button>
+                    <span>
+                        <input id="VitEOL1" path_sk="electrical.windTurbines.0.speed" type="number" value="10" style="width: 50px"> 
+                        tr/min
+                    </span>
+                </div>
+            </div>
+            <div class="col-sm-2" style="text-align: center;">
+                <h3>Eolienne 2</h3>
+                <br>
+                <div style="text-align: justify;">
+                    <button onclick="moinsmoins(VitEOL2)" class="btn btn-danger"> -- </button>
+                    <button onclick="moins(VitEOL2)" class="btn btn-danger"> - </button>
+                    <span>o</span>
+                    <button onclick="plus(VitEOL2)" class="btn btn-success">+</button>
+                    <button onclick="plusplus(VitEOL2)" class="btn btn-success"> ++ </button>
+                    <span>
+                    <input id="VitEOL2" path_sk="electrical.windTurbines.1.speed" type="number" value="10" style="width: 50px"> 
+                    tr/min
+                    </span>
+                </div>
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+        <div class="row" style="margin-bottom:2em;">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-2" style="text-align: center;">
+                <h3>Hydrogénérateur 1</h3>
+                <br> 
+                <div style="text-align: justify;">
+                    <button onclick="moinsmoins(VitHYD1)" class="btn btn-danger"> -- </button>
+                    <button onclick="moins(VitHYD1)" class="btn btn-danger"> - </button>
+                    <span>o</span>
+                    <button onclick="plus(VitHYD1)" class="btn btn-success">+</button>
+                    <button onclick="plusplus(VitHYD1)" class="btn btn-success"> ++ </button>
+                    <span>
+                        <input id="VitHYD1" path_sk="electrical.waterTurbines.0.speed" type="number" value="10" style="width: 50px"> 
+                        tr/min
+                    </span>
+                </div>
+            </div>
+            <div class="col-sm-2" style="text-align: center;">
+                <h3>Hydrogénérateur 2</h3>
+                <br>
+                <div style="text-align: justify;">
+                    <button onclick="moinsmoins(VitHYD2)" class="btn btn-danger"> -- </button>
+                    <button onclick="moins(VitHYD2)" class="btn btn-danger"> - </button>
+                    <span>o</span>
+                    <button onclick="plus(VitHYD2)" class="btn btn-success">+</button>
+                    <button onclick="plusplus(VitHYD2)" class="btn btn-success"> ++ </button>
+                    <span>
+                    <input id="VitHYD2" path_sk="electrical.waterTurbines.1.speed" type="number" value="10" style="width: 50px"> 
+                    tr/min
+                    </span>
+                </div>
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+        <div class="row" style="margin-bottom:2em;">
+            <div class="col-sm-5"></div>
+            <div class="col-sm-2" style="text-align: center;">
+                <h3>Groupe électrogène 1</h3>
+                <br> 
+                <div style="text-align: justify;">
+                    <button onclick="moinsmoins(TempGE1)" class="btn btn-danger"> -- </button>
+                    <button onclick="moins(TempGE1)" class="btn btn-danger"> - </button>
+                    <span>o</span>
+                    <button onclick="plus(TempGE1)" class="btn btn-success">+</button>
+                    <button onclick="plusplus(TempGE1)" class="btn btn-success"> ++ </button>
+                    <span>
+                        <input id="TempGE1" path_sk="electrical.generators.0.temperature" type="number" value="10" style="width: 50px"> 
+                        °C
+                    </span>
+                </div>
+            </div>
+            <div class="col-sm-5"></div>
+        </div>
+        <div class="row" style="margin-bottom:2em;">
+            <div class="col-sm-5"></div>
+            <div class="col-sm-2" style="text-align: center;">
+                <h3>Pile à hydrogène 1</h3>
+                <br> 
+                <div style="text-align: justify;">
+                    <button onclick="moinsmoins(TempPC1)" class="btn btn-danger"> -- </button>
+                    <button onclick="moins(TempPC1)" class="btn btn-danger"> - </button>
+                    <span>o</span>
+                    <button onclick="plus(TempPC1)" class="btn btn-success">+</button>
+                    <button onclick="plusplus(TempPC1)" class="btn btn-success"> ++ </button>
+                    <span>
+                        <input id="TempPC1" path_sk="electrical.fuelCells.0.temperature" type="number" value="10" style="width: 50px"> 
+                        °C
+                    </span>
+                </div>
+            </div>
+            <div class="col-sm-5"></div>
+        </div>
+    </div>
+    <hr style="height:1px;border-width:0;color:gray;background-color:black">
+    <h1 style="text-align: center"> Production </h1>
    <hr style="height:1px;border-width:0;color:gray;background-color:black">
    <div class="container-fluid">
       <div class="row">
@@ -150,8 +364,8 @@
       <div class="col-sm-4"  style="text-align: center">
          <img src="img/anemometre.png" style="width:160px; height: 160px;">
          <br> <br>
-         <button onclick="moinsmoins(anemometre)" class="btn btn-danger"> -- </button>
-         <button onclick="moins(anemometre)" class="btn btn-danger"> - </button>
+         <button onclick="moinsmoins(anemometre)" class="btn btn-danger">--</button>
+         <button onclick="moins(anemometre)" class="btn btn-danger">-</button>
          <span>o</span>
          <button onclick="plus(anemometre)" class="btn btn-success">+</button>
          <button onclick="plusplus(anemometre)" class="btn btn-success"> ++ </button>
@@ -169,7 +383,7 @@
          <button onclick="plus(thermometre)" class="btn btn-success">+</button>
          <button onclick="plusplus(thermometre)" class="btn btn-success"> ++ </button>
          <span>
-         <input id="thermometre" path_sk="" type="number" value="10" style="width: 50px"> °C
+         <input id="thermometre" path_sk="environment.outside.temperature" type="number" value="10" style="width: 50px"> °C
          </span>
       </div>
 
@@ -182,7 +396,7 @@
          <button onclick="plus(vitesse)" class="btn btn-success">+</button>
          <button onclick="plusplus(vitesse)" class="btn btn-success"> ++ </button>
          <span>
-         <input id="vitesse" path_sk="" type="number" value="10" style="width: 50px"> kn
+         <input id="vitesse" path_sk="navigation.speedThroughWater" type="number" value="10" style="width: 50px"> kn
          </span>
       </div>
      </div>
@@ -190,10 +404,10 @@
 
   <hr style="height:1px;border-width:0;color:gray;background-color:black">
   <hr style="height:1px;border-width:0;color:gray;background-color:black">
-  <h1 style="text-align: center"> Consommation </h1>
+  <h1 style="text-align: center">Consommation</h1>
   <hr style="height:1px;border-width:0;color:gray;background-color:black">
   <hr style="height:1px;border-width:0;color:gray;background-color:black">
-   <h1 style="text-align: center"> Appareils de Bord Classique </h1>
+   <h1 style="text-align: center">Appareils de bord Classique</h1>
 
    <div class="row">
       <div class="col-sm-1"  style="text-align: center">

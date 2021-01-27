@@ -42,7 +42,7 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
     let consoMaxEquip = localStorage.getItem('settingsVal2');
     let prodMinPS = localStorage.getItem('settingsVal3');
 
-    let vitBateau = "-";
+    let vitBateau = get(data, "navigation.speedThroughWater.value");
     let hydroH240DansEau = "-";
     let hydroPOD600DansEau = "-";
     let tempPileHG = get(data,"electrical.pileHydrogene.power.value");
@@ -55,9 +55,12 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
     let warningPS = false;
     let warningHYD = false;
     let warningPHG = false;
+    let warningGE = false;
+    let warningALT = false;
 
     //Verification de chaque alerte possible
-    warningHide("pbProdEol");
+
+    //Verification alertes EOL
     for(let elmt in EOL) {
         EOL[elmt].warning = false;
         if (vitesseVent > 2.5 && get(EOL[elmt],"power.value") == 0 && vitesseVent < ventMax)
@@ -82,6 +85,7 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
         warningHide("pbChargeBat");
     }
 
+    //Verification alertes PS
     for(let elmt in PS){
         PS[elmt].warning = false;
         if (get(PS[elmt],"temperature.value") > tempMaxPS){
@@ -102,7 +106,7 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
             warningHide("surchauffePS");
         }
 
-        if (get(PS[elmt],"power.value") < prodMinPS && get(PS[elmt],"illuminance.value") > 200){
+        if (get(PS[elmt],"power.value") < prodMinPS && get(PS[elmt],"irradiance.value") > 200){
             warningShow("pbProdPS");
             warning=true;
             warningPS=true;
@@ -113,6 +117,7 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
 
     }
 
+    //Verification alertes HYD
     if (vitBateau > 10 && hydroH240DansEau)
         {warningShow("pbVitHYD1");warning=true;warningHYD=true;warningHYD1=true;}
     else warningHide("pbVitHYD1");
@@ -121,6 +126,7 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
         {warningShow("pbVitHYD2");warning=true;warningHYD=true;warningHYD2=true;}
     else warningHide("pbVitHYD2");
 
+    //Verification alertes PHG
     if (tempPileHG > 45)
         {warningShow("surchauffePileHG");warning=true;warningPHG=true;}
     else warningHide("surchauffePileHG");
@@ -144,7 +150,7 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
     ////////////////////////////////
     ///  Changement des icones   ///
     ////////////////////////////////
-    if (warning || warningEOL || warningPS || warningHYD || warningPHG){
+    if (warning || warningEOL || warningPS || warningHYD || warningPHG || warningALT || warningGE){
         document.getElementById("warningImg").setAttribute("src", "img/warning.gif");
         warningHide("warningOK");
     }else {
@@ -191,9 +197,44 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
         }
     }
 
+    // Affichage warning PHG
     if (warningPHG)
         document.getElementById("IMGpileHydrogene").setAttribute("src", "img/pilehydrogene_alerte.gif");
     else document.getElementById("IMGpileHydrogene").setAttribute("src", "img/pilehydrogene.png");
+
+    for(let elmt in PHG){
+        if(PHG[elmt].warning){
+            document.getElementById("IMGpileHydrogene" + elmt).setAttribute("src", "img/pilehydrogene_alerte.gif");
+        }else{
+            document.getElementById("IMGpileHydrogene" + elmt).setAttribute("src", "img/pilehydrogene.png");
+        }
+    }
+
+    // Affichage warning ALT
+    if (warningALT)
+        document.getElementById("IMGalternateur").setAttribute("src", "img/alternateur_alerte.gif");
+    else document.getElementById("IMGalternateur").setAttribute("src", "img/alternateur.png");
+
+    for(let elmt in ALT){
+        if(ALT[elmt].warning){
+            document.getElementById("IMGalternateur" + elmt).setAttribute("src", "img/alternateur_alerte.gif");
+        }else{
+            document.getElementById("IMGalternateur" + elmt).setAttribute("src", "img/alternateur.png");
+        }
+    }
+
+    // Affichage warning GE
+    if (warningGE)
+        document.getElementById("IMGgroupe_electrogene").setAttribute("src", "img/groupe_electrogene_alerte.gif");
+    else document.getElementById("IMGgroupe_electrogene").setAttribute("src", "img/groupe_electrogene.png");
+
+    for(let elmt in GE){
+        if(GE[elmt].warning){
+            document.getElementById("IMGgroupe_electrogene" + elmt).setAttribute("src", "img/hydrolienne_alerte.gif");
+        }else{
+            document.getElementById("IMGgroupe_electrogene" + elmt).setAttribute("src", "img/hydrolienne.png");
+        }
+    }
 }
 
 
@@ -387,11 +428,11 @@ function forecastPage(data){
     prodChart.data.datasets[1].data = get(data, "electrical.prev.solar.produceTomorrow.hourly.value");
     prodChart.update();
 
-    document.getElementById("panneauxsolairesPrev").innerHTML = get(data, "electrical.prev.solar.meanPower.value");
-    document.getElementById("eoliennesPrev").innerHTML        = get(data, "electrical.prev.windTurbines.meanPower.value");
+    document.getElementById("panneauxsolairesPrev").innerHTML = get(data, "electrical.prev.solar.meanPowerTomorrow.value");
+    document.getElementById("eoliennesPrev").innerHTML        = get(data, "electrical.prev.windTurbines.meanPowerTomorrow.value");
 
-    sommeSourcesPrev = get(data, "electrical.prev.solar.meanPower.value")
-                    + get(data, "electrical.prev.windTurbines.meanPower.value");
+    sommeSourcesPrev = get(data, "electrical.prev.solar.meanPowerTomorrow.value")
+                    + get(data, "electrical.prev.windTurbines.meanPowerTomorrow.value");
     if (isNaN(sommeSourcesPrev)) sommeSourcesPrev = "-";
 
     document.getElementById("sommeSourcesPrev").innerHTML   = sommeSourcesPrev;
@@ -417,9 +458,8 @@ function solarPanelsPage(data){
                             '<img id="IMGpanneauSolaire' + solarPanel + '" class="icone" src="img/panneaux_solaire.png">' +
                             '</br>' +
                             '<p>Production : <span id="PANProduction' + solarPanel + '">' + get(data, "electrical.solar." + solarPanel + ".power.value") + '</span> W</p>' +
-                            '<p>Inclinaison : <span id="PANInclinaison' + solarPanel + '">' + get(data, "electrical.solar." + solarPanel + ".tilt.value") + '</span> °</p>' +
-                            '<p>Ensoleillement : <span id="PANEnsoleillement' + solarPanel + '">' + get(data, "electrical.solar." + solarPanel + ".illuminance.value") + '</span> %</p>' +
-                            '<p>Temperature : <span id="PANTemperature' + solarPanel + '">' + get(data, "electrical.solar." + solarPanel + ".temperature.value") + '</span> %</p>';
+                            '<p>Ensoleillement : <span id="PANEnsoleillement' + solarPanel + '">' + get(data, "electrical.solar." + solarPanel + ".irradiance.value") + '</span> W/m²</p>' +
+                            '<p>Temperature : <span id="PANTemperature' + solarPanel + '">' + get(data, "electrical.solar." + solarPanel + ".temperature.value") + '</span> °C</p>';
         }else{
             let solarPanelDiv = document.createElement("div"); 
             solarPanelDiv.setAttribute('id', 'panneauSolaire_' + solarPanel);
@@ -430,9 +470,8 @@ function solarPanelsPage(data){
                                 '<img id="IMGpanneauSolaire' + solarPanel + '" class="icone" src="img/panneaux_solaire.png">' +
                                 '</br>' +
                                 '<p>Production : <span id="PANProduction' + solarPanel + '">' + get(data, "electrical.solar." + solarPanel + ".power.value") + '</span> W</p>' +
-                                '<p>Inclinaison : <span id="PANInclinaison' + solarPanel + '">' + get(data, "electrical.solar." + solarPanel + ".tilt.value") + '</span> °</p>' +
-                                '<p>Ensoleillement : <span id="PANEnsoleillement' + solarPanel + '">' + get(data, "electrical.solar." + solarPanel + ".illuminance.value") + '</span> %</p>' +
-                                '<p>Temperature : <span id="PANTemperature' + solarPanel + '">' + get(data, "electrical.solar." + solarPanel + ".temperature.value") + '</span> %</p>';
+                                '<p>Ensoleillement : <span id="PANEnsoleillement' + solarPanel + '">' + get(data, "electrical.solar." + solarPanel + ".irradiance.value") + '</span> W/m²</p>' +
+                                '<p>Temperature : <span id="PANTemperature' + solarPanel + '">' + get(data, "electrical.solar." + solarPanel + ".temperature.value") + '</span> °C</p>';
             
             if(k%4 == 0) {
                 // Si le numero du panneau solaire est un multiple de 4, on crée une nouvelle ligne
@@ -474,7 +513,7 @@ function windTurbinesPage(data){
                             '<img id="IMGeolienne' + windTurbine + '" class="icone" src="img/eolienne.png">' +
                             '</br>' +
                             '<p>Production : <span id="EOLProduction' + windTurbine + '">' + get(data, "electrical.windTurbines." + windTurbine + ".power.value") + '</span> W</p>' +
-                            '<p>Vitesse : <span id="EOLVitesse' + windTurbine + '">' + get(data, "electrical.windTurbines." + windTurbine + ".windTurbineSpeed.value") + '</span> tr/min</p>';
+                            '<p>Vitesse : <span id="EOLVitesse' + windTurbine + '">' + get(data, "electrical.windTurbines." + windTurbine + ".speed.value") + '</span> tr/min</p>';
         }else{
             let windTurbineDiv = document.createElement("div"); 
             windTurbineDiv.setAttribute('id', 'eolienne_' + windTurbine);
@@ -485,7 +524,7 @@ function windTurbinesPage(data){
                             '<img id="IMGeolienne' + windTurbine + '" class="icone" src="img/eolienne.png">' +
                             '</br>' +
                             '<p>Production : <span id="EOLProduction' + windTurbine + '">' + get(data, "electrical.windTurbines." + windTurbine + ".power.value") + '</span> W</p>' +
-                            '<p>Vitesse : <span id="EOLVitesse' + windTurbine + '">' + get(data, "electrical.windTurbines." + windTurbine + ".windTurbineSpeed.value") + '</span> tr/min</p>';
+                            '<p>Vitesse : <span id="EOLVitesse' + windTurbine + '">' + get(data, "electrical.windTurbines." + windTurbine + ".speed.value") + '</span> tr/min</p>';
             
             if(k%3 == 0) {
                 // Si le numero de l'éolienne est un multiple de 3, on crée une nouvelle ligne
@@ -529,7 +568,7 @@ function waterTurbinesPage(data){
                             '<img id="IMGhydrolienne' + waterTurbine + '" class="icone" src="img/hydrolienne.png">' +
                             '</br>' +
                             '<p>Production : <span id="HYDProduction' + waterTurbine + '">' + get(data, "electrical.waterTurbines." + waterTurbine + ".power.value") + '</span> W</p>' +
-                            '<p>Vitesse : <span id="HYDVitesse' + waterTurbine + '">' + get(data, "electrical.waterTurbines." + waterTurbine + ".waterTurbineSpeed.value") + '</span> tr/min</p>';
+                            '<p>Vitesse : <span id="HYDVitesse' + waterTurbine + '">' + get(data, "electrical.waterTurbines." + waterTurbine + ".speed.value") + '</span> tr/min</p>';
         }else{
             let waterTurbineDiv = document.createElement("div"); 
             waterTurbineDiv.setAttribute('id', 'hydrolienne_' + waterTurbine);
@@ -540,7 +579,7 @@ function waterTurbinesPage(data){
                             '<img id="IMGhydrolienne' + waterTurbine + '" class="icone" src="img/hydrolienne.png">' +
                             '</br>' +
                             '<p>Production : <span id="HYDProduction' + waterTurbine + '">' + get(data, "electrical.waterTurbines." + waterTurbine + ".power.value") + '</span> W</p>' +
-                            '<p>Vitesse : <span id="HYDVitesse' + waterTurbine + '">' + get(data, "electrical.waterTurbines." + waterTurbine + ".windTurbineSpeed.value") + '</span> tr/min</p>';
+                            '<p>Vitesse : <span id="HYDVitesse' + waterTurbine + '">' + get(data, "electrical.waterTurbines." + waterTurbine + ".speed.value") + '</span> tr/min</p>';
             
             if(k%3 == 0) {
                 // Si le numero de l'hydrolienne est un multiple de 3, on crée une nouvelle ligne
@@ -579,7 +618,7 @@ function generatorsPage(data){
 
             element.innerHTML = 
                             '<p>' + get(data, "electrical.generators." + generator + ".name.value") + '</p>' +
-                            '<img id="IMGGroupeElectrogene' + generator + '" class="icone" src="img/groupe_electrogene.png">' +
+                            '<img id="IMGgroupe_electrogene' + generator + '" class="icone" src="img/groupe_electrogene.png">' +
                             '</br>' +
                             '<p>Production : <span id="GREProduction' + generator + '">' + get(data, "electrical.generators." + generator + ".power.value") + '</span> W</p>' +
                             '<p>Temperature : <span id="GRETemperature' + generator + '">' + get(data, "electrical.generators." + generator + ".temperature.value") + '</span> °C</p>';
@@ -590,7 +629,7 @@ function generatorsPage(data){
 
             generatorDiv.innerHTML = 
                             '<p>' + get(data, "electrical.generators." + generator + ".name.value") + '</p>' +
-                            '<img id="IMGGroupeElectrogene' + generator + '" class="icone" src="img/groupe_electrogene.png">' +
+                            '<img id="IMGgroupe_electrogene' + generator + '" class="icone" src="img/groupe_electrogene.png">' +
                             '</br>' +
                             '<p>Production : <span id="GREProduction' + generator + '">' + get(data, "electrical.generators." + generator + ".power.value") + '</span> W</p>' +
                             '<p>Temperature : <span id="GRETemperature' + generator + '">' + get(data, "electrical.generators." + generator + ".temperature.value") + '</span> °C</p>';
@@ -632,7 +671,7 @@ function alternatorsPage(data){
 
             element.innerHTML = 
                             '<p>' + get(data, "electrical.alternators." + alternator + ".name.value") + '</p>' +
-                            '<img id="IMGAlternateur' + alternator + '" class="icone" src="img/alternateur.png">' +
+                            '<img id="IMGalternateur' + alternator + '" class="icone" src="img/alternateur.png">' +
                             '</br>' +
                             '<p>Production : <span id="ALTProduction' + alternator + '">' + get(data, "electrical.alternators." + alternator + ".power.value") + '</span> W</p>';
         }else{
@@ -642,7 +681,7 @@ function alternatorsPage(data){
 
             alternatorDiv.innerHTML = 
                             '<p>' + get(data, "electrical.alternators." + alternator + ".name.value") + '</p>' +
-                            '<img id="IMGAlternateur' + alternator + '" class="icone" src="img/alternateur.png">' +
+                            '<img id="IMGalternateur' + alternator + '" class="icone" src="img/alternateur.png">' +
                             '</br>' +
                             '<p>Production : <span id="ALTProduction' + alternator + '">' + get(data, "electrical.alternators." + alternator + ".power.value") + '</span> W</p>';
             
@@ -683,7 +722,7 @@ function fuelCellsPage(data){
 
             element.innerHTML = 
                             '<p>' + get(data, "electrical.fuelCells." + fuelCell + ".name.value") + '</p>' +
-                            '<img id="IMGPileHydrogene' + fuelCell + '" class="icone" src="img/pilehydrogene.png">' +
+                            '<img id="IMGpileHydrogene' + fuelCell + '" class="icone" src="img/pilehydrogene.png">' +
                             '</br>' +
                             '<p>Production : <span id="PHDProduction' + fuelCell + '">' + get(data, "electrical.fuelCells." + fuelCell + ".power.value") + '</span> W</p>' +
                             '<p>Temperature : <span id="PHDTemperature' + fuelCell + '">' + get(data, "electrical.fuelCells." + fuelCell + ".temperature.value") + '</span> °C</p>';
@@ -694,7 +733,7 @@ function fuelCellsPage(data){
 
             fuelCellDiv.innerHTML = 
                             '<p>' + get(data, "electrical.fuelCells." + fuelCell + ".name.value") + '</p>' +
-                            '<img id="IMGPileHydrogene' + fuelCell + '" class="icone" src="img/pilehydrogene.png">' +
+                            '<img id="IMGpileHydrogene' + fuelCell + '" class="icone" src="img/pilehydrogene.png">' +
                             '</br>' +
                             '<p>Production : <span id="PHDProduction' + fuelCell + '">' + get(data, "electrical.fuelCells." + fuelCell + ".power.value") + '</span> W</p>' +
                             '<p>Temperature : <span id="PHDTemperature' + fuelCell + '">' + get(data, "electrical.fuelCells." + fuelCell + ".temperature.value") + '</span> °C</p>';
