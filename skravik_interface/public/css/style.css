@@ -12,7 +12,7 @@
 
 .alerte {
    margin-bottom: 10px;
-   display:none;
+   /*display:none;*/
    border-color:#ff5722!important; /*w3-border-deep-orange*/
    color:#000!important; /*w3-khaki*/
    background-color:#f0e68c!important; /*w3-khaki*/

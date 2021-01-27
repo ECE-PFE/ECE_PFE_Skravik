@@ -1,0 +1,200 @@
+{
+  "configuration": {
+    "api_key": "556cafad8a4b0060406cd30b4747483c",
+    "api_key_2": "1zee9JsHRz6Vxt4UemuSWF6Jz0T6QaKeschYi73o",
+    "solarPanelParams": {
+      "meanIlluminance": 5.73874,
+      "minIlluminance": 4.98,
+      "solarPanelSurface": 20,
+      "solarPanelEfficiency": 20,
+      "solarPanelLossCoeff": 80
+    },
+    "windTurbineParams": {
+      "windTurbineBladeDiameter": 1.15,
+      "windTurbineLoss": 100
+    },
+    "consumers": [
+      {
+        "name": "VHF",
+        "category": "Appareil de bord classique"
+      },
+      {
+        "name": "Centrale de navigation",
+        "category": "Appareil de bord classique"
+      },
+      {
+        "name": "GPS",
+        "category": "Appareil de bord classique"
+      },
+      {
+        "name": "AIS",
+        "category": "Appareil de bord classique"
+      },
+      {
+        "name": "Pilote spare",
+        "category": "Appareil de bord classique"
+      },
+      {
+        "name": "Pilote électrique",
+        "category": "Appareil de bord classique"
+      },
+      {
+        "name": "Pilote hydraulique",
+        "category": "Appareil de bord classique"
+      },
+      {
+        "name": "Feux de navigation",
+        "category": "Appareil de bord classique"
+      },
+      {
+        "name": "Ampli MP3",
+        "category": "Appareil de bord classique"
+      },
+      {
+        "name": "Dessalinisateur",
+        "category": "Appareil de bord classique"
+      },
+      {
+        "name": "Radar",
+        "category": "Appareil de bord classique"
+      },
+      {
+        "name": "Connexion satellite",
+        "category": "Appareil de bord classique"
+      },
+      {
+        "name": "Compas gyro",
+        "category": "Appareil de bord classique"
+      },
+      {
+        "name": "Loch Doppler",
+        "category": "Appareil de bord classique"
+      },
+      {
+        "name": "Sondeur",
+        "category": "Appareil de bord classique"
+      },
+      {
+        "name": "Ordinateur de bord",
+        "category": "Appareil de bord classique"
+      },
+      {
+        "name": "Guindeau électrique",
+        "category": "Appareil de bord classique"
+      },
+      {
+        "name": "Capteurs passifs",
+        "category": "Appareil léger"
+      },
+      {
+        "name": "ADCP",
+        "category": "Appareil léger"
+      },
+      {
+        "name": "2 Réfrigérateurs",
+        "category": "Appareil léger"
+      },
+      {
+        "name": "Congélateur",
+        "category": "Appareil léger"
+      },
+      {
+        "name": "4 ordinateurs et informatique",
+        "category": "Appareil léger"
+      },
+      {
+        "name": "8 prises usb tel/caméra",
+        "category": "Appareil léger"
+      },
+      {
+        "name": "Eclairage",
+        "category": "Appareil léger"
+      },
+      {
+        "name": "Pompe à eau",
+        "category": "Générateur de chaleur"
+      },
+      {
+        "name": "Chauffe eau",
+        "category": "Générateur de chaleur"
+      },
+      {
+        "name": "Chauffage",
+        "category": "Générateur de chaleur"
+      },
+      {
+        "name": "Treuil",
+        "category": "Appareil lourd"
+      },
+      {
+        "name": "Caisson hyperbare",
+        "category": "Appareil lourd"
+      },
+      {
+        "name": "Compresseur",
+        "category": "Appareil lourd"
+      },
+      {
+        "name": "Moteur électrique",
+        "category": "Moteur électrique"
+      }
+    ],
+    "solarPanels": [
+      {
+        "name": "Panneau solaire 1"
+      },
+      {
+        "name": "Panneau solaire 2"
+      },
+      {
+        "name": "Panneau solaire 3"
+      },
+      {
+        "name": "Panneau solaire 4"
+      }
+    ],
+    "windTurbines": [
+      {
+        "name": "Eolienne 1"
+      },
+      {
+        "name": "Eolienne 2"
+      }
+    ],
+    "waterTurbines": [
+      {
+        "name": "Hydrolienne 1"
+      },
+      {
+        "name": "Hydrolienne 2"
+      }
+    ],
+    "alternators": [
+      {
+        "name": "Alternateur"
+      }
+    ],
+    "generators": [
+      {
+        "name": "Générateur"
+      }
+    ],
+    "fuelCells": [
+      {
+        "name": "Pile à combustible"
+      }
+    ],
+    "batteries": [
+      {
+        "name": "Parc de batterie 1"
+      },
+      {
+        "name": "Parc de batterie 2"
+      },
+      {
+        "name": "Parc de batterie 3"
+      }
+    ]
+  },
+  "enabled": true
+}
