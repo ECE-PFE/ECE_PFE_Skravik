@@ -63,6 +63,7 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
     //Verification de chaque alerte possible
 
     //Verification alertes EOL
+    warningHide("pbProdEol");
     for(let elmt in EOL) {
         EOL[elmt].warning = false;
         if (vitesseVent > 2.5 && get(EOL[elmt],"power.value") == 0 && vitesseVent < ventMax)
@@ -71,8 +72,6 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
             warning = true;
             warningEOL = true;
             EOL[elmt].warning = true;
-        }
-        else{
         }
     }
 
@@ -92,6 +91,9 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
     }
 
     //Verification alertes PS
+    warningHide("chauffePS");
+    warningHide("surchauffePS");
+    warningHide("pbProdPS");
     for(let elmt in PS){
         PS[elmt].warning = false;
         if (get(PS[elmt],"temperature.value") > tempMaxPS){
@@ -99,8 +101,6 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
             warning=true;
             warningPS=true;
             PS[elmt].warning = true;
-        }else{
-            warningHide("chauffePS");
         }
 
         if (get(PS[elmt],"temperature.value") > 85){
@@ -108,8 +108,6 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
             warning=true;
             warningPS=true;
             PS[elmt].warning = true;
-        }else{ 
-            warningHide("surchauffePS");
         }
 
         if (get(PS[elmt],"power.value") < prodMinPS && get(PS[elmt],"irradiance.value") > 200){
@@ -117,8 +115,6 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
             warning=true;
             warningPS=true;
             PS[elmt].warning = true;
-        }else{
-            warningHide("pbProdPS");
         }
 
     }
