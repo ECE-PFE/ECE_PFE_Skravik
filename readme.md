@@ -14,7 +14,7 @@ Note :
 Démarrage du serveur :
 - Pour utiliser notre préconfiguration : copiez le fichier `skravik-admin-plugin.json` dans le dossier `%signalk%/signalkhome/.signalk/plugin-config-data/`.
 - Dans `%git%\skravik_interface`, executez `npm link` dans un terminal de commande. Vous pouvez fermer la console ensuite.
-- Dans le dossier `%SignalK%\signalkhome\.signalk\`, lancez `npm link skravik`. Gardez la console ouverte (une commande similaire sera à executer au même endroit plus tard).
+- Dans le dossier `%SignalK%\signalkhome\.signalk\`, lancez `npm link skravik_interface`. Gardez la console ouverte (une commande similaire sera à executer au même endroit plus tard).
 - Dans `%git%\skravik_sim`, lancez `npm link`. Vous pouvez fermer la console ensuite.
 - Dans le dossier `%SignalK%\signalkhome\.signalk\`, lancez `npm link skravik_sim`. Vous pouvez fermer la console ensuite.
 - Dans `%git%\skravik_admin`, lancer `npm link`. Vous pouvez fermer la console ensuite.
