@@ -11,7 +11,8 @@ Note :
 - On notera `%SignalK%` le dossier d'installation de signalK
 - On notera `%git%` le dossier contenant ce repo
 
-Démarrage du serveur :
+Installation pour le développement de l'interface:
+
 - Pour utiliser notre préconfiguration : copiez le fichier `skravik-admin-plugin.json` dans le dossier `%signalk%/signalkhome/.signalk/plugin-config-data/`.
 - Dans `%git%\skravik_interface`, executez `npm link` dans un terminal de commande. Vous pouvez fermer la console ensuite.
 - Dans le dossier `%SignalK%\signalkhome\.signalk\`, lancez `npm link skravik_interface`. Gardez la console ouverte (une commande similaire sera à executer au même endroit plus tard).
@@ -19,6 +20,16 @@ Démarrage du serveur :
 - Dans le dossier `%SignalK%\signalkhome\.signalk\`, lancez `npm link skravik_sim`. Vous pouvez fermer la console ensuite.
 - Dans `%git%\skravik_admin`, lancer `npm link`. Vous pouvez fermer la console ensuite.
 - Dans le dossier `%SignalK%\signalkhome\.signalk\`, lancez `npm link skravik_admin`. Vous pouvez fermer la console ensuite.
+- Aller sur `http://localhost:3000` dans le navigateur internet.
+	- Si la page ne répond pas (et donc que le serveur signalK ne tourne pas déjà) : 
+		- Dans le dossier `%SignalK%\tools`, lancez le racourci `SignalK-CLI.lnk`, puis executez dans la fenetre qui s'ouvre : `signalk-server.cmd`. Si tout se passe bien il devrait y avoir de nombreuses lignes commencant par GET.
+		- Actualisez la page.
+	- Si la page répond et que vous arrivez sur une interface de SignalK, l'installation est terminée.
+
+Installation normale :
+
+- Pour utiliser notre préconfiguration : copiez le fichier `skravik-admin-plugin.json` dans le dossier `%signalk%/signalkhome/.signalk/plugin-config-data/`.
+- Copier `%git%\skravik_interface`, `%git%\skravik_admin` et `%git%\skravik_sim` dans le dossier `%SignalK%\signalkhome\.signalk\node_modules/` (Créez le dossier `node_modules` s'il n'est pas présent)
 - Aller sur `http://localhost:3000` dans le navigateur internet.
 	- Si la page ne répond pas (et donc que le serveur signalK ne tourne pas déjà) : 
 		- Dans le dossier `%SignalK%\tools`, lancez le racourci `SignalK-CLI.lnk`, puis executez dans la fenetre qui s'ouvre : `signalk-server.cmd`. Si tout se passe bien il devrait y avoir de nombreuses lignes commencant par GET.
