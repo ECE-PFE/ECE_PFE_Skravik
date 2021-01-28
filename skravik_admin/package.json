@@ -8,7 +8,6 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "signalk-webapp",
     "signalk-node-server-plugin"
   ],
   "author": "",

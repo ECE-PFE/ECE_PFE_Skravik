@@ -1,9 +1,8 @@
 /////////////////////////////////////////////
 //////// Paramètres REST API SignalK ////////
 /////////////////////////////////////////////
-const host = "localhost";
-const port = 3000;
-const endpoint = "signalk/v1/api/vessels/self/";
+const endpointData = "/signalk/v1/api/vessels/self/";
+const endpointConfPlugin = "/skServer/plugins/skravik-admin-plugin/config";
 
 
 /////////////////////////////////////////
@@ -36,7 +35,11 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
     let consosTotales = sommeConsos;
     let prodVersBat = sourcesVersBatteries;
 
-    let chargeBat1 = get(data,"electrical.batteries.0.capacity.stateOfCharge.value");// a changer pour la charge totale ?
+    let chargeBatt = 0;
+    for(batt in BATTERY){
+        chargeBatt = chargeBatt + get(BATTERY[batt],"charge.value");
+    }
+    chargeBatt = chargeBatt/BATTERY.length;
 
     let ventMax = localStorage.getItem('settingsVal0');
     let tempMaxPS = localStorage.getItem('settingsVal1');
@@ -83,11 +86,11 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
     }else 
         warningHide("tropDeVent");
 
-    if (sourcesTotales > consosTotales && prodVersBat == 0 && chargeBat1 == 1){
+    /*if (sourcesTotales > consosTotales && prodVersBat == 0 && chargeBatt != 100){
         warningShow("pbChargeBat");
         warning=true;
     }else
-        warningHide("pbChargeBat");
+        warningHide("pbChargeBat");*/
 
     //Verification alertes PS
     warningHide("chauffePS");
@@ -302,24 +305,25 @@ function minBatteries(){
 /////////////////////////////////////
 
 function get(data, path){
-  try {
+    try {
     let pathArray = path.split(".");
     let object = data;
 
     pathArray.forEach(function(item){
-      object = object[item];
+        object = object[item];
     });
 
     return object;
 
-  } catch (error) {
+    } catch (error) {
         console.warn("Not found : " + path);
     return "-";
-  }
+    }
 }
 
 function updatePages(data) {
 
+    //Objet pour stocker les données de consommation et caractéristiques 
     PS = get(data, "electrical.solar");
     EOL = get(data, "electrical.windTurbines");
     HYD = get(data, "electrical.waterTurbines");
@@ -327,14 +331,12 @@ function updatePages(data) {
     ALT = get(data, "electrical.alternators");
     GE = get(data, "electrical.generators");
     BATTERY = get(data, "electrical.batteries");
-
     EQP = JSON.parse(JSON.stringify(get(data, "electrical.consumers"))); // Astuce pour obtenir une copie de l'objet au lieu de récupérer sa référence
     for(let eqp in EQP){
         if(get(EQP[eqp], "category.value") == "moteur_electrique"){
             delete EQP[eqp];
         }
     }
-
     MOT = JSON.parse(JSON.stringify(get(data, "electrical.consumers"))); // Astuce pour obtenir une copie de l'objet au lieu de récupérer sa référence
     for(let mot in MOT){
         if(get(MOT[mot], "category.value") != "moteur_electrique"){
@@ -825,7 +827,7 @@ function moteursPage(data){
     let motors = get(data, "electrical.consumers");
 
     let ligneDiv; // Stocke le bloc de la ligne actuelle
-    let k = 0; // Compteur de panneaux solaires disponibles
+    let k = 0; // Compteur moteurs disponibles
     for(let motor in motors){
 
         // On ignore les équipements
@@ -972,15 +974,15 @@ function updateDisplay(event) {
 
     warningHide("warningERR");//Si on reussi jusque la sans erreur c'est bon signe
 
-    setTimeout(fetchDataFromRestApi, 3000);
+    setTimeout(fetchDataFromRestApi, 3000); // Actualiser l'affichage toute les 3 secondes
 }
 
 function fetchDataFromRestApi()  {
     console.log("Getting data...");
-    var oReq = new XMLHttpRequest();
-    oReq.addEventListener("load", updateDisplay);
-    oReq.open("GET", "http://" + host + ":" + port + "/" + endpoint);
-    oReq.send();
+    var oReqData = new XMLHttpRequest();
+    oReqData.addEventListener("load", updateDisplay);
+    oReqData.open("GET", endpointData);
+    oReqData.send();
 }
 
 //////////////////////////////////////////////////
