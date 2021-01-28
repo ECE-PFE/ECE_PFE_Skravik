@@ -1,5 +1,5 @@
 {
-  "name": "skravik",
+  "name": "skravik_interface",
   "version": "1.0.0",
   "description": "Interface Skravik",
   "main": "public/index.html",

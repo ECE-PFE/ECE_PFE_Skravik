@@ -1,17 +1,16 @@
 {
   "configuration": {
     "api_key": "556cafad8a4b0060406cd30b4747483c",
-    "api_key_2": "1zee9JsHRz6Vxt4UemuSWF6Jz0T6QaKeschYi73o",
     "solarPanelParams": {
-      "meanIlluminance": 5.73874,
-      "minIlluminance": 4.98,
+      "maxIrradiance": 1.965,
+      "minIrradiance": 0.216,
       "solarPanelSurface": 20,
       "solarPanelEfficiency": 20,
       "solarPanelLossCoeff": 80
     },
     "windTurbineParams": {
       "windTurbineBladeDiameter": 1.15,
-      "windTurbineLoss": 100
+      "windTurbineLoss": 80
     },
     "consumers": [
       {
