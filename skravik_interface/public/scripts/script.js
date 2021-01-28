@@ -86,6 +86,7 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
     }else 
         warningHide("tropDeVent");
 
+    warningHide("pbChargeBat");
     /*if (sourcesTotales > consosTotales && prodVersBat == 0 && chargeBatt != 100){
         warningShow("pbChargeBat");
         warning=true;
@@ -513,7 +514,7 @@ function solarPanelsPage(data){
         let element = document.getElementById("panneauSolaire_" + solarPanel);
 
         //On vérifie si un bloc p avec l'id contenant le numéro de l'appareil existe ou non
-        if(typeof(element) != 'undefined' && element != null){
+        if(element){
             ligneDiv = element.parentNode;
 
             element.innerHTML = 
@@ -568,7 +569,7 @@ function windTurbinesPage(data){
         let element = document.getElementById("eolienne_" + windTurbine);
 
         //On vérifie si un bloc p avec l'id contenant le numéro de l'appareil existe ou non
-        if(typeof(element) != 'undefined' && element != null){
+        if(element){
             ligneDiv = element.parentNode;
 
             element.innerHTML = 
@@ -623,7 +624,7 @@ function waterTurbinesPage(data){
         let element = document.getElementById("hydrolienne_" + waterTurbine);
 
         //On vérifie si un bloc p avec l'id contenant le numéro de l'appareil existe ou non
-        if(typeof(element) != 'undefined' && element != null){
+        if(element){
             ligneDiv = element.parentNode;
 
             element.innerHTML = 
@@ -667,7 +668,7 @@ function waterTurbinesPage(data){
 function generatorsPage(data){
     let pageDiv = document.getElementById("PageGroupeElectrogene");
 
-    let generators = get(data, "electrical.generators");
+    let generators = get(config, "configuration.generators");
 
     let ligneDiv; // Stocke le bloc de la ligne actuelle
     let k = 0; // Compteur de panneaux solaires disponibles
@@ -676,7 +677,7 @@ function generatorsPage(data){
         let element = document.getElementById("groupeElectrogene_" + generator);
 
         //On vérifie si un bloc p avec l'id contenant le numéro de l'appareil existe ou non
-        if(typeof(element) != 'undefined' && element != null){
+        if(element){
             ligneDiv = element.parentNode;
 
             element.innerHTML = 
@@ -729,7 +730,7 @@ function alternatorsPage(data){
         let element = document.getElementById("alternateur_" + alternator);
 
         //On vérifie si un bloc p avec l'id contenant le numéro de l'appareil existe ou non
-        if(typeof(element) != 'undefined' && element != null){
+        if(element){
             ligneDiv = element.parentNode;
 
             element.innerHTML = 
@@ -780,7 +781,7 @@ function fuelCellsPage(data){
         let element = document.getElementById("pileHydrogene_" + fuelCell);
 
         //On vérifie si un bloc p avec l'id contenant le numéro de l'appareil existe ou non
-        if(typeof(element) != 'undefined' && element != null){
+        if(element){
             ligneDiv = element.parentNode;
 
             element.innerHTML = 
@@ -838,7 +839,7 @@ function moteursPage(data){
         let element = document.getElementById("moteur_electrique" + motor);
 
         //On vérifie si un bloc p avec l'id contenant le numéro de l'appareil existe ou non
-        if(typeof(element) != 'undefined' && element != null){
+        if(element){
             ligneDiv = element.parentNode;
 
             element.innerHTML = 
@@ -897,7 +898,7 @@ function equipementsPage(data)
         let element = document.getElementById("consumer_" + appareil);
 
         //On vérifie si un bloc p avec l'id contenant le numéro de l'appareil existe ou non
-        if(typeof(element) != 'undefined' && element != null){
+        if(element){
             //Si elle existe on modifie son contenu
             element.innerHTML = get(consumers, appareil + ".name.value") + " : " + '<span id="consumer_'+ appareil +'.span">'+ get(consumers, appareil + ".power.value") +'</span> W';
         }else{
@@ -925,7 +926,7 @@ function batteriesPanel(data){
         let element = document.getElementById("divBatterie" + battery);
 
         //On vérifie si un bloc p avec l'id contenant le numéro de l'appareil existe ou non
-        if(typeof(element) != 'undefined' && element != null){
+        if(element){
             ligneDiv = element.parentNode;
 
             element.innerHTML = 
@@ -1180,8 +1181,20 @@ function initMap(){
     }
 }
 
+function fetchConfigFromRestApi(){
+    console.log("Getting config...");
+    var oReqData = new XMLHttpRequest();
+    oReqData.addEventListener("load", function(event){
+        console.log("ici");
+        config = JSON.parse(event.target.responseText);
+    });
+    oReqData.open("GET", endpointConfPlugin);
+    oReqData.send();
+}
+
 $(document).ready(function(){
     initMap();
+    fetchConfigFromRestApi();
     fetchDataFromRestApi();
 
     var ctx1 = document.getElementById('previsionChart').getContext('2d');
