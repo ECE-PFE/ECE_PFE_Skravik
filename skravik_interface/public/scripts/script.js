@@ -4,6 +4,15 @@
 const endpointData = "/signalk/v1/api/vessels/self/";
 const endpointConfPlugin = "/skServer/plugins/skravik-admin-plugin/config";
 
+const consumerCategoryMap = {
+    "Appareil de bord classique": "classique",
+    "Appareil léger": "leger",
+    "Appareil lourd": "lourd",
+    "Générateur de chaleur": "generateur_chaleur",
+    "Moteur électrique": "moteur_electrique"
+};
+
+
 
 /////////////////////////////////////////
 //////// Paramètres des settings ////////
@@ -37,7 +46,7 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
 
     let chargeBatt = 0;
     for(batt in BATTERY){
-        chargeBatt = chargeBatt + get(BATTERY[batt],"charge.value");
+        chargeBatt = chargeBatt + get(data, "electrical.batteries." + batt + ".charge.value");
     }
     chargeBatt = chargeBatt/BATTERY.length;
 
@@ -64,7 +73,7 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
     warningHide("pbProdEol");
     for(let elmt in EOL) {
         EOL[elmt].warning = false;
-        if (vitesseVent > 2.5 && get(EOL[elmt],"power.value") == 0 && vitesseVent < ventMax)
+        if (vitesseVent > 2.5 && get(data, "electrical.windTurbines." + elmt + ".power.value") == 0 && vitesseVent < ventMax)
         {
             warningShow("pbProdEol");
             warning = true;
@@ -99,21 +108,21 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
     warningHide("pbProdPS");
     for(let elmt in PS){
         PS[elmt].warning = false;
-        if (get(PS[elmt],"temperature.value") > tempMaxPS){
+        if (get(data, "electrical.solar." + elmt + ".temperature.value") > tempMaxPS){
             warningShow("chauffePS");
             warning=true;
             warningPS=true;
             PS[elmt].warning = true;
         }
 
-        if (get(PS[elmt],"temperature.value") > 85){
+        if (get(data, "electrical.solar." + elmt + ".temperature.value") > 85){
             warningShow("surchauffePS");
             warning=true;
             warningPS=true;
             PS[elmt].warning = true;
         }
 
-        if (get(PS[elmt],"power.value") < prodMinPS && get(PS[elmt],"irradiance.value") > 200){
+        if (get(data, "electrical.solar." + elmt + ".power.value") < prodMinPS && get(data, "electrical.solar." + elmt + ".irradiance.value") > 200){
             warningShow("pbProdPS");
             warning=true;
             warningPS=true;
@@ -126,15 +135,13 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
     warningHide("pbVitHYD");
     for(let elmt in HYD){
         HYD[elmt].warning = false;
-        if (vitBateau > 10 && get(HYD[elmt], "isUnderWater.value"))
+        if (vitBateau > 10 && get(data, "electrical.waterTurbines." + elmt + ".isUnderWater.value"))
         {
             warningShow("pbVitHYD");
             warning=true;
             warningHYD=true;
             HYD[elmt].warning = true;
-        }
-        console.log(get(HYD[elmt], "isUnderWater.value"));
-            
+        }   
     }
 
     //Verification alertes PHG
@@ -144,14 +151,14 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
     warningHide("pbProdPileHG");
     for(let elmt in PHG){
         PHG[elmt].warning = false;
-        if (get(PHG[elmt], "temperature.value") > 45){
+        if (get(data, "electrical.fuelCells." + elmt + ".temperature.value") > 45){
             warningShow("surchauffePileHG");
             warning=true;
             warningPHG=true;
             PHG[elmt].warning = true;
         }
 
-        if (get(PHG[elmt], "temperature.value") < 5){
+        if (get(data, "electrical.fuelCells." + elmt + ".temperature.value")  < 5){
             warningShow("tropFroidPileHG");
             warning=true;
             warningPHG=true;
@@ -166,7 +173,7 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
         }
         else warningHide("pbProdPileHG");*/
 
-        if (get(PHG[elmt], "fuelConsumption.value") > 65){
+        if (get(data, "electrical.fuelCells." + elmt + ".fuelConsumption.value")  > 65){
             warningShow("pbConsoPileHG");
             warning=true;
             warningPHG=true;
@@ -183,7 +190,7 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
     warningHide("pbBattFaible");
     for(let elmt in BATTERY){
         BATTERY[elmt].warning=false;
-        if (get(BATTERY[elmt], "charge.value") < seuilMinBatteries){
+        if (get(data, "electrical.batteries." + elmt + ".charge.value")  < seuilMinBatteries){
             warningShow("pbBattFaible");
             warning=true;
             BATTERY[elmt].warning=true;
@@ -324,72 +331,74 @@ function get(data, path){
 
 function updatePages(data) {
 
-    //Objet pour stocker les données de consommation et caractéristiques 
-    PS = get(data, "electrical.solar");
-    EOL = get(data, "electrical.windTurbines");
-    HYD = get(data, "electrical.waterTurbines");
-    PHG = get(data, "electrical.fuelCells");
-    ALT = get(data, "electrical.alternators");
-    GE = get(data, "electrical.generators");
-    BATTERY = get(data, "electrical.batteries");
-    EQP = JSON.parse(JSON.stringify(get(data, "electrical.consumers"))); // Astuce pour obtenir une copie de l'objet au lieu de récupérer sa référence
+    //Objet pour stocker les éléments de la configuration du plugin
+    PS = get(config, "configuration.solarPanels");
+    EOL = get(config, "configuration.windTurbines");
+    HYD = get(config, "configuration.waterTurbines");
+    PHG = get(config, "configuration.fuelCells");
+    ALT = get(config, "configuration.alternators");
+    GE = get(config, "configuration.generators");
+    BATTERY = get(config, "configuration.batteries");
+    EQP = JSON.parse(JSON.stringify(get(config, "configuration.consumers"))); // Astuce pour obtenir une copie de l'objet au lieu de récupérer sa référence
     for(let eqp in EQP){
-        if(get(EQP[eqp], "category.value") == "moteur_electrique"){
+        if(consumerCategoryMap[get(EQP[eqp], "category")] == "moteur_electrique"){
             delete EQP[eqp];
         }
     }
-    MOT = JSON.parse(JSON.stringify(get(data, "electrical.consumers"))); // Astuce pour obtenir une copie de l'objet au lieu de récupérer sa référence
+    MOT = JSON.parse(JSON.stringify(get(config, "configuration.consumers"))); // Astuce pour obtenir une copie de l'objet au lieu de récupérer sa référence
     for(let mot in MOT){
-        if(get(MOT[mot], "category.value") != "moteur_electrique"){
+        if(consumerCategoryMap[get(MOT[mot], "category")] != "moteur_electrique"){
             delete MOT[mot];
         }
     }
 
+    
+
     sommePanneauxSolaires = 0;
     for(let solar in PS){
-        sommePanneauxSolaires = sommePanneauxSolaires + get(PS[solar], "power.value");
+        sommePanneauxSolaires = sommePanneauxSolaires + get(data, "electrical.solar." + solar + ".power.value");
     }
     if (isNaN(sommePanneauxSolaires)) sommePanneauxSolaires = "-";
 
     sommeEoliennes = 0;
     for(let windTurbine in EOL){
-        sommeEoliennes = sommeEoliennes + get(EOL[windTurbine], "power.value");
+        sommeEoliennes = sommeEoliennes + get(data, "electrical.windTurbines." + windTurbine + ".power.value");
     }
     if (isNaN(sommeEoliennes)) sommeEoliennes = "-";
 
     sommeHydroliennes = 0;
     for(let waterTurbine in HYD){
-        sommeHydroliennes = sommeHydroliennes + get(HYD[waterTurbine], "power.value");
+        sommeHydroliennes = sommeHydroliennes + get(data, "electrical.waterTurbines." + waterTurbine + ".power.value");
     }
     if (isNaN(sommeHydroliennes)) sommeHydroliennes = "-";
 
     sommeGroupeElectrogene = 0;
     for(let generator in GE){
-        sommeGroupeElectrogene = sommeGroupeElectrogene + get(GE[generator], "power.value");
+        sommeGroupeElectrogene = sommeGroupeElectrogene + get(data, "electrical.generators." + generator + ".power.value");
     }
     if (isNaN(sommeGroupeElectrogene)) sommeGroupeElectrogene = "-";
 
     sommeAlternateur = 0;
     for(let alternator in ALT){
-        sommeAlternateur = sommeAlternateur + get(ALT[alternator], "power.value");
+        sommeAlternateur = sommeAlternateur + get(data, "electrical.alternators." + alternator + ".power.value");
     }
     if (isNaN(sommeAlternateur)) sommeAlternateur = "-";
     
     sommePileHydrogene = 0;
     for(let fuelCell in PHG){
-        sommePileHydrogene = sommePileHydrogene + (get(PHG[fuelCell], "power.value") == "-")?0:get(PHG[fuelCell], "power.value");
+        sommePileHydrogene = sommePileHydrogene + get(data, "electrical.fuelCells." + fuelCell + ".power.value");
     }
     if (isNaN(sommePileHydrogene)) sommePileHydrogene = "-";
 
     sommeMoteurs = 0;
     for(let motor in MOT){
-        sommeMoteurs = sommeMoteurs - get(MOT[motor], "power.value");
+        sommeMoteurs = sommeMoteurs - get(data, "electrical.consumers." + motor + ".power.value");
     }
     if (isNaN(sommeMoteurs)) sommeMoteurs = "-";
 
     sommeEquipements = 0;
     for(let appareil in EQP){
-        sommeEquipements = sommeEquipements - get(EQP[appareil], "power.value");
+        sommeEquipements = sommeEquipements - get(data, "electrical.consumers." + appareil + ".power.value");
     }
     if (isNaN(sommeEquipements)) sommeEquipements = "-";
 
@@ -505,11 +514,9 @@ function forecastPage(data){
 function solarPanelsPage(data){
     let pageDiv = document.getElementById("PagePanneauxSolaires");
 
-    let solarPanels = get(data, "electrical.solar");
-
     let ligneDiv; // Stocke le bloc de la ligne actuelle
     let k = 0; // Compteur de panneaux solaires disponibles
-    for(let solarPanel in solarPanels){
+    for(let solarPanel in PS){
 
         let element = document.getElementById("panneauSolaire_" + solarPanel);
 
@@ -560,11 +567,9 @@ function solarPanelsPage(data){
 function windTurbinesPage(data){
     let pageDiv = document.getElementById("PageEoliennes");
 
-    let windTurbines = get(data, "electrical.windTurbines");
-
     let ligneDiv; // Stocke le bloc de la ligne actuelle
     let k = 0; // Compteur de panneaux solaires disponibles
-    for(let windTurbine in windTurbines){
+    for(let windTurbine in EOL){
 
         let element = document.getElementById("eolienne_" + windTurbine);
 
@@ -615,11 +620,9 @@ function windTurbinesPage(data){
 function waterTurbinesPage(data){
     let pageDiv = document.getElementById("PageHydroliennes");
 
-    let waterTurbines = get(data, "electrical.waterTurbines");
-
     let ligneDiv; // Stocke le bloc de la ligne actuelle
     let k = 0; // Compteur de panneaux solaires disponibles
-    for(let waterTurbine in waterTurbines){
+    for(let waterTurbine in HYD){
 
         let element = document.getElementById("hydrolienne_" + waterTurbine);
 
@@ -668,11 +671,9 @@ function waterTurbinesPage(data){
 function generatorsPage(data){
     let pageDiv = document.getElementById("PageGroupeElectrogene");
 
-    let generators = get(config, "configuration.generators");
-
     let ligneDiv; // Stocke le bloc de la ligne actuelle
     let k = 0; // Compteur de panneaux solaires disponibles
-    for(let generator in generators){
+    for(let generator in GE){
 
         let element = document.getElementById("groupeElectrogene_" + generator);
 
@@ -721,11 +722,9 @@ function generatorsPage(data){
 function alternatorsPage(data){
     let pageDiv = document.getElementById("PageAlternateur");
 
-    let alternators = get(data, "electrical.alternators");
-
     let ligneDiv; // Stocke le bloc de la ligne actuelle
     let k = 0; // Compteur de panneaux solaires disponibles
-    for(let alternator in alternators){
+    for(let alternator in ALT){
 
         let element = document.getElementById("alternateur_" + alternator);
 
@@ -772,11 +771,9 @@ function alternatorsPage(data){
 function fuelCellsPage(data){
     let pageDiv = document.getElementById("PagePileHydrogene");
 
-    let fuelCells = get(data, "electrical.fuelCells");
-
     let ligneDiv; // Stocke le bloc de la ligne actuelle
     let k = 0; // Compteur de panneaux solaires disponibles
-    for(let fuelCell in fuelCells){
+    for(let fuelCell in PHG){
 
         let element = document.getElementById("pileHydrogene_" + fuelCell);
 
@@ -825,16 +822,9 @@ function fuelCellsPage(data){
 function moteursPage(data){
     let pageDiv = document.getElementById("PageMoteurs");
 
-    let motors = get(data, "electrical.consumers");
-
     let ligneDiv; // Stocke le bloc de la ligne actuelle
     let k = 0; // Compteur moteurs disponibles
-    for(let motor in motors){
-
-        // On ignore les équipements
-        if(get(motors[motor], "category.value") != "moteur_electrique"){
-            continue;
-        }
+    for(let motor in MOT){
 
         let element = document.getElementById("moteur_electrique" + motor);
 
@@ -878,19 +868,12 @@ function moteursPage(data){
     }
 }
 
-function equipementsPage(data)
-{
-    let consumers = get(data, "electrical.consumers");
-
-    for(let appareil in consumers){
-
-        // On ignore les moteurs
-        if(get(consumers[appareil], "category.value") == "moteur_electrique"){
-            continue;
-        }
+function equipementsPage(data){
+    
+    for(let appareil in EQP){
 
         // On récupère le div avec le id qui contient le nom de la catégorie
-        let div_categorie = document.getElementById(get(consumers[appareil], "category.value"));
+        let div_categorie = document.getElementById(get(data, "electrical.consumers." + appareil + ".category.value"));
         if(div_categorie === null){
             continue;
         }
@@ -900,15 +883,15 @@ function equipementsPage(data)
         //On vérifie si un bloc p avec l'id contenant le numéro de l'appareil existe ou non
         if(element){
             //Si elle existe on modifie son contenu
-            element.innerHTML = get(consumers, appareil + ".name.value") + " : " + '<span id="consumer_'+ appareil +'.span">'+ get(consumers, appareil + ".power.value") +'</span> W';
+            element.innerHTML = get(data, "electrical.consumers." + appareil + ".name.value") + " : " + '<span id="consumer_'+ appareil +'.span">'+ get(data, "electrical.consumers." + appareil + ".power.value") +'</span> W';
         }else{
             //Sinon on l'ajoute
             let p = document.createElement("p");
             p.setAttribute('id', "consumer_" + appareil);
-            let node = document.createTextNode(get(consumers, appareil + ".name.value") + " : ");
+            let node = document.createTextNode(get(data, "electrical.consumers." + appareil + ".name.value") + " : ");
     
             p.appendChild(node);
-            p.innerHTML += '<span id="consumer_'+ appareil +'.span">'+ get(consumers, appareil + ".power.value") +'</span> W';
+            p.innerHTML += '<span id="consumer_'+ appareil +'.span">'+ get(data, "electrical.consumers." + appareil + ".power.value") +'</span> W';
             div_categorie.appendChild(p);
         }
     }
@@ -917,11 +900,9 @@ function equipementsPage(data)
 function batteriesPanel(data){
     let panelDiv = document.getElementById("batteriesPanel");
 
-    let batteries = get(data, "electrical.batteries");
-
     let ligneDiv; // Stocke le bloc de la ligne actuelle
     let k = 0; // Compteur de panneaux solaires disponibles
-    for(let battery in batteries){
+    for(let battery in BATTERY){
 
         let element = document.getElementById("divBatterie" + battery);
 
@@ -1185,7 +1166,6 @@ function fetchConfigFromRestApi(){
     console.log("Getting config...");
     var oReqData = new XMLHttpRequest();
     oReqData.addEventListener("load", function(event){
-        console.log("ici");
         config = JSON.parse(event.target.responseText);
     });
     oReqData.open("GET", endpointConfPlugin);
