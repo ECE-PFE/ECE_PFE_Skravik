@@ -70,20 +70,24 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
         }
     }
 
-    if (sourcesTotales < - consosTotales)
-        {warningShow("pbConsoVSProd");warning=true;}
-    else warningHide("pbConsoVSProd");
+    if (sourcesTotales < - consosTotales){
+        warningShow("pbConsoVSProd");
+        warning=true;
+    }else 
+        warningHide("pbConsoVSProd");
 
-    if (vitesseVent > ventMax)
-        {warningShow("tropDeVent");warning=true;warningEOL=true;}
-    else warningHide("tropDeVent");
+    if (vitesseVent > ventMax){
+        warningShow("tropDeVent");
+        warning=true;
+        warningEOL=true;
+    }else 
+        warningHide("tropDeVent");
 
     if (sourcesTotales > consosTotales && prodVersBat == 0 && chargeBat1 == 1){
         warningShow("pbChargeBat");
         warning=true;
-    }else{
+    }else
         warningHide("pbChargeBat");
-    }
 
     //Verification alertes PS
     warningHide("chauffePS");
@@ -117,6 +121,7 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
     //Verification alertes HYD
     warningHide("pbVitHYD");
     for(let elmt in HYD){
+        HYD[elmt].warning = false;
         if (vitBateau > 10 && get(HYD[elmt], "isUnderWater.value"))
         {
             warningShow("pbVitHYD");
@@ -124,6 +129,7 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
             warningHYD=true;
             HYD[elmt].warning = true;
         }
+        console.log(get(HYD[elmt], "isUnderWater.value"));
             
     }
 
@@ -133,6 +139,7 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
     warningHide("pbConsoPileHG");
     warningHide("pbProdPileHG");
     for(let elmt in PHG){
+        PHG[elmt].warning = false;
         if (get(PHG[elmt], "temperature.value") > 45){
             warningShow("surchauffePileHG");
             warning=true;
@@ -171,6 +178,7 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
 
     warningHide("pbBattFaible");
     for(let elmt in BATTERY){
+        BATTERY[elmt].warning=false;
         if (get(BATTERY[elmt], "charge.value") < seuilMinBatteries){
             warningShow("pbBattFaible");
             warning=true;
