@@ -18,13 +18,16 @@ const consumerCategoryMap = {
 //////// Paramètres des settings ////////
 /////////////////////////////////////////
 const settings =[
-  [0,  33,   33,   "Vitesse de vent max"],
+  [0,  65,   65,   "Vitesse de vent max"],
   [75, 80,   80,   "Temperature max des panneaux solaires"],
   [0,  2935, 2935, "Conso max des équipements"],
   [0,  200, 200,   "Prod panneau solaire minimale"],
   [0,  100, 100,   "Seuil batterie faible"]
 ]//min, max, default, text
 
+/////////////////////////////////////////
+////////     Fonctions utiles    ////////
+/////////////////////////////////////////
 function sumPowerValue(powerValues){
     let res = "-";
     for(let val of powerValues){
@@ -36,6 +39,14 @@ function sumPowerValue(powerValues){
     }
 
     return res;
+}
+
+function Knot_MperS(knot) {
+    return knot*3600/1852;
+}
+
+function MperS_Knot(m_s) {
+    return m_s*1852/3600;
 }
 
 /////////////////////////////////////////////
@@ -85,7 +96,7 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
     warningHide("pbProdEol");
     for(let elmt in EOL) {
         EOL[elmt].warning = false;
-        if (vitesseVent > 2.5 && get(data, "electrical.windTurbines." + elmt + ".power.value") == 0 && vitesseVent < ventMax)
+        if (vitesseVent > 4.8596 && get(data, "electrical.windTurbines." + elmt + ".power.value") == 0 && vitesseVent < ventMax)
         {
             warningShow("pbProdEol");
             warning = true;
@@ -193,7 +204,7 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
         }
     }
 
-    if (consoEquip > consoMaxEquip){
+    if (-consoEquip > consoMaxEquip){
         warningShow("pbConsosEquip");
         warning=true;
     }else 
