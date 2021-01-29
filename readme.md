@@ -29,13 +29,18 @@ Installation pour le développement de l'interface:
 Installation normale :
 
 - Pour utiliser notre préconfiguration : copiez le fichier `skravik-admin-plugin.json` dans le dossier `%signalk%/signalkhome/.signalk/plugin-config-data/`.
-- Copier `%git%\skravik_interface`, `%git%\skravik_admin` et `%git%\skravik_sim` dans le dossier `%SignalK%\signalkhome\.signalk\node_modules/` (Créez le dossier `node_modules` s'il n'est pas présent)
+- Copier `%git%\skravik_interface`, `%git%\skravik_admin` et `%git%\skravik_sim` dans le dossier `%SignalK%\signalkhome\.signalk\node_modules\` (Créez le dossier `node_modules` s'il n'est pas présent)
 - Aller sur `http://localhost:3000` dans le navigateur internet.
 	- Si la page ne répond pas (et donc que le serveur signalK ne tourne pas déjà) : 
 		- Dans le dossier `%SignalK%\tools`, lancez le racourci `SignalK-CLI.lnk`, puis executez dans la fenetre qui s'ouvre : `signalk-server.cmd`. Si tout se passe bien il devrait y avoir de nombreuses lignes commencant par GET.
 		- Actualisez la page.
 	- Si la page répond et que vous arrivez sur une interface de SignalK, l'installation est terminée.
 
+## Configuration du plugin
+- A partir de l'interface de SignalK (`http://localhost:3000/`), cliquez sur "Server" à gauche de l'écran puis sur "Plugin Config"
+- Ensuite, cliquez sur Skravik Admin. Ici, vous pouvez ajouter des producteurs, consommateurs et batteries en cliquant sur "+".
+- Le paramètre "API Key OpenWeatherMap" permet de saisir la clé API de OpenWeatherMap qui permet de fournir les prévisions météos. Cette clé est obtenu en s'inscrivant sur `https://openweathermap.org/`. Aussi, les sections "Paramètres panneaux solaires" et "Paramètres eolien" sont utiles pour la calculer la prévisions de production.
+- Chaque section concernant l'ajout d'équipements permet d'ajouter ou supprimer un élément. La position de l'élément définit le numéro d'identifiant au sein de sa catégorie (panneaux solaire, éoliennes, hydroliennes, consommateurs, batteries, ...) comme décrit par l'image ci-dessous : 
 ## Utilisation de la simulation
 - Après avoir démarré SignalK, ouvrez ces 2 pages :
 	- La page de controle des données générées pour la simulation : [http://localhost:3000/skravik_sim/](http://localhost:3000/skravik_sim/)

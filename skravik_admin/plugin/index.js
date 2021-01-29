@@ -70,7 +70,7 @@ module.exports = (app) => {
             },
 
             "windTurbineParams": {
-                "title": "Paramètre eoliens",
+                "title": "Paramètres eolien",
                 "type": "object",
                 "properties": {
                     "windTurbineBladeDiameter": {
