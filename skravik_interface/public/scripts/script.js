@@ -25,6 +25,18 @@ const settings =[
   [0,  100, 100,   "Seuil batterie faible"]
 ]//min, max, default, text
 
+function sumPowerValue(powerValues){
+    let res = "-";
+    for(let val of powerValues){
+        if(isNaN(val)){
+            continue;
+        }
+
+        res = ((isNaN(res))?0:res) + val;
+    }
+
+    return res;
+}
 
 /////////////////////////////////////////////
 //////// Gestion page avertissements ////////
@@ -187,10 +199,12 @@ function checkWarnings(data) {// sommeSources, sommeConsos, sommeEquipements, so
     }else 
         warningHide("pbConsosEquip");
 
+    // Vérification alerte BATTERY
     warningHide("pbBattFaible");
     for(let elmt in BATTERY){
         BATTERY[elmt].warning=false;
-        if (get(data, "electrical.batteries." + elmt + ".charge.value")  < seuilMinBatteries){
+        let charge = get(data, "electrical.batteries." + elmt + ".charge.value");
+        if(!isNaN(charge) && charge  < seuilMinBatteries){
             warningShow("pbBattFaible");
             warning=true;
             BATTERY[elmt].warning=true;
@@ -352,61 +366,59 @@ function updatePages(data) {
         }
     }
 
-    
-
-    sommePanneauxSolaires = 0;
+    let val = []
     for(let solar in PS){
-        sommePanneauxSolaires = sommePanneauxSolaires + get(data, "electrical.solar." + solar + ".power.value");
+        val.push(get(data, "electrical.solar." + solar + ".power.value"));
     }
-    if (isNaN(sommePanneauxSolaires)) sommePanneauxSolaires = "-";
+    sommePanneauxSolaires = sumPowerValue(val);
 
-    sommeEoliennes = 0;
+    val = [];
     for(let windTurbine in EOL){
-        sommeEoliennes = sommeEoliennes + get(data, "electrical.windTurbines." + windTurbine + ".power.value");
+        val.push(get(data, "electrical.windTurbines." + windTurbine + ".power.value"));
     }
-    if (isNaN(sommeEoliennes)) sommeEoliennes = "-";
+    sommeEoliennes = sumPowerValue(val);
 
-    sommeHydroliennes = 0;
+    val = [];
     for(let waterTurbine in HYD){
-        sommeHydroliennes = sommeHydroliennes + get(data, "electrical.waterTurbines." + waterTurbine + ".power.value");
+        val.push(get(data, "electrical.waterTurbines." + waterTurbine + ".power.value"));
     }
-    if (isNaN(sommeHydroliennes)) sommeHydroliennes = "-";
+    sommeHydroliennes = sumPowerValue(val);
 
-    sommeGroupeElectrogene = 0;
+    val = [];
     for(let generator in GE){
-        sommeGroupeElectrogene = sommeGroupeElectrogene + get(data, "electrical.generators." + generator + ".power.value");
+        val.push(get(data, "electrical.generators." + generator + ".power.value"));
     }
-    if (isNaN(sommeGroupeElectrogene)) sommeGroupeElectrogene = "-";
-
-    sommeAlternateur = 0;
-    for(let alternator in ALT){
-        sommeAlternateur = sommeAlternateur + get(data, "electrical.alternators." + alternator + ".power.value");
-    }
-    if (isNaN(sommeAlternateur)) sommeAlternateur = "-";
+    sommeGroupeElectrogene = sumPowerValue(val);
     
-    sommePileHydrogene = 0;
+    val = [];
+    for(let alternator in ALT){
+        val.push(get(data, "electrical.alternators." + alternator + ".power.value"));
+    }
+    sommeAlternateur = sumPowerValue(val);
+    
+    val = [];
     for(let fuelCell in PHG){
-        sommePileHydrogene = sommePileHydrogene + get(data, "electrical.fuelCells." + fuelCell + ".power.value");
+        val.push(get(data, "electrical.fuelCells." + fuelCell + ".power.value"));
     }
-    if (isNaN(sommePileHydrogene)) sommePileHydrogene = "-";
+    sommePileHydrogene = sumPowerValue(val);
 
-    sommeMoteurs = 0;
+    val = [];
     for(let motor in MOT){
-        sommeMoteurs = sommeMoteurs - get(data, "electrical.consumers." + motor + ".power.value");
+         val.push(get(data, "electrical.consumers." + motor + ".power.value"));
     }
-    if (isNaN(sommeMoteurs)) sommeMoteurs = "-";
+    sommeMoteurs = -sumPowerValue(val);
+    if(isNaN(sommeMoteurs)) sommeMoteurs = "-";
 
-    sommeEquipements = 0;
+    val = [];
     for(let appareil in EQP){
-        sommeEquipements = sommeEquipements - get(data, "electrical.consumers." + appareil + ".power.value");
+        val.push(get(data, "electrical.consumers." + appareil + ".power.value"));
     }
-    if (isNaN(sommeEquipements)) sommeEquipements = "-";
+    sommeEquipements = -sumPowerValue(val);
+    if(isNaN(sommeEquipements)) sommeEquipements = "-";
 
-    sommeSources = sommePanneauxSolaires + sommeEoliennes + sommeHydroliennes + sommeGroupeElectrogene + sommeAlternateur + sommePileHydrogene;
-    if (isNaN(sommeSources)) sommeSources = "-";
+    sommeSources = sumPowerValue([sommePanneauxSolaires, sommeEoliennes, sommeHydroliennes, sommeGroupeElectrogene, sommeAlternateur, sommePileHydrogene]);
 
-    sommeConsos = sommeMoteurs + sommeEquipements;
-    if (isNaN(sommeConsos)) sommeConsos = "-";
+    sommeConsos = sumPowerValue([sommeMoteurs, sommeEquipements]);
 
     if (isNaN(sommeSources + sommeConsos)){//si pas nombre valide
         sourcesVersConsos    = "-";
@@ -503,10 +515,7 @@ function forecastPage(data){
     document.getElementById("panneauxsolairesPrev").innerHTML = get(data, "electrical.prev.solar.meanPowerTomorrow.value");
     document.getElementById("eoliennesPrev").innerHTML        = get(data, "electrical.prev.windTurbines.meanPowerTomorrow.value");
 
-    sommeSourcesPrev = 0;
-    sommeSourcesPrev = get(data, "electrical.prev.solar.meanPowerTomorrow.value") + 
-                        get(data, "electrical.prev.windTurbines.meanPowerTomorrow.value");
-    if (isNaN(sommeSourcesPrev)) sommeSourcesPrev = "-";
+    sommeSourcesPrev = sumPowerValue([get(data, "electrical.prev.solar.meanPowerTomorrow.value"), get(data, "electrical.prev.windTurbines.meanPowerTomorrow.value")]);
 
     document.getElementById("sommeSourcesPrev").innerHTML = sommeSourcesPrev;
 }
