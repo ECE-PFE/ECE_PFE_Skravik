@@ -20,7 +20,7 @@ module.exports = (app) => {
     // ******** REQUIRED PLUGIN DEFINITION *******
     let plugin = {};
 
-    plugin.id = 'skravik-admin-plugin';
+    plugin.id = 'skravik-interface-plugin';
     plugin.name = 'Skravik Admin';
     plugin.description = 'Configuration du catamaran Skravik';
     plugin.schema = {

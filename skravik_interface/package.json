@@ -2,7 +2,7 @@
   "name": "skravik_interface",
   "version": "1.0.0",
   "description": "Interface Skravik",
-  "main": "public/index.html",
+  "main": "plugin/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,7 +11,8 @@
     "url": "git+https://github.com/ECE-PFE/ECE_PFE_Skravik.git"
   },
   "keywords": [
-    "signalk-webapp"
+    "signalk-webapp",
+    "signalk-node-server-plugin"
   ],
   "author": "Skravik",
   "license": "ISC",

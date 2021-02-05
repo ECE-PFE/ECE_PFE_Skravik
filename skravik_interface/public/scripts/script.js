@@ -2,7 +2,7 @@
 //////// Paramètres REST API SignalK ////////
 /////////////////////////////////////////////
 const endpointData = "/signalk/v1/api/vessels/self/";
-const endpointConfPlugin = "/skServer/plugins/skravik-admin-plugin/config";
+const endpointConfPlugin = "/skServer/plugins/skravik-interface-plugin/config";
 
 const consumerCategoryMap = {
     "Appareil de bord classique": "classique",
