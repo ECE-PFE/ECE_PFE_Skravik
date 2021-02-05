@@ -1141,7 +1141,7 @@ function initMap(){
 
 
         let oReq = new XMLHttpRequest();
-        oReq.open("POST", "/skServer/plugins/skravik-admin-plugin/api");
+        oReq.open("POST", "/skServer/plugins/skravik-interface-plugin/api");
         oReq.setRequestHeader("Content-Type", "application/json");
         oReq.send(JSON.stringify(msg));
     });
@@ -1176,7 +1176,7 @@ function initMap(){
 
 
         let oReq = new XMLHttpRequest();
-        oReq.open("POST", "/skServer/plugins/skravik-admin-plugin/api");
+        oReq.open("POST", "/skServer/plugins/skravik-interface-plugin/api");
         oReq.setRequestHeader("Content-Type", "application/json");
         oReq.send(JSON.stringify(msg));
     }
